@@ -1,0 +1,65 @@
+grammar de.itemis.tooling.terminology.Terminology with org.eclipse.xtext.common.Terminals
+
+generate terminology "http://www.itemis.de/tooling/terminology/Terminology"
+
+TermsFile:Terminology|SubjectEntries;
+Terminology:
+	"Terminology" name=ID
+	"Definitions"
+		("Subjects" subjects+=Subject (','subjects+=Subject)*)
+		("Status" status+=Status (',' status+=Status)*)
+		("Languages" languages+=Language (',' languages+=Language)*)
+		("Gr" grs+=Gr (','grs+=Gr)*)
+		("Authors" authors+=Author (',' authors+=Author)*)
+		("Products" products+=Product(','products+=Product)*)?
+		("Customers" customers+=Customer(','customers+=Customer)*)?
+;
+Status: id=ID displayName=STRING status=EntryStatus;
+Subject:name=ID displayName=STRING;
+Language:id=ID;
+Gr:id=ID displayName=STRING pos=Pos gender=Gender? number=GrNumber?;
+Author:id=ID displayName=STRING;
+Product:name=ID displayName=STRING;
+Customer:name=ID displayName=STRING;
+Datum hidden(): INT'-'INT'-'INT;
+Qname:ID'.'ID;
+
+SubjectEntries:
+	"Subject" subject=[Subject|Qname]
+		entries+=Entry*
+;
+Entry:
+	"Entry" id=ID '{'
+		feedback=Feedback?
+		meta=MetaData
+		"Definition" definition=STRING
+		("Source" definitionSource=STRING)?
+		terms+=Term*
+	'}'
+;
+Feedback:
+	"@Feedback" text=STRING
+;
+MetaData:
+	"Metadata" "{"
+		"Status" status=[Status]
+		"created" createdAuthor=[Author] created=Datum
+		("modified" modifiedAuthor=[Author] modified=Datum)?
+	"}"
+;
+Term:
+	(allowDuplicate?="@DuplikatOK")?
+	"Term" name=STRING
+		"Status" status=TermStatus
+		"Language" language=[Language]
+		"Gr" gr=[Gr]
+		("Usage" usage=STRING)?
+		("Products" products+=[Product](','products+=[Product])*)?
+		("Customers" customers+=[Customer](','customers+=[Customer])*)?
+;
+
+enum EntryStatus:unfinished|_OK|consolidated|archive|imported|exported;
+enum TermStatus: permitted|preferred|rejected|superseded;
+enum Pos:_noun|transitive_verb|intransitive_verb|adjektive|adverb;
+enum Gender:masculine|feminine|neuter|other;
+enum GrNumber:singular|plural;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.itemis.de/tooling/terminology/Terminology" 
+       class = "de.itemis.tooling.terminology.terminology.TerminologyPackage"
+       genModel = "de/itemis/tooling/terminology/Terminology.genmodel" /> 
+	
+  </extension>
+
+
+
+
+</plugin>

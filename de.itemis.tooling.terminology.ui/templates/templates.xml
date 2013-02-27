@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<templates>
+<template autoinsert="true" context="de.itemis.tooling.terminology.Terminology.kw_modified" deleted="false" description="modified today" enabled="true" name="modified" id="modified">modified ${author:CrossReference('MetaData.modifiedAuthor')} ${today}</template>
+<template autoinsert="true" context="de.itemis.tooling.terminology.Terminology.Term" deleted="false" description="new term" enabled="true" name="Term" id="Term">  Term
+  "${term}"
+    Status ${status:Enum('TermStatus')}
+    Language ${language:CrossReference('Term.language')}
+    Gr ${Gr:CrossReference('Term.gr')}
+    Usage "${usage}"
+</template>
+<template autoinsert="true" context="de.itemis.tooling.terminology.Terminology.Entry" deleted="false" description="new entry" enabled="true" name="Entry" id="Entry">Entry ${entryID}{
+  Metadata{
+    Status ${entryStatus:CrossReference('MetaData.status')}
+    created ${author:CrossReference('MetaData.createdAuthor')} ${today}
+  }
+  Definition "${definition}"
+  Term
+  "${term}"
+    Status ${status:Enum('TermStatus')}
+    Language ${language:CrossReference('Term.language')}
+    Gr ${Gr:CrossReference('Term.gr')}
+    Usage "${usage}"
+${cursor}}</template>
+</templates>
