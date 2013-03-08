@@ -95,6 +95,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		}
 
 		languages.removeAll(defined.keySet());
+		languages.removeAll(entry.getMissingPreferredTermLangage());
 		if(!languages.isEmpty() &&levelMissing!=null){
 			String list=Joiner.on(", ").join(Collections2.transform(languages, new Function<Language, String>() {
 				public String apply(Language s){

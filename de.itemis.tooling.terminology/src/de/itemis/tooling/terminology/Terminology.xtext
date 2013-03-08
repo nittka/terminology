@@ -29,6 +29,10 @@ SubjectEntries:
 		entries+=Entry*
 ;
 Entry:
+	('@MissingPreferredTermOK''('
+		missingPreferredTermLangage+=[Language](','missingPreferredTermLangage+=[Language])*
+	')'
+	)?
 	"Entry" id=ID '{'
 		feedback=Feedback?
 		meta=MetaData
@@ -48,7 +52,7 @@ MetaData:
 	"}"
 ;
 Term:
-	(allowDuplicate?="@DuplikatOK")?
+	(allowDuplicate?="@DuplicateOK")?
 	"Term" name=STRING
 		"Status" status=TermStatus
 		"Language" language=[Language]
@@ -59,7 +63,7 @@ Term:
 ;
 
 enum EntryStatus:unfinished|_OK|consolidated|archive|imported|exported;
-enum TermStatus: permitted|preferred|rejected|superseded;
-enum Pos:_noun|transitive_verb|intransitive_verb|adjektive|adverb;
+enum TermStatus: preferred|permitted|superseded|rejected;
+enum Pos:_noun|transitive_verb|intransitive_verb|adjective|adverb;
 enum Gender:masculine|feminine|neuter|other;
 enum GrNumber:singular|plural;

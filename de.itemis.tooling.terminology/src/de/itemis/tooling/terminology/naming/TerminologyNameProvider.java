@@ -12,6 +12,7 @@ import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.IResourceScopeCache;
 
+import com.google.common.base.Optional;
 import com.google.inject.Provider;
 
 import de.itemis.tooling.terminology.terminology.Entry;
@@ -45,10 +46,10 @@ public class TerminologyNameProvider extends
 	}
 
 	QualifiedName qualifiedName(final Term term) {
-		return getTerminologyName(term).append(term.getName());
+		return getTerminologyName(term).append(Optional.fromNullable(term.getName()).or(""));
 	}
 
 	QualifiedName qualifiedName(final Entry entry) {
-		return getTerminologyName(entry).append(entry.getId());
+		return getTerminologyName(entry).append(Optional.fromNullable(entry.getId()).or(""));
 	}
 }

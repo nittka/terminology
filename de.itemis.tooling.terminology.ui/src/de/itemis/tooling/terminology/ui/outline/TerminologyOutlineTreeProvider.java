@@ -7,10 +7,14 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.AbstractOutlineNode;
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
+import org.eclipse.xtext.ui.editor.outline.impl.EObjectNode;
+import org.eclipse.xtext.util.TextRegion;
 
 import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Language;
@@ -46,9 +50,11 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 		}
 	}
 
+	void _createChildren(final IOutlineNode parentNode, SubjectEntries modelElement){}
+
 	void createLanguageNodes(IOutlineNode parent, final SubjectEntries entries, final EList<Language> languages){
 		for (final Language language : languages) {
-			new AbstractOutlineNode(parent,null,language.getId(),false) {
+			EObjectNode ln = new EObjectNode(entries, parent,null,language.getId(),false) {
 				boolean created=false;
 				@Override
 				public List<IOutlineNode> getChildren() {
@@ -59,6 +65,8 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 					return super.getChildren();
 				}
 			};
+			ICompositeNode node = NodeModelUtils.getNode(entries);
+			ln.setTextRegion(new TextRegion(node.getOffset(), node.getLength()));
 		}
 	}
 

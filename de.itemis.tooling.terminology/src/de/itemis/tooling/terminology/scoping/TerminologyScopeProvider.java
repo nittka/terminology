@@ -51,6 +51,15 @@ public class TerminologyScopeProvider extends AbstractDeclarativeScopeProvider {
 		}, IScope.NULLSCOPE);
 	}
 
+	public IScope scope_Entry_missingPreferredTermLangage(SubjectEntries entries, EReference ref){
+		EList<Language> languages = getTerminology(entries).getLanguages();
+		return Scopes.scopeFor(languages, new Function<Language, QualifiedName>() {
+			public QualifiedName apply(Language s){
+				return QualifiedName.create(s.getId());
+			}
+		}, IScope.NULLSCOPE);
+	}
+
 	public IScope scope_Term_gr(SubjectEntries entries, EReference ref){
 		EList<Gr> grs = getTerminology(entries).getGrs();
 		return Scopes.scopeFor(grs, new Function<Gr, QualifiedName>() {

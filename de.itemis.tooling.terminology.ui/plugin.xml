@@ -338,7 +338,7 @@
             categoryId="org.eclipse.ui.category.window"
             description="search in terminologies"
             id="de.itemis.tooling.terminology.SearchCommand"
-            name="Terminology-Search">
+            name="Terminology Search">
       </command>
    </extension>
    <extension

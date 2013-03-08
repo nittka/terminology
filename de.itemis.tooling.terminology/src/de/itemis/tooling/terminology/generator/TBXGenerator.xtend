@@ -145,7 +145,7 @@ class TBXGenerator {
 
 	def localize(Pos w){
 		switch (w){
-			case Pos::ADJEKTIVE:"adjective"
+			case Pos::ADJECTIVE:"adjective"
 			case Pos::ADVERB:"adverb"
 			case Pos::_NOUN:"noun"
 			case Pos::INTRANSITIVE_VERB:"intransitive_verb"

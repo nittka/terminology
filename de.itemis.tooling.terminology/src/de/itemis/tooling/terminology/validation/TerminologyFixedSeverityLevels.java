@@ -6,7 +6,7 @@ public class TerminologyFixedSeverityLevels implements
 		TerminologyValidationSeverityLevels {
 
 	public Severity getOnePreferredTermPerLanguageLevel() {
-		return Severity.ERROR;
+		return Severity.WARNING;
 	}
 	public Severity getUniqueEntryIdLevel() {
 		return Severity.ERROR;

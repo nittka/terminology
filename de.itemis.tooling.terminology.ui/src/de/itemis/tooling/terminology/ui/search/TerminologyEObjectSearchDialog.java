@@ -59,6 +59,8 @@ import de.itemis.tooling.terminology.ui.search.TerminologyEObjectSearch.Terminol
  */
 public class TerminologyEObjectSearchDialog extends ListDialog {
 
+	private static final String SETTINGS_SECTION = "Terminology_Search";
+
 	protected Text searchControl;
 
 	private String initialPatternText;
@@ -97,8 +99,8 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 			}
 		};
 		this.uriOpener = uriOpener;
-		setTitle("Terminology-Search");
-		setMessage("Search for terms.");
+		setTitle("Terminology Search");
+		setMessage("Search for terms");
 		setAddCancelButton(true);
 		// super class needs an IStructuredContentProvider so we register this dummy and 
 		// register the lazy one later
@@ -321,7 +323,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		labelCompositeLayout.marginWidth = 0;
 		labelComposite.setLayout(labelCompositeLayout);
 		matchingElementsLabel = new Label(labelComposite, SWT.NONE);
-		matchingElementsLabel.setText("TODO");
+		matchingElementsLabel.setText("Searching...");
 		matchingElementsLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		searchStatusLabel = new Label(labelComposite, SWT.RIGHT);
 		searchStatusLabel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
@@ -370,17 +372,23 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		definitionControl.setSelection(getDialogSettings().getBoolean("definition"));
 		usageControl.setSelection(getDialogSettings().getBoolean("usage"));
 		for (TermStatus status : TermStatus.values()) {
-			statusControls.get(status).setSelection(getDialogBoundsSettings().getBoolean(status.toString()));
+			statusControls.get(status).setSelection(getDialogSettings().getBoolean(status.toString()));
 		}
 	}
 
 	private IDialogSettings getDialogSettings(){
 		IDialogSettings settings = TerminologyActivator.getInstance().getDialogSettings();
-		if(settings.getSection("Terminology_Search")==null){
-			settings.addNewSection("Terminology_Search");
+		if(settings.getSection(SETTINGS_SECTION)==null){
+			initDefaultSettings(settings);
 		}
-		return settings.getSection("Terminology_Search");
-		
+		return settings.getSection(SETTINGS_SECTION);
+	}
+
+	private void initDefaultSettings(IDialogSettings settings) {
+		IDialogSettings newSetting = settings.addNewSection(SETTINGS_SECTION);
+		for (TermStatus status : TermStatus.values()) {
+			newSetting.put(status.toString(), true);
+		}
 	}
 
 	private void setDefaultGridData(Control control) {

@@ -3,21 +3,29 @@ package de.itemis.tooling.terminology.resource;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.util.IAcceptor;
+import org.eclipse.xtext.util.IResourceScopeCache;
+
+import com.google.inject.Provider;
 
 import de.itemis.tooling.terminology.terminology.Entry;
+import de.itemis.tooling.terminology.terminology.Language;
 import de.itemis.tooling.terminology.terminology.Term;
 import de.itemis.tooling.terminology.terminology.TermStatus;
-import de.itemis.tooling.terminology.terminology.TerminologyPackage;
+import de.itemis.tooling.terminology.terminology.Terminology;
 
 public class TerminologyResourceDescriptionStrategy extends
 		DefaultResourceDescriptionStrategy {
 
+	@Inject
+	
+	IResourceScopeCache cache;
 	@Override
 	public boolean createEObjectDescriptions(EObject eObject,
 			IAcceptor<IEObjectDescription> acceptor) {
@@ -34,9 +42,8 @@ public class TerminologyResourceDescriptionStrategy extends
 		return super.createEObjectDescriptions(eObject, acceptor);
 	}
 
-	//TODO use primary language (first in list of languages) instead of hard coded de
 	private Term getTermForDefinition(Entry entry) {
-		Term deTerm=null;
+		Term primaryLanguagePreferredTerm=null;
 		Term firstPreferred=null;
 		for (Term term : entry.getTerms()) {
 			if(term.getStatus()==TermStatus.PREFERRED){
@@ -44,20 +51,31 @@ public class TerminologyResourceDescriptionStrategy extends
 					firstPreferred=term;
 				}
 				try {
-					//TODO ensure comments do not break this functionality
-					String language=NodeModelUtils.findNodesForFeature(term, TerminologyPackage.Literals.TERM__LANGUAGE).get(0).getText();
-					if("de".equals(language) && deTerm==null){
-						deTerm=term;
+					if(primaryLanguagePreferredTerm==null && isPrimaryLanguageTerm(term)){
+						primaryLanguagePreferredTerm=term;
 					}
 				} catch (Exception e) {
 					//that's OK
 				}
-				if(deTerm!=null && firstPreferred!=null){
+				if(primaryLanguagePreferredTerm!=null && firstPreferred!=null){
 					break;
 				}
 			}
 		}
-		return deTerm!=null?deTerm:firstPreferred;
+		return primaryLanguagePreferredTerm!=null?primaryLanguagePreferredTerm:firstPreferred;
+	}
+
+	private boolean isPrimaryLanguageTerm(Term term) {
+		//linking during creation of ResourceDescriptions is not really good style
+		final Language l=term.getLanguage();
+		Language primaryLanguage=cache.get("primaryLanguage", term.eResource(), new Provider<Language>() {
+			public Language get() {
+				return ((Terminology)l.eContainer()).getLanguages().get(0);
+			}
+		});
+		return l==primaryLanguage;
+//		String language=NodeModelUtils.findNodesForFeature(term, TerminologyPackage.Literals.TERM__LANGUAGE).get(0).getText();
+//		return "de".equals(language);
 	}
 
 	private Map<String, String> getUserData(Term term, Term defTerm) {

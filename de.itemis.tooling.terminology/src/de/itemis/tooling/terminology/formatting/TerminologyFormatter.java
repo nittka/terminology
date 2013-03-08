@@ -32,13 +32,18 @@ public class TerminologyFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(0, 1, 1).after(ga.getML_COMMENTRule());
 
 		c.setNoSpace().before(ga.getSubjectEntriesRule());
+		//Entry
 		c.setLinewrap(2).before(ga.getEntryRule());
+		c.setNoSpace().around(ga.getEntryAccess().getLeftParenthesisKeyword_0_1());
+		c.setNoSpace().before(ga.getEntryAccess().getRightParenthesisKeyword_0_4());
+		c.setNoSpace().before(ga.getEntryAccess().getCommaKeyword_0_3_0());
+		c.setLinewrap(1).after(ga.getEntryAccess().getRightParenthesisKeyword_0_4());
 		c.setLinewrap(1).before(ga.getFeedbackAccess().getFeedbackKeyword_0());
 		
 		//Metadata
 		c.setLinewrap(1).before(ga.getMetaDataRule());
-		c.setIndentationIncrement().after(ga.getEntryAccess().getLeftCurlyBracketKeyword_2());
-		c.setIndentationDecrement().before(ga.getEntryAccess().getRightCurlyBracketKeyword_9());
+		c.setIndentationIncrement().after(ga.getEntryAccess().getLeftCurlyBracketKeyword_3());
+		c.setIndentationDecrement().before(ga.getEntryAccess().getRightCurlyBracketKeyword_10());
 		c.setIndentationIncrement().before(ga.getMetaDataAccess().getStatusKeyword_2());
 		c.setLinewrap(1).before(ga.getMetaDataAccess().getStatusKeyword_2());
 		c.setLinewrap(1).before(ga.getMetaDataAccess().getCreatedKeyword_4());
@@ -47,13 +52,13 @@ public class TerminologyFormatter extends AbstractDeclarativeFormatter {
 		c.setIndentationDecrement().before(ga.getMetaDataAccess().getRightCurlyBracketKeyword_8());
 
 		//Definition
-		c.setLinewrap(1).before(ga.getEntryAccess().getDefinitionKeyword_5());
-		c.setNoLinewrap().before(ga.getEntryAccess().getDefinitionAssignment_6());
-		c.setLinewrap(1).after(ga.getEntryAccess().getDefinitionAssignment_6());
-		c.setLinewrap(1).after(ga.getEntryAccess().getDefinitionSourceAssignment_7_1());
+		c.setLinewrap(1).before(ga.getEntryAccess().getDefinitionKeyword_6());
+		c.setNoLinewrap().before(ga.getEntryAccess().getDefinitionAssignment_7());
+		c.setLinewrap(1).after(ga.getEntryAccess().getDefinitionAssignment_7());
+		c.setLinewrap(1).after(ga.getEntryAccess().getDefinitionSourceAssignment_8_1());
 
 		//Term
-		c.setLinewrap(1).after(ga.getTermAccess().getAllowDuplicateDuplikatOKKeyword_0_0());
+		c.setLinewrap(1).after(ga.getTermAccess().getAllowDuplicateDuplicateOKKeyword_0_0());
 		c.setLinewrap(1).after(ga.getTermAccess().getNameAssignment_2());
 		c.setIndentationIncrement().after(ga.getTermAccess().getNameAssignment_2());
 		//TODO this seems to cause problems wrt. the unordered group

@@ -36,7 +36,7 @@ public class TerminologyTemplateContextTypeRegistry extends
 		//entry
 		allContextTypes.add(getType(ga.getEntryRule(), ctxTypeProvider));
 		allContextTypes.add(getType(ga.getFeedbackAccess().getFeedbackKeyword_0(), ctxTypeProvider));
-		allContextTypes.add(getType(ga.getEntryAccess().getSourceKeyword_7_0(), ctxTypeProvider));
+		allContextTypes.add(getType(ga.getEntryAccess().getSourceKeyword_8_0(), ctxTypeProvider));
 
 		//term
 		allContextTypes.add(getType(ga.getTermRule(), ctxTypeProvider));

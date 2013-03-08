@@ -10,6 +10,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.actions.IActionContributor;
 import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
+import org.eclipse.xtext.ui.editor.outline.impl.OutlineFilterAndSorter.IComparator;
 import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
@@ -22,6 +23,7 @@ import de.itemis.tooling.terminology.formatting.TerminologyIndentation;
 import de.itemis.tooling.terminology.ui.folding.TerminologyFoldingActionContributor;
 import de.itemis.tooling.terminology.ui.folding.TerminologyFoldingRegionProvider;
 import de.itemis.tooling.terminology.ui.hover.TerminologyEObjectHoverProvider;
+import de.itemis.tooling.terminology.ui.outline.TerminologyOutlineSorter;
 import de.itemis.tooling.terminology.ui.preferences.TerminologyPreferenceBasedValidationSeverityLevels;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologyHighlightingConfig;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologySemanticHighlighter;
@@ -88,5 +90,10 @@ public class TerminologyUiModule extends de.itemis.tooling.terminology.ui.Abstra
 
 	public Class<? extends XtextTemplateContextType> bindTemplateContextType() {
 		return TerminologyTemplateContextType.class;
+	}
+
+	@Override
+	public Class<? extends IComparator> bindOutlineFilterAndSorter$IComparator() {
+		return TerminologyOutlineSorter.class;
 	}
 }
