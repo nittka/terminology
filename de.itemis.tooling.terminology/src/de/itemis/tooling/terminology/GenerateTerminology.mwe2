@@ -117,7 +117,9 @@ Workflow {
                 // }
     
                 // rename refactoring
-//                fragment = refactoring.RefactorElementNameFragment {}
+                fragment = refactoring.RefactorElementNameFragment {
+                  useJdtRefactoring=false
+                }
     
                 // provides the necessary bindings for java types integration
                 fragment = types.TypesGeneratorFragment {}

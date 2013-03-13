@@ -9,7 +9,6 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import com.google.inject.Inject;
 
 import de.itemis.tooling.terminology.terminology.Term;
-import de.itemis.tooling.terminology.terminology.TermStatus;
 
 /**
  * Provides labels for a EObjects.
@@ -35,10 +34,13 @@ public class TerminologyLabelProvider extends DefaultEObjectLabelProvider {
     }
 */
 	public String image(Term term) {
-		if(term.getStatus()==TermStatus.PREFERRED){
-			return "preferredterm.png";
-		}else{
-			return "term.png";
+		String result=null;
+		switch(term.getStatus()){
+			case PREFERRED:result="public_co.gif";break;
+			case PERMITTED:result="protected_co.gif";break;
+			case REJECTED:result="private_co.gif";break;
+			case SUPERSEDED:result="compare_method.gif";break;
 		}
+		return result;
 	}
 }

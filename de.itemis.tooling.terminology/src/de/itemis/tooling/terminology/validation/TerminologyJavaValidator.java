@@ -102,11 +102,11 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 					return s.getId();
 				}
 			}));
-			createError(levelMissing, "missing preferred terms for the following languages: "+list, TerminologyPackage.Literals.ENTRY__ID);
+			createError(levelMissing, "missing preferred term for the following languages: "+list, TerminologyPackage.Literals.ENTRY__ID);
 		}
 	}
 
-	@Check
+//	@Check(CheckType.EXPENSIVE)
 	public void oneSubjectFile(Terminology terminology) {
 		Map<Subject, List<URI>> subjectFileLinks=getSubjectLinks(terminology);
 		for (Subject def : terminology.getSubjects()) {

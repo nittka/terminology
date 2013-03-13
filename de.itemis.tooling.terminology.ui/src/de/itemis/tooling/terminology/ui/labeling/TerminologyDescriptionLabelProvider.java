@@ -6,6 +6,7 @@ package de.itemis.tooling.terminology.ui.labeling;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 
+import de.itemis.tooling.terminology.terminology.TermStatus;
 import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 
 /**
@@ -36,10 +37,18 @@ public class TerminologyDescriptionLabelProvider extends DefaultDescriptionLabel
 
 	public String image(IEObjectDescription ele) {
 		if(ele.getEClass()==TerminologyPackage.Literals.TERM){
-			if("preferred".equals(ele.getUserData("status"))){
-				return "preferredterm.png";
-			}else{
-				return "term.png";
+			String result=null;
+			try {
+				TermStatus status = TermStatus.getByName(ele.getUserData("status"));
+				switch(status){
+					case PREFERRED:result="public_co.gif";break;
+					case PERMITTED:result="protected_co.gif";break;
+					case REJECTED:result="private_co.gif";break;
+					case SUPERSEDED:result="compare_method.gif";break;
+				}
+				return result;
+			} catch (Exception e) {
+				return null;
 			}
 		}
 		return (String)super.image(ele);

@@ -1,21 +1,23 @@
 package de.itemis.tooling.terminology.generator
 
+import de.itemis.tooling.terminology.terminology.Author
+import de.itemis.tooling.terminology.terminology.Entry
+import de.itemis.tooling.terminology.terminology.EntryStatus
+import de.itemis.tooling.terminology.terminology.Gender
+import de.itemis.tooling.terminology.terminology.GrNumber
+import de.itemis.tooling.terminology.terminology.Pos
+import de.itemis.tooling.terminology.terminology.Status
+import de.itemis.tooling.terminology.terminology.SubjectEntries
+import de.itemis.tooling.terminology.terminology.Term
+import de.itemis.tooling.terminology.terminology.TermStatus
+import de.itemis.tooling.terminology.terminology.Terminology
 import java.util.ArrayList
 import java.util.LinkedHashMap
 import java.util.List
 import java.util.Map
 import org.eclipse.xtext.generator.IFileSystemAccess
-import de.itemis.tooling.terminology.terminology.SubjectEntries
-import de.itemis.tooling.terminology.terminology.Terminology
-import de.itemis.tooling.terminology.terminology.Author
-import de.itemis.tooling.terminology.terminology.Entry
-import de.itemis.tooling.terminology.terminology.Term
-import de.itemis.tooling.terminology.terminology.Pos
-import de.itemis.tooling.terminology.terminology.Gender
-import de.itemis.tooling.terminology.terminology.GrNumber
-import de.itemis.tooling.terminology.terminology.TermStatus
-import de.itemis.tooling.terminology.terminology.Status
-import de.itemis.tooling.terminology.terminology.EntryStatus
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class TBXGenerator {
 	
@@ -34,10 +36,11 @@ class TBXGenerator {
 			<martifHeader>
 				<fileDesc>
 					<titleStmt>
-						<title>TODO Title</title>
+						<title>«(entries.subject.eContainer as Terminology).titleInfo»</title>
 					</titleStmt>
 					<sourceDesc>
-						<p>TODO source description</p>
+						<p>This file was created («new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date)») using the eclipse terminology plugin (see https://github.com/nittka/terminology).</p>
+						<p>«entries.subject.displayName»</p>
 					</sourceDesc>
 				</fileDesc>
 				<encodingDesc>
@@ -75,7 +78,7 @@ class TBXGenerator {
 		<termEntry id="«e.id»">
 			«e.definitionContent»
 			<admin type="elementWorkingStatus">«e.meta.status.localize»</admin>
-			<descrip type="subjectField">«(e.eContainer as SubjectEntries).subject.displayName»</descrip>
+			<descrip type="subjectField">«(e.eContainer as SubjectEntries).subject.name»</descrip>
 			<transacGrp>
 				<transac type="transactionType">origination</transac>
 				<transacNote type="responsibility" target="«e.meta.createdAuthor.backMatter.toId»">«e.meta.createdAuthor.backMatter.toSimpleId»</transacNote>

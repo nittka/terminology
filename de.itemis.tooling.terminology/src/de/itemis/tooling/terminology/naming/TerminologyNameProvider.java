@@ -26,7 +26,7 @@ public class TerminologyNameProvider extends
 	@Inject
 	IResourceScopeCache cache;
 
-	private QualifiedName getTerminologyName(EObject o) {
+	private QualifiedName getCategoryName(EObject o) {
 		final SubjectEntries cat = (SubjectEntries) EcoreUtil2
 				.getRootContainer(o);
 		QualifiedName terminologyName = cache.get(cat, o.eResource(),
@@ -46,10 +46,10 @@ public class TerminologyNameProvider extends
 	}
 
 	QualifiedName qualifiedName(final Term term) {
-		return getTerminologyName(term).append(Optional.fromNullable(term.getName()).or(""));
+		return getCategoryName(term).append(Optional.fromNullable(term.getName()).or(""));
 	}
 
 	QualifiedName qualifiedName(final Entry entry) {
-		return getTerminologyName(entry).append(Optional.fromNullable(entry.getId()).or(""));
+		return getCategoryName(entry).append(Optional.fromNullable(entry.getId()).or(""));
 	}
 }

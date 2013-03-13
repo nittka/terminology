@@ -60,19 +60,7 @@ public class IteratorJob extends Job {
 		List<IEObjectDescription> result = Lists.newArrayList(matches);
 		Collections.sort(result, new Comparator<IEObjectDescription>() {
 			public int compare(IEObjectDescription o1, IEObjectDescription o2) {
-				int diff = o1.getQualifiedName().compareToIgnoreCase(o2.getQualifiedName());
-				if (diff == 0) {
-					String className1 = o1.getEClass().getName();
-					String className2 = o2.getEClass().getName();
-					if(className1 == null)
-						diff = className2 == null ? 0 : -1;
-					else
-						diff = className2 == null ? 1 : className1.compareToIgnoreCase(className2);
-					if (diff == 0) {
-						diff = o1.getEObjectURI().toString().compareTo(o2.getEObjectURI().toString());
-					}
-				}
-				return diff;
+				return o1.getQualifiedName().getLastSegment().compareToIgnoreCase(o2.getQualifiedName().getLastSegment());
 			}
 		});
 		return result;

@@ -7,6 +7,6 @@ public class TerminologyOutlineSorter extends DefaultComparator {
 
 	@Override
 	public int compare(IOutlineNode o1, IOutlineNode o2) {
-		return o1.getText().toString().toLowerCase().compareTo(o2.getText().toString().toLowerCase());	
+		return o1.getText().toString().compareToIgnoreCase(o2.getText().toString());
 	}
 }

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.internal.text.TableOwnerDrawSupport;
 import org.eclipse.jface.text.ITextSelection;
@@ -366,6 +367,14 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		}
 		readSettings();
 		return label;
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		super.createButtonsForButtonBar(parent);
+		getOkButton().setText("Save Settings and Close");
+		setButtonLayoutData(getOkButton());
+		getButton(IDialogConstants.CANCEL_ID).setText("Close");
 	}
 
 	private void readSettings() {

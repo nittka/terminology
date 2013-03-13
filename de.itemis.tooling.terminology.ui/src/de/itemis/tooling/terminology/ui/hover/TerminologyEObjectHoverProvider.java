@@ -29,12 +29,31 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 		if(o instanceof Term){
 			ICompositeNode node = NodeModelUtils.findActualNodeFor(o);
 			StringBuilder b=new StringBuilder();
-			if(((Entry)o.eContainer()).getDefinition().length()>0){
-				b.append(((Entry)o.eContainer()).getDefinition());
+			String definition=((Entry)o.eContainer()).getDefinition();
+			if(definition!=null && definition.length()>0){
+				b.append("Definition: ");
+				b.append(definition);
 				b.append("\n");
 			}
-			b.append(node.getText().trim());
+			String nodeText = node.getText().trim();
+			int StatusIndex =nodeText.indexOf("Status");
+			b.append(nodeText.substring(StatusIndex));
 			//make hover window bigger
+			b.append("<dl></dl><dl></dl><dl></dl><dl></dl><dl></dl>");
+			return b.toString().replaceAll("\n", "</br>");
+		} else if(o instanceof Entry){
+			Entry e=(Entry)o;
+			StringBuilder b=new StringBuilder();
+			if(e.getDefinition()!=null &&e.getDefinition().length()>0){
+				b.append("Definition: ");
+				b.append(e.getDefinition());
+				b.append("\n");
+			}
+			for (Term t : e.getTerms()) {
+				b.append("Term ");
+				b.append(t.getName());
+				b.append("\n");
+			}
 			b.append("<dl></dl><dl></dl><dl></dl><dl></dl><dl></dl>");
 			return b.toString().replaceAll("\n", "</br>");
 		} else if (o instanceof Subject){
@@ -62,7 +81,7 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 //		return resultString.replaceAll("\\\\\"", "\"").replaceAll("\n", "</br>");
 //	}
 
-	private static final List<EClass> hoverClasses=ImmutableList.of(TerminologyPackage.Literals.TERM,TerminologyPackage.Literals.AUTHOR, TerminologyPackage.Literals.SUBJECT, TerminologyPackage.Literals.STATUS, TerminologyPackage.Literals.GR);
+	private static final List<EClass> hoverClasses=ImmutableList.of(TerminologyPackage.Literals.TERM,TerminologyPackage.Literals.AUTHOR, TerminologyPackage.Literals.SUBJECT, TerminologyPackage.Literals.STATUS, TerminologyPackage.Literals.GR, TerminologyPackage.Literals.ENTRY);
 	@Override
 	protected boolean hasHover(EObject o) {
 		EClass eClass = o.eClass();

@@ -4,7 +4,7 @@ generate terminology "http://www.itemis.de/tooling/terminology/Terminology"
 
 TermsFile:Terminology|SubjectEntries;
 Terminology:
-	"Terminology" name=ID
+	"Terminology" name=ID titleInfo=STRING
 	"Definitions"
 		("Subjects" subjects+=Subject (','subjects+=Subject)*)
 		("Status" status+=Status (',' status+=Status)*)
@@ -38,6 +38,7 @@ Entry:
 		meta=MetaData
 		"Definition" definition=STRING
 		("Source" definitionSource=STRING)?
+		("RelatedEntries" relatedEntries+=[Entry](',' relatedEntries+=[Entry])*)?
 		terms+=Term*
 	'}'
 ;

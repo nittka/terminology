@@ -14,6 +14,7 @@ import com.google.common.base.Function;
 
 import de.itemis.tooling.terminology.terminology.Author;
 import de.itemis.tooling.terminology.terminology.Customer;
+import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Gr;
 import de.itemis.tooling.terminology.terminology.Language;
 import de.itemis.tooling.terminology.terminology.Product;
@@ -55,6 +56,14 @@ public class TerminologyScopeProvider extends AbstractDeclarativeScopeProvider {
 		EList<Language> languages = getTerminology(entries).getLanguages();
 		return Scopes.scopeFor(languages, new Function<Language, QualifiedName>() {
 			public QualifiedName apply(Language s){
+				return QualifiedName.create(s.getId());
+			}
+		}, IScope.NULLSCOPE);
+	}
+
+	public IScope scope_Entry_relatedEntries(SubjectEntries entries, EReference ref){
+		return Scopes.scopeFor(entries.getEntries(), new Function<Entry, QualifiedName>() {
+			public QualifiedName apply(Entry s){
 				return QualifiedName.create(s.getId());
 			}
 		}, IScope.NULLSCOPE);
