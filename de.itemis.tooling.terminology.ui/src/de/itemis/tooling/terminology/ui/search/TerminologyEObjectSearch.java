@@ -1,19 +1,24 @@
 package de.itemis.tooling.terminology.ui.search;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.dialogs.SearchPattern;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import de.itemis.tooling.terminology.terminology.TermStatus;
@@ -29,6 +34,8 @@ class TerminologyEObjectSearch {
 		private boolean inDefinition;
 		private boolean inUsage;
 		private Set<String> status=new HashSet<String>();
+		private Set<URI> products=Sets.newHashSet();
+
 		public void setTextPattern(String textPattern) {
 			this.textPattern = textPattern;
 		}
@@ -46,6 +53,14 @@ class TerminologyEObjectSearch {
 				}
 			}
 		}
+		public void setProducts(Map<IEObjectDescription, Button> productControls) {
+			products.clear();
+			for (Entry<IEObjectDescription, Button> entry : productControls.entrySet()) {
+				if(entry.getValue().getSelection()){
+					products.add(entry.getKey().getEObjectURI());
+				}
+			}
+		}
 	}
 
 	@Inject
@@ -58,36 +73,58 @@ class TerminologyEObjectSearch {
 		return Iterables.filter(getSearchScope(), getSearchPredicate(pattern));
 	}
 
-
 		protected Predicate<IEObjectDescription> getSearchPredicate(final TerminologySearchPattern pattern) {
 			final SearchPattern searchPattern = new SearchPattern();
 			searchPattern.setPattern(pattern.textPattern);
+			final Set<URI> productRefs;
+			if(!pattern.products.isEmpty()){
+				productRefs=getProductReferences(pattern.products);
+			}else{
+				productRefs=null;
+			}
 
 			return new Predicate<IEObjectDescription>() {
 				public boolean apply(IEObjectDescription input) {
+					boolean isMatch=false;
 					if(input.getEClass()==TerminologyPackage.Literals.TERM){
-						if(!pattern.status.contains(input.getUserData("status"))){
-							return false;
-						}
-						if (isNameMatches(searchPattern, input)) {
-							return true;
-						}
-						if(pattern.inDefinition){
-							String def=input.getUserData("def");
-							if(def!=null && searchPattern.matches(def)){
-								return true;
+						if(pattern.status.contains(input.getUserData("status"))){
+							isMatch|=isNameMatches(searchPattern, input);
+							if(pattern.inDefinition && !isMatch){
+								String def=input.getUserData("def");
+								isMatch|=(def!=null && searchPattern.matches(def));
 							}
-						}
-						if(pattern.inUsage){
-							String sem=input.getUserData("sem");
-							if(sem!=null && searchPattern.matches(sem)){
-								return true;
+							if(pattern.inUsage &&!isMatch){
+								String sem=input.getUserData("sem");
+								isMatch|=(sem!=null && searchPattern.matches(sem));
+							}
+							if(isMatch &&productRefs!=null){
+								isMatch&=productRefs.contains(input.getEObjectURI());
 							}
 						}
 					}
-					return false;
+					return isMatch;
 				}
 			};
+		}
+
+		protected Set<URI> getProductReferences(final Set<URI> product){
+			Set<URI> result=Sets.newHashSet();
+			Iterator<IResourceDescription> it1 = getResourceDescriptions().getAllResourceDescriptions().iterator();
+			while(it1.hasNext()){
+				IResourceDescription res = it1.next();
+				Iterable<IReferenceDescription> descs = Iterables.filter(res.getReferenceDescriptions(), new Predicate<IReferenceDescription>() {
+					public boolean apply(IReferenceDescription desc){
+						if(desc.getEReference()==TerminologyPackage.Literals.TERM__PRODUCTS){
+							return product.contains(desc.getTargetEObjectUri());
+						}
+						return false;
+					}
+				});
+				for (IReferenceDescription desc : descs) {
+					result.add(desc.getSourceEObjectUri());
+				}
+			}
+			return result;
 		}
 
 		protected boolean isNameMatches(SearchPattern searchPattern, IEObjectDescription eObjectDescription) {

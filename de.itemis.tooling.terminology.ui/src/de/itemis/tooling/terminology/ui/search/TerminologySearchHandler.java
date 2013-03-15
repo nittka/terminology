@@ -9,11 +9,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.label.GlobalDescriptionLabelProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+
+import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 
 /**
  * adapted from OpenXtextElementHandler
@@ -28,6 +31,9 @@ public class TerminologySearchHandler extends AbstractHandler {
 	
 	@Inject
 	private GlobalDescriptionLabelProvider globalDescriptionLabelProvider;
+
+	@Inject
+	private IResourceDescriptions index;
 	
 	@Inject(optional=true)
 	@Named("xtext.enable.styledLables")
@@ -40,13 +46,14 @@ public class TerminologySearchHandler extends AbstractHandler {
 		ListDialog searchDialog = createSearchDialog(event, activeShell, searchEngine, uriEditorOpener);
 		int result = searchDialog.open();
 		if (result == Window.OK) {
+			//TODO kann raus?
 			try {
 				Object[] selections = searchDialog.getResult();
 				if (selections != null && selections.length > 0) {
 					Object selection = selections[0];
 					if (selection instanceof IEObjectDescription) {
-						IEObjectDescription selectedObjectDescription = (IEObjectDescription) selection;
-						uriEditorOpener.open(selectedObjectDescription.getEObjectURI(), true);
+//						IEObjectDescription selectedObjectDescription = (IEObjectDescription) selection;
+//						uriEditorOpener.open(selectedObjectDescription.getEObjectURI(), true);
 					}
 				}
 			} catch (Exception e) {
@@ -58,7 +65,11 @@ public class TerminologySearchHandler extends AbstractHandler {
 	}
 
 	protected ListDialog createSearchDialog(ExecutionEvent event, Shell activeShell, TerminologyEObjectSearch searchEngine, IURIEditorOpener uriOpener) {
-		return new TerminologyEObjectSearchDialog(activeShell, searchEngine, globalDescriptionLabelProvider, isEnableStyledLabels(), uriOpener);
+		return new TerminologyEObjectSearchDialog(activeShell, searchEngine, globalDescriptionLabelProvider, isEnableStyledLabels(), uriOpener, getProducts());
+	}
+
+	private Iterable<IEObjectDescription> getProducts(){
+		return index.getExportedObjectsByType(TerminologyPackage.Literals.PRODUCT);
 	}
 
 	public void setEnableStyledLabels(boolean enableStyledLabels) {

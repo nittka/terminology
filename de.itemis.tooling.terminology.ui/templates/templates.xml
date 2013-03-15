@@ -9,6 +9,7 @@
     Usage "${usage}"
 </template>
 <template autoinsert="true" context="de.itemis.tooling.terminology.Terminology.Entry" deleted="false" description="new entry" enabled="true" name="Entry" id="Entry">Entry ${entryID}{
+  @Feedback "${feedback}"
   Metadata{
     Status ${entryStatus:CrossReference('MetaData.status')}
     created ${author:CrossReference('MetaData.createdAuthor')} ${today}
@@ -21,4 +22,5 @@
     Gr ${Gr:CrossReference('Term.gr')}
     Usage "${usage}"
 ${cursor}}</template>
+<template autoinsert="true" context="de.itemis.tooling.terminology.Terminology.kw_@Feedback" deleted="false" description="add feedback to an entry" enabled="true" name="feedback" id="feedback">@Feedback "${feedback}"</template>
 </templates>
