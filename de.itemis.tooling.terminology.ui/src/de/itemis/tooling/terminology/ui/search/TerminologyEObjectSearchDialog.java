@@ -2,26 +2,24 @@ package de.itemis.tooling.terminology.ui.search;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.internal.text.TableOwnerDrawSupport;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
-import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
@@ -51,14 +49,20 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ListDialog;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.label.AbstractLabelProvider;
 import org.eclipse.xtext.ui.search.EObjectDescriptionContentProvider;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
+import com.google.common.collect.ObjectArrays;
 
 import de.itemis.tooling.terminology.terminology.TermStatus;
+import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 import de.itemis.tooling.terminology.ui.internal.TerminologyActivator;
 import de.itemis.tooling.terminology.ui.search.TerminologyEObjectSearch.TerminologySearchPattern;
 
@@ -94,10 +98,13 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	private Button usageControl;
 	private Map<TermStatus, Button> statusControls;
 	private Map<IEObjectDescription, Button> productControls;
+	private Map<IEObjectDescription, Button> customerControls;
 
 	private Iterable<IEObjectDescription> possibleProducs;
+	private Iterable<IEObjectDescription> possibleCustomers;
 
-	public TerminologyEObjectSearchDialog(Shell parent, TerminologyEObjectSearch searchEngine, ILabelProvider labelProvider, IURIEditorOpener uriOpener, Iterable<IEObjectDescription> products) {
+
+	public TerminologyEObjectSearchDialog(Shell parent, TerminologyEObjectSearch searchEngine, ILabelProvider labelProvider, IURIEditorOpener uriOpener, IResourceDescriptions index) {
 		super(parent);
 		this.searchEngine = searchEngine;
 		this.labelProvider = new AbstractLabelProvider(labelProvider) {
@@ -110,7 +117,8 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 			}
 		};
 		this.uriOpener = uriOpener;
-		this.possibleProducs=products;
+		this.possibleProducs=index.getExportedObjectsByType(TerminologyPackage.Literals.PRODUCT);
+		this.possibleCustomers=index.getExportedObjectsByType(TerminologyPackage.Literals.CUSTOMER);
 		setTitle("Terminology Search");
 		setMessage("Search for terms");
 		setAddCancelButton(true);
@@ -129,11 +137,11 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		});
 		setLabelProvider(this.labelProvider);
 		setHelpAvailable(false);
-		setDialogBoundsSettings(getDialogSettings(), DIALOG_PERSISTLOCATION);
+		setDialogBoundsSettings(getDialogSettings(), DIALOG_PERSISTLOCATION|DIALOG_PERSISTSIZE);
 	}
 	
-	public TerminologyEObjectSearchDialog(Shell parent, TerminologyEObjectSearch searchEngine, ILabelProvider labelProvider, boolean enableStyledLabels, IURIEditorOpener uriOpener, Iterable<IEObjectDescription> products) {
-		this(parent, searchEngine, labelProvider,uriOpener, products);
+	public TerminologyEObjectSearchDialog(Shell parent, TerminologyEObjectSearch searchEngine, ILabelProvider labelProvider, boolean enableStyledLabels, IURIEditorOpener uriOpener, IResourceDescriptions index) {
+		this(parent, searchEngine, labelProvider,uriOpener, index);
 		setShellStyle(SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE
 				| getDefaultOrientation());
 		this.enableStyledLabels = enableStyledLabels;
@@ -283,15 +291,25 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		for (TermStatus status : TermStatus.values()) {
 			settings.put(status.toString(), statusControls.get(status).getSelection());
 		}
+		settings.put("products", getSelectedEObjects(productControls));
+		settings.put("customers", getSelectedEObjects(customerControls));
+	}
+
+	private String[] getSelectedEObjects(Map<IEObjectDescription, Button> buttons){
+		String[] selected=new String[0];
+		for (Entry<IEObjectDescription, Button> entry : buttons.entrySet()) {
+			if(entry.getValue().getSelection()){
+				selected=ObjectArrays.concat(selected, entry.getKey().getQualifiedName().toString());
+			}
+		}
+		return selected;
 	}
 
 	@Override
-	protected Label createMessageArea(Composite composite) {
-		Label label = super.createMessageArea(composite);
-		searchControl = new Text(composite, SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL);
+	protected Label createMessageArea(Composite parent2) {
+		Label label = super.createMessageArea(parent2);
+		searchControl = new Text(parent2, SWT.BORDER | SWT.SEARCH | SWT.ICON_CANCEL);
 		setDefaultGridData(searchControl);
-		Label searchIn=new Label(composite, SWT.NONE);
-		searchIn.setText("Also search in:");
 
 		SelectionAdapter selectionListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -299,63 +317,10 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 			}
 		};
 
-		Composite checkboxComposite = new Composite(composite, SWT.NONE);
-		setDefaultGridData(checkboxComposite);
-		GridLayout checkboxCompositeLayout = new GridLayout(2, true);
-		checkboxCompositeLayout.marginWidth = 0;
-		checkboxComposite.setLayout(checkboxCompositeLayout);
+		initSearchScopeSettings(parent2, selectionListener);
+		initCustomersProductsSettings(parent2, selectionListener);
 
-		definitionControl=new Button(checkboxComposite, SWT.CHECK);
-		definitionControl.setText("Definition");
-		definitionControl.addSelectionListener(selectionListener);
-		usageControl=new Button(checkboxComposite, SWT.CHECK);
-		usageControl.setText("Usage");
-		usageControl.addSelectionListener(selectionListener);
-
-		Label searchStatus=new Label(composite, SWT.NONE);
-		searchStatus.setText("Terms with status:");
-
-		Composite checkboxComposite2 = new Composite(composite, SWT.NONE);
-		setDefaultGridData(checkboxComposite2);
-		GridLayout checkboxComposite2Layout = new GridLayout(5, true);
-		checkboxComposite2Layout.marginWidth = 0;
-		checkboxComposite2.setLayout(checkboxComposite2Layout);
-
-		statusControls=new LinkedHashMap<TermStatus, Button>();
-		for (TermStatus status: TermStatus.values()) {
-			Button statusButton=new Button(checkboxComposite2, SWT.CHECK);
-			statusButton.setText(status.toString());
-			statusButton.addSelectionListener(selectionListener);
-			statusControls.put(status, statusButton);
-		}
-
-		//start products
-		Label productRef=new Label(composite, SWT.NONE);
-		productRef.setText("Term with product reference to");
-
-		Composite checkboxComposite3 = new Composite(composite, SWT.NONE);
-		setDefaultGridData(checkboxComposite3);
-		GridLayout checkboxComposite3Layout = new GridLayout(3, true);
-		checkboxComposite3Layout.marginWidth = 0;
-		checkboxComposite3.setLayout(checkboxComposite3Layout);
-
-		productControls=new LinkedHashMap<IEObjectDescription, Button>();
-		for (IEObjectDescription product : possibleProducs) {
-			Button productButton=new Button(checkboxComposite3, SWT.CHECK);
-			productButton.setText(product.getQualifiedName().toString());
-			productButton.addSelectionListener(selectionListener);
-			productControls.put(product, productButton);
-		}
-
-//		ListViewer productViewer=new ListViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-//		for (IEObjectDescription product : possibleProducs) {
-//			productViewer.getList().add(product.getQualifiedName().toString());
-//		}
-		
-		
-		//end products
-
-		Composite labelComposite = new Composite(composite, SWT.NONE);
+		Composite labelComposite = new Composite(parent2, SWT.NONE);
 		setDefaultGridData(labelComposite);
 		GridLayout labelCompositeLayout = new GridLayout(2, true);
 		labelCompositeLayout.marginWidth = 0;
@@ -406,6 +371,114 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		return label;
 	}
 
+	//TODO checkbox table viewer, 2 columns
+	private void initCustomersProductsSettings(Composite parent, SelectionAdapter selectionListener){
+		ExpandableComposite exComposite = createStyleSection(parent, "products and customers", 3);
+		Composite composite=new Composite(exComposite, SWT.NONE);
+		exComposite.setClient(composite);
+		composite.setLayout(parent.getLayout());
+
+		//start products
+		Label productRef=new Label(composite, SWT.NONE);
+		productRef.setText("Terms for products");
+
+		Composite productComposite = new Composite(composite, SWT.NONE);
+		setDefaultGridData(productComposite);
+		GridLayout productCompositeLayout = new GridLayout(3, true);
+		productCompositeLayout.marginWidth = 0;
+		productComposite.setLayout(productCompositeLayout);
+
+		productControls=new LinkedHashMap<IEObjectDescription, Button>();
+		for (IEObjectDescription product : possibleProducs) {
+			Button productButton=new Button(productComposite, SWT.CHECK);
+			productButton.setText(product.getQualifiedName().toString());
+			productButton.addSelectionListener(selectionListener);
+			productControls.put(product, productButton);
+		}
+
+//		ListViewer productViewer=new ListViewer(composite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+//		for (IEObjectDescription product : possibleProducs) {
+//			productViewer.getList().add(product.getQualifiedName().toString());
+//		}
+		//end products
+
+		//start customers
+		Label customerRef=new Label(composite, SWT.NONE);
+		customerRef.setText("Terms for customers");
+
+		Composite customerComposite = new Composite(composite, SWT.NONE);
+		setDefaultGridData(customerComposite);
+		GridLayout customerCompositeLayout = new GridLayout(3, true);
+		customerCompositeLayout.marginWidth = 0;
+		customerComposite.setLayout(customerCompositeLayout);
+
+		customerControls=new LinkedHashMap<IEObjectDescription, Button>();
+		for (IEObjectDescription customer : possibleCustomers) {
+			Button customerButton=new Button(customerComposite, SWT.CHECK);
+			customerButton.setText(customer.getQualifiedName().toString());
+			customerButton.addSelectionListener(selectionListener);
+			customerControls.put(customer, customerButton);
+		}
+		//end customers
+
+	}
+
+	private void initSearchScopeSettings(Composite parent, SelectionAdapter selectionListener){
+		ExpandableComposite exComposite = createStyleSection(parent, "search parameters", 3);
+		Composite composite=new Composite(exComposite, SWT.NONE);
+		exComposite.setClient(composite);
+		composite.setLayout(parent.getLayout());
+
+		Label searchIn=new Label(composite, SWT.NONE);
+		searchIn.setText("Also search in:");
+
+		Composite checkboxComposite = new Composite(composite, SWT.NONE);
+		setDefaultGridData(checkboxComposite);
+		GridLayout checkboxCompositeLayout = new GridLayout(2, true);
+		checkboxCompositeLayout.marginWidth = 0;
+		checkboxComposite.setLayout(checkboxCompositeLayout);
+
+		definitionControl=new Button(checkboxComposite, SWT.CHECK);
+		definitionControl.setText("Definition");
+		definitionControl.addSelectionListener(selectionListener);
+		usageControl=new Button(checkboxComposite, SWT.CHECK);
+		usageControl.setText("Usage");
+		usageControl.addSelectionListener(selectionListener);
+
+		Label searchStatus=new Label(composite, SWT.NONE);
+		searchStatus.setText("Terms with status:");
+
+		Composite checkboxComposite2 = new Composite(composite, SWT.NONE);
+		setDefaultGridData(checkboxComposite2);
+		GridLayout checkboxComposite2Layout = new GridLayout(5, true);
+		checkboxComposite2Layout.marginWidth = 0;
+		checkboxComposite2.setLayout(checkboxComposite2Layout);
+
+		statusControls=new LinkedHashMap<TermStatus, Button>();
+		for (TermStatus status: TermStatus.values()) {
+			Button statusButton=new Button(checkboxComposite2, SWT.CHECK);
+			statusButton.setText(status.toString());
+			statusButton.addSelectionListener(selectionListener);
+			statusControls.put(status, statusButton);
+		}
+	}
+
+	protected ExpandableComposite createStyleSection(Composite parent, String label, int nColumns) {
+		ExpandableComposite excomposite = new ExpandableComposite(parent, ExpandableComposite.TWISTIE
+				| ExpandableComposite.CLIENT_INDENT);
+		excomposite.setText(label);
+		excomposite.setExpanded(false);
+		excomposite.setFont(JFaceResources.getFontRegistry().getBold(JFaceResources.DIALOG_FONT));
+		excomposite.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false, nColumns, 1));
+		excomposite.addExpansionListener(new ExpansionAdapter() {
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				getShell().layout(true, true);
+			}
+		});
+		return excomposite;
+	}
+
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		super.createButtonsForButtonBar(parent);
@@ -420,6 +493,20 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		for (TermStatus status : TermStatus.values()) {
 			statusControls.get(status).setSelection(getDialogSettings().getBoolean(status.toString()));
 		}
+		readEObjectSettings("products", productControls);
+		readEObjectSettings("customers", customerControls);
+	}
+
+	private void readEObjectSettings(String key, Map<IEObjectDescription, Button> buttons){
+		if(getDialogSettings().getArray(key)!=null){
+			List<String> selected = Lists.newArrayList(getDialogSettings().getArray(key));
+			for (Entry<IEObjectDescription, Button> button :buttons.entrySet()) {
+				if(selected.contains(button.getKey().getQualifiedName().toString())){
+					button.getValue().setSelection(true);
+				}
+			}
+		}
+		
 	}
 
 	private IDialogSettings getDialogSettings(){
@@ -455,6 +542,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		pattern.setInUsage(usageControl.getSelection());
 		pattern.setStatus(statusControls);
 		pattern.setProducts(productControls);
+		pattern.setCustomers(customerControls);
 
 		//		if (pattern.textPattern != null) {
 			Iterable<IEObjectDescription> matches = getSearchEngine().findMatches(pattern);

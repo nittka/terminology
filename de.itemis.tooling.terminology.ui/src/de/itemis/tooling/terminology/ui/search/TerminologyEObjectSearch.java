@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.dialogs.SearchPattern;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
@@ -35,6 +36,7 @@ class TerminologyEObjectSearch {
 		private boolean inUsage;
 		private Set<String> status=new HashSet<String>();
 		private Set<URI> products=Sets.newHashSet();
+		private Set<URI> customers=Sets.newHashSet();
 
 		public void setTextPattern(String textPattern) {
 			this.textPattern = textPattern;
@@ -54,10 +56,16 @@ class TerminologyEObjectSearch {
 			}
 		}
 		public void setProducts(Map<IEObjectDescription, Button> productControls) {
-			products.clear();
-			for (Entry<IEObjectDescription, Button> entry : productControls.entrySet()) {
+			initFromButtons(products, productControls);
+		}
+		public void setCustomers(Map<IEObjectDescription, Button> customerControls){
+			initFromButtons(customers, customerControls);
+		}
+		private void initFromButtons(Set<URI> set, Map<IEObjectDescription, Button> controls){
+			set.clear();
+			for (Entry<IEObjectDescription, Button> entry : controls.entrySet()) {
 				if(entry.getValue().getSelection()){
-					products.add(entry.getKey().getEObjectURI());
+					set.add(entry.getKey().getEObjectURI());
 				}
 			}
 		}
@@ -77,10 +85,16 @@ class TerminologyEObjectSearch {
 			final SearchPattern searchPattern = new SearchPattern();
 			searchPattern.setPattern(pattern.textPattern);
 			final Set<URI> productRefs;
+			final Set<URI> customerRefs;
 			if(!pattern.products.isEmpty()){
-				productRefs=getProductReferences(pattern.products);
+				productRefs=getReferences(pattern.products, TerminologyPackage.Literals.TERM__PRODUCTS);
 			}else{
 				productRefs=null;
+			}
+			if(!pattern.customers.isEmpty()){
+				customerRefs=getReferences(pattern.customers, TerminologyPackage.Literals.TERM__CUSTOMERS);
+			}else{
+				customerRefs=null;
 			}
 
 			return new Predicate<IEObjectDescription>() {
@@ -97,8 +111,11 @@ class TerminologyEObjectSearch {
 								String sem=input.getUserData("sem");
 								isMatch|=(sem!=null && searchPattern.matches(sem));
 							}
-							if(isMatch &&productRefs!=null){
+							if(isMatch && productRefs!=null){
 								isMatch&=productRefs.contains(input.getEObjectURI());
+							}
+							if(isMatch && customerRefs!=null){
+								isMatch&=customerRefs.contains(input.getEObjectURI());
 							}
 						}
 					}
@@ -107,15 +124,15 @@ class TerminologyEObjectSearch {
 			};
 		}
 
-		protected Set<URI> getProductReferences(final Set<URI> product){
+		protected Set<URI> getReferences(final Set<URI> selected, final EReference ref){
 			Set<URI> result=Sets.newHashSet();
 			Iterator<IResourceDescription> it1 = getResourceDescriptions().getAllResourceDescriptions().iterator();
 			while(it1.hasNext()){
 				IResourceDescription res = it1.next();
 				Iterable<IReferenceDescription> descs = Iterables.filter(res.getReferenceDescriptions(), new Predicate<IReferenceDescription>() {
 					public boolean apply(IReferenceDescription desc){
-						if(desc.getEReference()==TerminologyPackage.Literals.TERM__PRODUCTS){
-							return product.contains(desc.getTargetEObjectUri());
+						if(desc.getEReference()==ref){
+							return selected.contains(desc.getTargetEObjectUri());
 						}
 						return false;
 					}
