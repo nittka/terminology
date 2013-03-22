@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.itemis.tooling.terminology.ui
-Bundle-Vendor: My Company
+Bundle-Name: Terminology UI
+Bundle-Vendor: itemis AG 4+1
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.itemis.tooling.terminology.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -13,7 +13,6 @@ Require-Bundle: de.itemis.tooling.terminology;visibility:=reexport,
  org.eclipse.ui,
  org.eclipse.xtext.builder,
  org.antlr.runtime,
- org.eclipse.xtext.common.types.ui,
  org.eclipse.compare,
  org.eclipse.ui.forms;bundle-version="3.4.1"
 Import-Package: org.apache.log4j

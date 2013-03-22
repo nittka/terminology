@@ -12,7 +12,7 @@ import de.itemis.tooling.terminology.terminology.SubjectEntries
 class TerminologyGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		resource.contents.get(0).createFiles(fsa)
+//		resource.contents.get(0).createFiles(fsa)
 	}
 
 	def dispatch void createFiles(EObject o, IFileSystemAccess fsa){}
