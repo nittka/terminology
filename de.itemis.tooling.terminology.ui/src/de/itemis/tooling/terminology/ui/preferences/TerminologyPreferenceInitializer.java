@@ -4,7 +4,8 @@ import javax.inject.Inject;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.xtext.builder.preferences.BuilderPreferenceAccess;
+
+import de.itemis.tooling.terminology.ui.generator.TerminologyGenerators;
 
 /**
  * Class used to initialize default preference values.
@@ -13,6 +14,8 @@ public class TerminologyPreferenceInitializer extends AbstractPreferenceInitiali
 
 	@Inject
 	IPreferenceStore store;
+	@Inject
+	TerminologyGenerators generators;
 
 	public void initializeDefaultPreferences() {
 		//folding preferences
@@ -27,6 +30,7 @@ public class TerminologyPreferenceInitializer extends AbstractPreferenceInitiali
 		store.setDefault(TerminologyPreferenceConstants.VALIDATION_MISSING_DEFINITION_KEY, "null");
 		store.setDefault(TerminologyPreferenceConstants.VALIDATION_MISSING_PREFTERM_KEY, "null");
 
-		store.setDefault(BuilderPreferenceAccess.PREF_AUTO_BUILDING,false);
+		//generators
+//		generators.applyDefaults(store);
 	}
 }

@@ -198,7 +198,7 @@
             point="org.eclipse.ui.preferencePages">
         <page
             category="de.itemis.tooling.terminology.Terminology"
-            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:de.itemis.tooling.terminology.ui.preferences.TerminologyBuilderPreferencePage"
             id="de.itemis.tooling.terminology.Terminology.compiler.preferencePage"
             name="Compiler">
             <keywordReference id="de.itemis.tooling.terminology.ui.keyword_Terminology"/>
@@ -208,7 +208,7 @@
             point="org.eclipse.ui.propertyPages">
         <page
             category="de.itemis.tooling.terminology.Terminology"
-            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:de.itemis.tooling.terminology.ui.preferences.TerminologyBuilderPreferencePage"
             id="de.itemis.tooling.terminology.Terminology.compiler.propertyPage"
             name="Compiler">
             <keywordReference id="de.itemis.tooling.terminology.ui.keyword_Terminology"/>

@@ -69,6 +69,7 @@ import de.itemis.tooling.terminology.ui.search.TerminologyEObjectSearch.Terminol
 /**
  * adapted from XtextEObjectSearchDialog
  */
+@SuppressWarnings("restriction")
 public class TerminologyEObjectSearchDialog extends ListDialog {
 
 	private static final String SETTINGS_SECTION = "Terminology_Search";

@@ -6,18 +6,11 @@ package de.itemis.tooling.terminology.generator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
-import org.eclipse.emf.ecore.EObject
-import de.itemis.tooling.terminology.terminology.SubjectEntries
 
 class TerminologyGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
+		//exists, so that there are no compile errors
 //		resource.contents.get(0).createFiles(fsa)
-	}
-
-	def dispatch void createFiles(EObject o, IFileSystemAccess fsa){}
-
-	def dispatch createFiles(SubjectEntries c, IFileSystemAccess fsa){
-		new TBXGenerator().generate(c,fsa)
 	}
 }

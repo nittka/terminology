@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="generator" name="Terminology Generator Participant" schema="schema/de_itemis_tooling_terminology_generator.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
@@ -10,8 +11,7 @@
        genModel = "de/itemis/tooling/terminology/Terminology.genmodel" /> 
 	
   </extension>
-
-
-
-
+  <extension point="de.itemis.tooling.terminology.generator">
+     <generator class="de.itemis.tooling.terminology.generator.TBXGenerator"/>
+  </extension>
 </plugin>

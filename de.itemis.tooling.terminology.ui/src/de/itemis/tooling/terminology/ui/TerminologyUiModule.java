@@ -6,6 +6,7 @@ package de.itemis.tooling.terminology.ui;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.formatting.IIndentationInformation;
+import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.actions.IActionContributor;
 import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
@@ -22,8 +23,10 @@ import com.google.inject.name.Names;
 import de.itemis.tooling.terminology.formatting.TerminologyIndentation;
 import de.itemis.tooling.terminology.ui.folding.TerminologyFoldingActionContributor;
 import de.itemis.tooling.terminology.ui.folding.TerminologyFoldingRegionProvider;
+import de.itemis.tooling.terminology.ui.generator.TerminologyUIGenerator;
 import de.itemis.tooling.terminology.ui.hover.TerminologyEObjectHoverProvider;
 import de.itemis.tooling.terminology.ui.outline.TerminologyOutlineSorter;
+import de.itemis.tooling.terminology.ui.preferences.TerminologyBuilderPreferenceInitializer;
 import de.itemis.tooling.terminology.ui.preferences.TerminologyPreferenceBasedValidationSeverityLevels;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologyHighlightingConfig;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologySemanticHighlighter;
@@ -53,6 +56,7 @@ public class TerminologyUiModule extends de.itemis.tooling.terminology.ui.Abstra
 
 	//Folding Start
 	@Override
+	@SuppressWarnings("restriction")
 	public void configureBracketMatchingAction(Binder binder) {
 		//actually we want to override the first binding only...
 		binder.bind(IActionContributor.class).annotatedWith(Names.named("foldingActionGroup")).to( //$NON-NLS-1$
@@ -95,5 +99,14 @@ public class TerminologyUiModule extends de.itemis.tooling.terminology.ui.Abstra
 	@Override
 	public Class<? extends IComparator> bindOutlineFilterAndSorter$IComparator() {
 		return TerminologyOutlineSorter.class;
+	}
+
+	@Override
+	public void configureBuilderPreferenceStoreInitializer(com.google.inject.Binder binder) {
+		binder.bind(org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer.class).annotatedWith(com.google.inject.name.Names.named("builderPreferenceInitializer")).to(TerminologyBuilderPreferenceInitializer.class);
+	}
+
+	public Class<? extends IGenerator> bindGenerator() {
+		return TerminologyUIGenerator.class;
 	}
 }

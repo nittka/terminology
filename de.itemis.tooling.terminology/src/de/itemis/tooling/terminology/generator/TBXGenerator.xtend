@@ -11,20 +11,29 @@ import de.itemis.tooling.terminology.terminology.SubjectEntries
 import de.itemis.tooling.terminology.terminology.Term
 import de.itemis.tooling.terminology.terminology.TermStatus
 import de.itemis.tooling.terminology.terminology.Terminology
+import java.text.SimpleDateFormat
 import java.util.ArrayList
+import java.util.Date
 import java.util.LinkedHashMap
 import java.util.List
 import java.util.Map
-import org.eclipse.xtext.generator.IFileSystemAccess
-import java.text.SimpleDateFormat
-import java.util.Date
 
-class TBXGenerator {
+class TBXGenerator extends TerminologyGeneratorParticipant {
+
+	override getDefaultFolder() {
+		"tbx";
+	}
+
+	override getDisplayName() {
+		"TBX Generator"
+	}
+
+	override getId() {
+		"default_tbx_generator"
+	}
 	
-	def  generate(SubjectEntries c, IFileSystemAccess fsa){
-		val folder=(c.subject.eContainer as Terminology).name+"_TBX/"
-		val name=folder+c.subject.name+".tbx"
-		fsa.generateFile(name, c.getContent)
+	override getFileContents(SubjectEntries entries) {
+		newArrayList(entries.subject.name+".tbx"->entries.content)
 	}
 
 	//TODO Header anpassen
