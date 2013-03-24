@@ -11,7 +11,4 @@
        genModel = "de/itemis/tooling/terminology/Terminology.genmodel" /> 
 	
   </extension>
-  <extension point="de.itemis.tooling.terminology.generator">
-     <generator class="de.itemis.tooling.terminology.generator.TBXGenerator"/>
-  </extension>
 </plugin>

@@ -1,4 +1,4 @@
-package de.itemis.tooling.terminology.generator
+package de.itemis.tooling.terminology.tbxexport
 
 import de.itemis.tooling.terminology.terminology.Author
 import de.itemis.tooling.terminology.terminology.Entry
@@ -17,21 +17,14 @@ import java.util.Date
 import java.util.LinkedHashMap
 import java.util.List
 import java.util.Map
+import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant
 
-class TBXGenerator extends TerminologyGeneratorParticipant {
+class TBXExporter extends TerminologyGeneratorParticipant {
 
-	override getDefaultFolder() {
-		"tbx";
+	public new() {
+		super("default_tbx_generator", "TBX Generator", "tbx")
 	}
 
-	override getDisplayName() {
-		"TBX Generator"
-	}
-
-	override getId() {
-		"default_tbx_generator"
-	}
-	
 	override getFileContents(SubjectEntries entries) {
 		newArrayList(entries.subject.name+".tbx"->entries.content)
 	}

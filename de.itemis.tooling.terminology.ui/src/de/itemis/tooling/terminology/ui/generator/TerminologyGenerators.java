@@ -8,14 +8,12 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
-
 import org.eclipse.xtext.builder.preferences.OptionsConfigurationBlock;
 import org.eclipse.xtext.ui.editor.preferences.PreferenceStoreAccessImpl;
 
 import com.google.common.collect.Lists;
 
 import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant;
-import de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory;
 
 @SuppressWarnings("restriction")
 public class TerminologyGenerators {
@@ -36,16 +34,15 @@ public class TerminologyGenerators {
 		}
 		if(generators==null){
 			generators=Lists.newArrayList();
-			TerminologyExecutableExtensionFactory factory=new TerminologyExecutableExtensionFactory();
+			//Injection does not really make sense as here only classes from the terminology plugin could be injected
+//			Injector injector = TerminologyActivator.getInstance().getInjector(TerminologyActivator.DE_ITEMIS_TOOLING_TERMINOLOGY_TERMINOLOGY);
 			IConfigurationElement[] configs = Platform.getExtensionRegistry().getConfigurationElementsFor("de.itemis.tooling.terminology.generator");
 			for (IConfigurationElement config : configs) {
-				String className=config.getAttribute("class");
 				try {
-					factory.setInitializationData(config, null, className);
-					TerminologyGeneratorParticipant generator=(TerminologyGeneratorParticipant)factory.create();
-					String folder=preferences.getString(generator.getId()+"_folder");
-					if(folder!=null){
-						generator.setFolder(folder);
+					TerminologyGeneratorParticipant generator = (TerminologyGeneratorParticipant)config.createExecutableExtension("class");
+//					injector.injectMembers(generator);
+					if(preferences.contains(generator.getId()+"_folder")){
+						generator.setFolder(preferences.getString(generator.getId()+"_folder"));
 					}else{
 						generator.setFolder(generator.getDefaultFolder());
 					}

@@ -10,8 +10,18 @@ import de.itemis.tooling.terminology.terminology.SubjectEntries;
 
 public abstract class TerminologyGeneratorParticipant {
 
+	private String id;
+	private String defaultFolder;
+	private String displayName;
 	private String folder;
 	private boolean active;
+
+	protected TerminologyGeneratorParticipant(String id, String displayName, String defaultFolder) {
+		this.id=id;
+		this.displayName=displayName;
+		this.defaultFolder=defaultFolder;
+		this.folder=defaultFolder;
+	}
 
 	/**
 	 * provide a list filename->content for the given catagory
@@ -24,17 +34,23 @@ public abstract class TerminologyGeneratorParticipant {
 	/**
 	 * default folder in which the files are placed
 	 * */
-	public abstract String getDefaultFolder();
+	public final String getDefaultFolder(){
+		return defaultFolder;
+	}
 
 	/**
 	 * Display name of the generator (shown in the complier preference page)
 	 * */
-	public abstract String getDisplayName();
+	public final String getDisplayName(){
+		return displayName;
+	}
 
 	/**
 	 * id of this generator
 	 * */
-	public abstract String getId();
+	public final String getId(){
+		return id;
+	}
 
 	public final void setFolder(String folder) {
 		this.folder = folder;
