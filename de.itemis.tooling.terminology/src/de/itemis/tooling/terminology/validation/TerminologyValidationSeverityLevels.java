@@ -24,4 +24,8 @@ public interface TerminologyValidationSeverityLevels {
 	 * entry definition is empty
 	 * */
 	Severity getMissingDefinition();
+	/**
+	 * entry references must be symmetric
+	 * */
+	Severity getEntryRefSymmetric();
 }

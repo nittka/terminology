@@ -12,7 +12,6 @@ import de.itemis.tooling.terminology.terminology.Term
 import de.itemis.tooling.terminology.terminology.Terminology
 import java.util.Map
 
-//TODO line break handling, possibly escaping
 class CsvExporter extends TerminologyGeneratorParticipant {
 
 	//number of columns depends on the number of terms per language, will be stored here
@@ -46,7 +45,7 @@ class CsvExporter extends TerminologyGeneratorParticipant {
 	'''
 	}
 
-	def termHeader(Language l)'''term_«l.id»;status;grammar;usage;products;customers'''
+	def termHeader(Language l)'''term_«l.name»;status;grammar;usage;products;customers'''
 
 	def content(Entry entry)'''«new EntryContent(entry,languageCount)»'''
 
@@ -74,7 +73,7 @@ class EntryContent{
 
 	override toString(){
 		newArrayList(
-			entry.id,
+			entry.name,
 			fromNullable(entry.meta.status),
 			fromNullable(entry.meta.created),
 			fromNullable(entry.meta.createdAuthor),
@@ -103,7 +102,7 @@ class EntryContent{
 		newArrayList(
 			t.name,
 			t.status.name,
-			t.gr.id,
+			t.gr.name,
 			t.usage.fromNullable,
 			t.products.fromNullable,
 			t.customers.fromNullable
@@ -114,12 +113,22 @@ class EntryContent{
 		switch o {
 			case o==null:""
 			Iterable : o.map[Object it|fromNullable].join(', ')
-			Author : o.id
+			Author : o.name
 			Product : o.name
 			Customer :o.name
-			Entry :o.id
-			Status: o.id
-			default: o.toString.replaceAll(";",",")
+			Entry :o.name
+			Status: o.name
+			default: {
+				val string=o.toString
+				//TODO potential for optimization
+				//will fail if iterable contains elements with characters to be escaped
+				//which is currently not the case
+				if(string.indexOf(';')>=0 || string.indexOf('\n')>=0){
+					'''"«string»"'''
+				}else{
+					string
+				}
+			}
 		}
 	}
 }

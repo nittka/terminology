@@ -95,7 +95,8 @@ public class TerminologyXtextEditor extends XtextEditor{
 		String[] superPages = super.collectContextMenuPreferencePages();
 		String[] xturtlePages = new String[] {
 				getLanguageName() + ".folding",
-				getLanguageName() + ".validation"
+				getLanguageName() + ".validation",
+				getLanguageName() + ".refactoring"
 				};
 		return ObjectArrays.concat(superPages, xturtlePages, String.class);
 	}

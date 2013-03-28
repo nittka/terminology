@@ -76,11 +76,19 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 		</refObject>
 	'''
 
+	def firstTermString(Entry e){
+		val sortedTerms=e.terms.sortBy[status.value]
+		if (sortedTerms.size>0) sortedTerms.head.name else ""
+	}
+
 	def dispatch CharSequence getContent(Entry e)'''
-		<termEntry id="«e.id»">
+		<termEntry id="«e.name»">
 			«e.definitionContent»
 			<admin type="elementWorkingStatus">«e.meta.status.localize»</admin>
 			<descrip type="subjectField">«(e.eContainer as SubjectEntries).subject.name»</descrip>
+			«FOR related:e.relatedEntries»
+				<descrip type"relatedConcept" target="«related.name»">«related.firstTermString»</descrip> 
+			«ENDFOR»
 			<transacGrp>
 				<transac type="transactionType">origination</transac>
 				<transacNote type="responsibility" target="«e.meta.createdAuthor.backMatter.toId»">«e.meta.createdAuthor.backMatter.toSimpleId»</transacNote>
@@ -111,7 +119,7 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 	def CharSequence getLanguageSets(Entry e){
 		var Map<String, List<CharSequence>> setMap=new LinkedHashMap<String, List<CharSequence>>()
 		for(Term b:e.terms){
-			val language=b.language.id
+			val language=b.language.name
 			if(!setMap.containsKey(language)){
 				setMap.put(language,new ArrayList)
 			}
@@ -146,6 +154,12 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 			«IF b.usage.hasContent»
 				<termNote type="usageNote">«b.usage»</termNote>
 			«ENDIF»
+			«FOR product:b.products»
+				<admin type="productSubset">«product.name»</admin>
+			«ENDFOR»
+			«FOR customer:b.customers»
+				<admin type="customerSubset">«customer.name»</admin>
+			«ENDFOR»
 		</tig>	'''
 
 	def localize(Pos w){
@@ -223,7 +237,7 @@ class BackMatter{
 	}
 
 	def String toSimpleId(){
-		author.id
+		author.name
 	}
 
 	def String displayString(){

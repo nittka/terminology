@@ -28,6 +28,7 @@ public class TerminologyValidationPreferencePage extends FieldEditorPreferencePa
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_UNIQUE_ENTRY_KEY, "unique entry id per terminology",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_UNIQUE_TERM_KEY, "duplicate term per terminology",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_MISSING_DEFINITION_KEY, "missing definition",otherErrors, getFieldEditorParent()));
+		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_ENTRY_REF_SYMMETRIC_KEY, "missing inverse entry reference",otherErrors, getFieldEditorParent()));
 	}
 	public void init(IWorkbench workbench) {}
 }

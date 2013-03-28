@@ -50,6 +50,6 @@ public class TerminologyNameProvider extends
 	}
 
 	QualifiedName qualifiedName(final Entry entry) {
-		return getCategoryName(entry).append(Optional.fromNullable(entry.getId()).or(""));
+		return getCategoryName(entry).append(Optional.fromNullable(entry.getName()).or(""));
 	}
 }

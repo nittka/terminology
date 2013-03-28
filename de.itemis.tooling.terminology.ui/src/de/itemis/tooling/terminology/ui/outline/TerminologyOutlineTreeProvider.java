@@ -54,7 +54,7 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	void createLanguageNodes(IOutlineNode parent, final SubjectEntries entries, final EList<Language> languages){
 		for (final Language language : languages) {
-			EObjectNode ln = new EObjectNode(entries, parent,null,language.getId(),false) {
+			EObjectNode ln = new EObjectNode(entries, parent,null,language.getName(),false) {
 				boolean created=false;
 				@Override
 				public List<IOutlineNode> getChildren() {

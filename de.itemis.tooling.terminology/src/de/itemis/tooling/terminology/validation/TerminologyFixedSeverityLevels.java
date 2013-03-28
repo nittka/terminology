@@ -20,4 +20,7 @@ public class TerminologyFixedSeverityLevels implements
 	public Severity getMissingDefinition() {
 		return null;
 	}
+	public Severity getEntryRefSymmetric() {
+		return null;
+	}
 }

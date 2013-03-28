@@ -9,6 +9,8 @@ import de.itemis.tooling.terminology.terminology.TermStatus
 import de.itemis.tooling.terminology.terminology.Terminology
 import java.util.List
 import java.util.Map
+import java.text.Collator
+import java.util.Locale
 
 //TODO escaping
 class WikiExporter extends TerminologyGeneratorParticipant {
@@ -25,15 +27,21 @@ class WikiExporter extends TerminologyGeneratorParticipant {
 	}
 
 	def CharSequence content(Language l, SubjectEntries entries)'''
-		||Benennung||weitere Benennungen «l.id»||«languages.filter[it!=l].map["Benennungen "+it.id].join("||")»||
+		||Benennung||weitere Benennungen «l.name»||«languages.filter[it!=l].map["Benennungen "+it.name].join("||")»||
 		«FOR Entry e:sortedEntries(l,entries)»
 			«e.getLine(l)»
 		«ENDFOR»
 	'''
 
+	val sorter=Collator::getInstance(Locale::GERMANY)
 	def List<Entry> sortedEntries(Language l, SubjectEntries entries){
 		val filtered=entries.entries.filter[it.showEntry(l)]
-		filtered.sortBy[terms.findFirst[preferredForLanguage(l)].name]
+		//TODO in case of performance issues optimise here
+		filtered.sort[Entry e1, Entry e2| 
+			sorter.compare(
+				e1.terms.findFirst[preferredForLanguage(l)].name, 
+				e2.terms.findFirst[preferredForLanguage(l)].name
+			)]
 	}
 
 	def boolean showEntry(Entry e,Language l){

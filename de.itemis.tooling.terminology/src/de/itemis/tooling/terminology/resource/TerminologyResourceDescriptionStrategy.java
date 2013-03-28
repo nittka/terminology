@@ -20,8 +20,8 @@ public class TerminologyResourceDescriptionStrategy extends
 		DefaultResourceDescriptionStrategy {
 
 	@Inject
-	
 	IResourceScopeCache cache;
+
 	@Override
 	public boolean createEObjectDescriptions(EObject eObject,
 			IAcceptor<IEObjectDescription> acceptor) {
@@ -65,7 +65,6 @@ public class TerminologyResourceDescriptionStrategy extends
 		if(term.getUsage()!=null &&term.getUsage().length()>0){
 			result.put("sem", term.getUsage());
 		}
-		//TODO customer/products
 		return result;
 	}
 }

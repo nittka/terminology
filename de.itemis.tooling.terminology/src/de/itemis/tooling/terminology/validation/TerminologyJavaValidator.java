@@ -60,7 +60,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		if(level!=null){
 			String definition=entry.getDefinition();
 			if(definition==null ||definition.trim().length()==0){
-				createError(level, "missing definition", TerminologyPackage.Literals.ENTRY__ID);
+				createError(level, "missing definition", TerminologyPackage.Literals.ENTRY__NAME);
 			}
 		}
 	}
@@ -99,10 +99,10 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		if(!languages.isEmpty() &&levelMissing!=null){
 			String list=Joiner.on(", ").join(Collections2.transform(languages, new Function<Language, String>() {
 				public String apply(Language s){
-					return s.getId();
+					return s.getName();
 				}
 			}));
-			createError(levelMissing, "missing preferred term for the following languages: "+list, TerminologyPackage.Literals.ENTRY__ID);
+			createError(levelMissing, "missing preferred term for the following languages: "+list, TerminologyPackage.Literals.ENTRY__NAME);
 		}
 	}
 
@@ -124,11 +124,24 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		Severity level=levels.getUniqueEntryIdLevel();
 		if(level!=null){
 			SubjectEntries entries=getEntries(entry);
-			if(getDuplicate(entries, TerminologyPackage.Literals.ENTRY).contains(entry.getId())){
-				createError(level, "entry id not unique: "+entry.getId(), TerminologyPackage.Literals.ENTRY__ID);
+			if(getDuplicate(entries, TerminologyPackage.Literals.ENTRY).contains(entry.getName())){
+				createError(level, "entry id not unique: "+entry.getName(), TerminologyPackage.Literals.ENTRY__NAME);
 			}
 		}
 	}
+
+	@Check
+	public void inverseEntryReference(Entry entry) {
+		Severity level=levels.getEntryRefSymmetric();
+		if(level!=null){
+			for (Entry referenced : entry.getRelatedEntries()) {
+				if(!referenced.getRelatedEntries().contains(entry)){
+					createError(level, "referenced entry does refence this one"+entry.getName(), TerminologyPackage.Literals.ENTRY__RELATED_ENTRIES, entry.getRelatedEntries().indexOf(referenced));
+				}
+			}
+		}
+	}
+
 
 	@Check
 	public void uniqueTerm(Term term) {
@@ -235,6 +248,25 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 			break;
 		}
 	}
+	private void createError(Severity s, String errorMEssage, EStructuralFeature feature, int index){
+		if(s==null){
+			return;
+		}
+		switch (s) {
+		case ERROR:
+			error(errorMEssage, feature,index);
+			break;
+		case WARNING:
+			warning(errorMEssage, feature,index);
+			break;
+		case INFO:
+			info(errorMEssage, feature,index);
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void createError(Severity s, EObject source, String errorMEssage, EStructuralFeature feature){
 		if(s==null){
 			return;

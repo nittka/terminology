@@ -14,11 +14,11 @@ Terminology:
 		("Products" products+=Product(','products+=Product)*)?
 		("Customers" customers+=Customer(','customers+=Customer)*)?
 ;
-Status: id=ID displayName=STRING status=EntryStatus;
+Status: name=ID displayName=STRING status=EntryStatus;
 Subject:name=ID displayName=STRING;
-Language:id=ID;
-Gr:id=ID displayName=STRING pos=Pos gender=Gender? number=GrNumber?;
-Author:id=ID displayName=STRING;
+Language:name=ID;
+Gr:name=ID displayName=STRING pos=Pos gender=Gender? number=GrNumber?;
+Author:name=ID displayName=STRING;
 Product:name=ID displayName=STRING;
 Customer:name=ID displayName=STRING;
 Datum hidden(): INT'-'INT'-'INT;
@@ -33,7 +33,7 @@ Entry:
 		missingPreferredTermLangage+=[Language](','missingPreferredTermLangage+=[Language])*
 	')'
 	)?
-	"Entry" id=ID '{'
+	"Entry" name=ID '{'
 		feedback=Feedback?
 		meta=MetaData
 		"Definition" definition=STRING
@@ -62,6 +62,10 @@ Term:
 		("Products" products+=[Product](','products+=[Product])*)?
 		("Customers" customers+=[Customer](','customers+=[Customer])*)?
 ;
+
+terminal STRING	: 
+			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'\\') | !('\\'|'"') )* '"' 
+		; 
 
 enum EntryStatus:unfinished|_OK|consolidated|archive|imported|exported;
 enum TermStatus: preferred|permitted|superseded|rejected;

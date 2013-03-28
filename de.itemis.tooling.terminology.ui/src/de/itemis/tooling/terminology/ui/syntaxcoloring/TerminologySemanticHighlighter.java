@@ -1,7 +1,10 @@
 package de.itemis.tooling.terminology.ui.syntaxcoloring;
 
+import java.util.List;
+
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.XtextResource;
@@ -40,13 +43,26 @@ public class TerminologySemanticHighlighter implements
 		if(term.getStatus()==TermStatus.PREFERRED){
 			id=TerminologyHighlightingConfig.PREFERRED_TERM;
 		}
-		INode node = NodeModelUtils.findNodesForFeature(term, TerminologyPackage.Literals.TERM__NAME).get(0);
-		acceptor.addPosition(node.getOffset(), node.getLength(), id);
+		INode node = getNode(term, TerminologyPackage.Literals.TERM__NAME);
+		if(node!=null){
+			acceptor.addPosition(node.getOffset(), node.getLength(), id);
+		}
 	}
 
 	private void highlightDefinition(Entry entry,
 			IHighlightedPositionAcceptor acceptor) {
-		INode node = NodeModelUtils.findNodesForFeature(entry, TerminologyPackage.Literals.ENTRY__DEFINITION).get(0);
-		acceptor.addPosition(node.getOffset(), node.getLength(), TerminologyHighlightingConfig.DEFINITION);
+		INode node = getNode(entry, TerminologyPackage.Literals.ENTRY__DEFINITION);
+		if(node!=null){
+			acceptor.addPosition(node.getOffset(), node.getLength(), TerminologyHighlightingConfig.DEFINITION);
+		}
+	}
+
+	private INode getNode(EObject o, EStructuralFeature f){
+		List<INode> candidates = NodeModelUtils.findNodesForFeature(o, f);
+		if(candidates.size()>0){
+			return candidates.get(0);
+		}else{
+			return null;
+		}
 	}
 }

@@ -14,7 +14,6 @@ import com.google.common.base.Function;
 
 import de.itemis.tooling.terminology.terminology.Author;
 import de.itemis.tooling.terminology.terminology.Customer;
-import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Gr;
 import de.itemis.tooling.terminology.terminology.Language;
 import de.itemis.tooling.terminology.terminology.Product;
@@ -38,62 +37,38 @@ public class TerminologyScopeProvider extends AbstractDeclarativeScopeProvider {
 		EList<Status> status = getTerminology(entries).getStatus();
 		return Scopes.scopeFor(status, new Function<Status, QualifiedName>() {
 			public QualifiedName apply(Status s){
-				return QualifiedName.create(s.getId());
+				return QualifiedName.create(s.getName());
 			}
 		}, IScope.NULLSCOPE);
 	}
 
 	public IScope scope_Term_language(SubjectEntries entries, EReference ref){
 		EList<Language> languages = getTerminology(entries).getLanguages();
-		return Scopes.scopeFor(languages, new Function<Language, QualifiedName>() {
-			public QualifiedName apply(Language s){
-				return QualifiedName.create(s.getId());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(languages);
 	}
 
 	public IScope scope_Entry_missingPreferredTermLangage(SubjectEntries entries, EReference ref){
 		EList<Language> languages = getTerminology(entries).getLanguages();
-		return Scopes.scopeFor(languages, new Function<Language, QualifiedName>() {
-			public QualifiedName apply(Language s){
-				return QualifiedName.create(s.getId());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(languages);
 	}
 
 	public IScope scope_Entry_relatedEntries(SubjectEntries entries, EReference ref){
-		return Scopes.scopeFor(entries.getEntries(), new Function<Entry, QualifiedName>() {
-			public QualifiedName apply(Entry s){
-				return QualifiedName.create(s.getId());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(entries.getEntries());
 	}
 
 	public IScope scope_Term_gr(SubjectEntries entries, EReference ref){
 		EList<Gr> grs = getTerminology(entries).getGrs();
-		return Scopes.scopeFor(grs, new Function<Gr, QualifiedName>() {
-			public QualifiedName apply(Gr s){
-				return QualifiedName.create(s.getId());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(grs);
 	}
 
 	public IScope scope_Term_customers(SubjectEntries entries, EReference ref){
 		EList<Customer> customers = getTerminology(entries).getCustomers();
-		return Scopes.scopeFor(customers, new Function<Customer, QualifiedName>() {
-			public QualifiedName apply(Customer s){
-				return QualifiedName.create(s.getName());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(customers);
 	}
 
 	public IScope scope_Term_products(SubjectEntries entries, EReference ref){
 		EList<Product> products = getTerminology(entries).getProducts();
-		return Scopes.scopeFor(products, new Function<Product, QualifiedName>() {
-			public QualifiedName apply(Product s){
-				return QualifiedName.create(s.getName());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(products);
 	}
 
 	public IScope scope_MetaData_createdAuthor(SubjectEntries entries, EReference ref){
@@ -106,10 +81,6 @@ public class TerminologyScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	private IScope getAuthors(SubjectEntries entries) {
 		EList<Author> authors = getTerminology(entries).getAuthors();
-		return Scopes.scopeFor(authors, new Function<Author, QualifiedName>() {
-			public QualifiedName apply(Author s){
-				return QualifiedName.create(s.getId());
-			}
-		}, IScope.NULLSCOPE);
+		return Scopes.scopeFor(authors);
 	}
 }
