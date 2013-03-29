@@ -95,8 +95,9 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	private IURIEditorOpener uriOpener;
 
 	private Button definitionControl;
-
 	private Button usageControl;
+	private Button useCustomerProductsControl;
+
 	private Map<TermStatus, Button> statusControls;
 	private Map<IEObjectDescription, Button> productControls;
 	private Map<IEObjectDescription, Button> customerControls;
@@ -289,6 +290,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		IDialogSettings settings = getDialogSettings();
 		settings.put("definition", definitionControl.getSelection());
 		settings.put("usage", usageControl.getSelection());
+		settings.put("enableCPsettings", useCustomerProductsControl.getSelection());
 		for (TermStatus status : TermStatus.values()) {
 			settings.put(status.toString(), statusControls.get(status).getSelection());
 		}
@@ -374,7 +376,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 
 	//TODO checkbox table viewer, 2 columns
 	private void initCustomersProductsSettings(Composite parent, SelectionAdapter selectionListener){
-		ExpandableComposite exComposite = createStyleSection(parent, "products and customers", 3);
+		ExpandableComposite exComposite = createStyleSection(parent, "product/customer settings", 3);
 		Composite composite=new Composite(exComposite, SWT.NONE);
 		exComposite.setClient(composite);
 		composite.setLayout(parent.getLayout());
@@ -425,15 +427,26 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	}
 
 	private void initSearchScopeSettings(Composite parent, SelectionAdapter selectionListener){
-		ExpandableComposite exComposite = createStyleSection(parent, "search parameters", 3);
+		ExpandableComposite exComposite = createStyleSection(parent, "general settings", 3);
 		Composite composite=new Composite(exComposite, SWT.NONE);
 		exComposite.setClient(composite);
 		composite.setLayout(parent.getLayout());
 
-		Label searchIn=new Label(composite, SWT.NONE);
+		Composite leftRight=new Composite(composite, SWT.NONE);
+		GridLayout leftRightLayout=new GridLayout(2, false);
+		leftRightLayout.marginWidth=0;
+		leftRight.setLayout(leftRightLayout);
+
+		//left
+		Label searchIn=new Label(leftRight, SWT.NONE);
 		searchIn.setText("Also search in:");
 
-		Composite checkboxComposite = new Composite(composite, SWT.NONE);
+		//right
+		Label useCustomerProductSettings=new Label(leftRight, SWT.NONE);
+		useCustomerProductSettings.setText("customer/product settings:");
+
+		//left
+		Composite checkboxComposite = new Composite(leftRight, SWT.NONE);
 		setDefaultGridData(checkboxComposite);
 		GridLayout checkboxCompositeLayout = new GridLayout(2, true);
 		checkboxCompositeLayout.marginWidth = 0;
@@ -446,13 +459,19 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		usageControl.setText("Usage");
 		usageControl.addSelectionListener(selectionListener);
 
-		Label searchStatus=new Label(composite, SWT.NONE);
+		//right
+		useCustomerProductsControl=new Button(leftRight, SWT.CHECK);
+		useCustomerProductsControl.setText("enabled");
+		useCustomerProductsControl.addSelectionListener(selectionListener);
+
+		Label searchStatus=new Label(leftRight, SWT.NONE);
 		searchStatus.setText("Terms with status:");
 
 		Composite checkboxComposite2 = new Composite(composite, SWT.NONE);
 		setDefaultGridData(checkboxComposite2);
 		GridLayout checkboxComposite2Layout = new GridLayout(5, true);
 		checkboxComposite2Layout.marginWidth = 0;
+		checkboxComposite2Layout.marginTop=-7;
 		checkboxComposite2.setLayout(checkboxComposite2Layout);
 
 		statusControls=new LinkedHashMap<TermStatus, Button>();
@@ -491,6 +510,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	private void readSettings() {
 		definitionControl.setSelection(getDialogSettings().getBoolean("definition"));
 		usageControl.setSelection(getDialogSettings().getBoolean("usage"));
+		useCustomerProductsControl.setSelection(getDialogSettings().getBoolean("enableCPsettings"));
 		for (TermStatus status : TermStatus.values()) {
 			statusControls.get(status).setSelection(getDialogSettings().getBoolean(status.toString()));
 		}
@@ -537,9 +557,12 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	 * @since 2.0
 	 */
 	protected void applyFilter() {
+		boolean useCustomerProductSettings = useCustomerProductsControl.getSelection();
+		setProductCustomerSettingsEnabled(useCustomerProductSettings);
 		TerminologySearchPattern pattern=new TerminologySearchPattern();
 		pattern.setTextPattern(searchControl.getText());
 		pattern.setInDefinition(definitionControl.getSelection());
+		pattern.setUseCustomerProducts(useCustomerProductSettings);
 		pattern.setInUsage(usageControl.getSelection());
 		pattern.setStatus(statusControls);
 		pattern.setProducts(productControls);
@@ -549,6 +572,15 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 			Iterable<IEObjectDescription> matches = getSearchEngine().findMatches(pattern);
 			startSizeCalculation(matches);
 //		}
+	}
+
+	private void setProductCustomerSettingsEnabled(boolean enabled){
+		for (Control c : productControls.values()) {
+			c.setEnabled(enabled);
+		}
+		for (Control c : customerControls.values()) {
+			c.setEnabled(enabled);
+		}
 	}
 
 	public void updateMatches(final Collection<IEObjectDescription> matches, final boolean isFinished) {

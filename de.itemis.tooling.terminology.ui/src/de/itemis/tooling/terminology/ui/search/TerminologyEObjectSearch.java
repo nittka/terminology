@@ -37,6 +37,7 @@ class TerminologyEObjectSearch {
 		private Set<String> status=new HashSet<String>();
 		private Set<URI> products=Sets.newHashSet();
 		private Set<URI> customers=Sets.newHashSet();
+		private boolean useCustomerProducts;
 
 		public void setTextPattern(String textPattern) {
 			this.textPattern = textPattern;
@@ -54,6 +55,9 @@ class TerminologyEObjectSearch {
 					status.add(bstatus.toString());
 				}
 			}
+		}
+		public void setUseCustomerProducts(boolean useCustomerProducts) {
+			this.useCustomerProducts = useCustomerProducts;
 		}
 		public void setProducts(Map<IEObjectDescription, Button> productControls) {
 			initFromButtons(products, productControls);
@@ -86,12 +90,12 @@ class TerminologyEObjectSearch {
 			searchPattern.setPattern(pattern.textPattern);
 			final Set<URI> productRefs;
 			final Set<URI> customerRefs;
-			if(!pattern.products.isEmpty()){
+			if(pattern.useCustomerProducts && !pattern.products.isEmpty()){
 				productRefs=getReferences(pattern.products, TerminologyPackage.Literals.TERM__PRODUCTS);
 			}else{
 				productRefs=null;
 			}
-			if(!pattern.customers.isEmpty()){
+			if(pattern.useCustomerProducts && !pattern.customers.isEmpty()){
 				customerRefs=getReferences(pattern.customers, TerminologyPackage.Literals.TERM__CUSTOMERS);
 			}else{
 				customerRefs=null;
