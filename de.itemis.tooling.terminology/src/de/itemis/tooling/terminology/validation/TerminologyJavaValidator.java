@@ -45,6 +45,7 @@ import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 
 public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 
+	public static final String RELATED_ENTRY_SYMMETRIC="relatedEntrySymmetric";
 	@Inject
 	TerminologyValidationSeverityLevels levels;
 
@@ -136,7 +137,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		if(level!=null){
 			for (Entry referenced : entry.getRelatedEntries()) {
 				if(!referenced.getRelatedEntries().contains(entry)){
-					createError(level, "referenced entry does refence this one"+entry.getName(), TerminologyPackage.Literals.ENTRY__RELATED_ENTRIES, entry.getRelatedEntries().indexOf(referenced));
+					createError(level, entry, "related entry "+referenced.getName() +" does refence this one", TerminologyPackage.Literals.ENTRY__RELATED_ENTRIES, entry.getRelatedEntries().indexOf(referenced), RELATED_ENTRY_SYMMETRIC,entry.getName(),referenced.getName());
 				}
 			}
 		}
@@ -231,55 +232,37 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 	}
 
 	private void createError(Severity s, String errorMEssage, EStructuralFeature feature){
-		if(s==null){
-			return;
-		}
-		switch (s) {
-		case ERROR:
-			error(errorMEssage, feature);
-			break;
-		case WARNING:
-			warning(errorMEssage, feature);
-			break;
-		case INFO:
-			info(errorMEssage, feature);
-			break;
-		default:
-			break;
-		}
+		createError(s, getCurrentObject(), errorMEssage, feature,-1,(String)null);
 	}
-	private void createError(Severity s, String errorMEssage, EStructuralFeature feature, int index){
-		if(s==null){
-			return;
-		}
-		switch (s) {
-		case ERROR:
-			error(errorMEssage, feature,index);
-			break;
-		case WARNING:
-			warning(errorMEssage, feature,index);
-			break;
-		case INFO:
-			info(errorMEssage, feature,index);
-			break;
-		default:
-			break;
-		}
-	}
-
 	private void createError(Severity s, EObject source, String errorMEssage, EStructuralFeature feature){
+		createError(s, source, errorMEssage, feature,-1,(String)null);
+	}
+	private void createError(Severity s, EObject o, String errorMEssage, EStructuralFeature feature, int index, String ...issueData){
 		if(s==null){
 			return;
 		}
+		String code=null;
+		String[]data={};
+		//init code and data
+		if(issueData!=null&&issueData.length>0){
+			code=issueData[0];
+			if(issueData.length>1){
+				data=new String[issueData.length-1];
+				//TODO there is definetly some library for that
+				for(int i=0;i<data.length;i++){
+					data[i]=issueData[i+1];
+				}
+			}
+		}
 		switch (s) {
 		case ERROR:
-			error(errorMEssage, source, feature,-1);
+			error(errorMEssage, o, feature,index, code, data);
 			break;
 		case WARNING:
-			warning(errorMEssage, source, feature,-1);
+			warning(errorMEssage, o, feature,index, code, data);
 			break;
 		case INFO:
-			info(errorMEssage, source, feature,-1);
+			info(errorMEssage, o, feature,index, code, data);
 			break;
 		default:
 			break;
