@@ -1,10 +1,12 @@
 package de.itemis.tooling.terminology.ui.search;
 
+import java.text.Collator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -23,6 +25,8 @@ public class IteratorJob extends Job {
 	private List<IEObjectDescription> matches;
 
 	private final TerminologyEObjectSearchDialog dialog;
+
+	private Collator sorter=Collator.getInstance(Locale.GERMANY);
 
 	public IteratorJob(TerminologyEObjectSearchDialog dialog) {
 		super("Counting");
@@ -60,7 +64,7 @@ public class IteratorJob extends Job {
 		List<IEObjectDescription> result = Lists.newArrayList(matches);
 		Collections.sort(result, new Comparator<IEObjectDescription>() {
 			public int compare(IEObjectDescription o1, IEObjectDescription o2) {
-				return o1.getQualifiedName().getLastSegment().compareToIgnoreCase(o2.getQualifiedName().getLastSegment());
+				return sorter.compare(o1.getQualifiedName().getLastSegment(), o2.getQualifiedName().getLastSegment());
 			}
 		});
 		return result;

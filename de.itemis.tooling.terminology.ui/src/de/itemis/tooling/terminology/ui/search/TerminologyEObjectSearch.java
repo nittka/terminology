@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
@@ -59,18 +58,17 @@ class TerminologyEObjectSearch {
 		public void setUseCustomerProducts(boolean useCustomerProducts) {
 			this.useCustomerProducts = useCustomerProducts;
 		}
-		public void setProducts(Map<IEObjectDescription, Button> productControls) {
-			initFromButtons(products, productControls);
+		public void setProducts(IEObjectDescription[] checked) {
+			initFromArray(products, checked);
 		}
-		public void setCustomers(Map<IEObjectDescription, Button> customerControls){
-			initFromButtons(customers, customerControls);
+		public void setCustomers(IEObjectDescription[] checked){
+			initFromArray(customers, checked);
 		}
-		private void initFromButtons(Set<URI> set, Map<IEObjectDescription, Button> controls){
+
+		private void initFromArray(Set<URI> set, IEObjectDescription[] checked){
 			set.clear();
-			for (Entry<IEObjectDescription, Button> entry : controls.entrySet()) {
-				if(entry.getValue().getSelection()){
-					set.add(entry.getKey().getEObjectURI());
-				}
+			for (IEObjectDescription desc : checked) {
+				set.add(desc.getEObjectURI());
 			}
 		}
 	}
