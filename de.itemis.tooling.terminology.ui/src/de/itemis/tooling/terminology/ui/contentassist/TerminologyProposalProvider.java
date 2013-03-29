@@ -30,22 +30,24 @@ public class TerminologyProposalProvider extends AbstractTerminologyProposalProv
 		SubjectEntries entries=(SubjectEntries) EcoreUtil2.getRootContainer(model);
 		for (Entry entry : entries.getEntries()) {
 			for (Term term : entry.getTerms()) {
+				final String termNameLower =term.getName().toLowerCase();
+				PrefixMatcher matcher = new PrefixMatcher() {
+					@Override
+					public boolean isCandidateMatchingPrefix(String name, String prefix) {
+						return termNameLower.startsWith(prefix.toLowerCase())||name.startsWith(prefix);
+					}
+				};
+				ContentAssistContext newContext = context.copy().setMatcher(matcher).toContext();
+
 				ICompletionProposal result = null;
 				StyledString displayString = getStyledDisplayString(term,term.getName(),term.getName());
 				Image image = getImage(term);
-				result = createCompletionProposal(entry.getName(), displayString, image, context);
+				result = createCompletionProposal(entry.getName(), displayString, image, newContext);
 				if (result instanceof ConfigurableCompletionProposal) {
 					ConfigurableCompletionProposal typed = (ConfigurableCompletionProposal) result;
 					typed.setAdditionalProposalInfo(entry);
 					typed.setHover(getHover());
-					//check 
-					final String termNameLower =term.getName().toLowerCase();
-					typed.setMatcher(new PrefixMatcher() {
-						@Override
-						public boolean isCandidateMatchingPrefix(String name, String prefix) {
-							return termNameLower.startsWith(prefix.toLowerCase())||name.startsWith(prefix);
-						}
-					});
+					typed.setMatcher(matcher);
 				}
 				getPriorityHelper().adjustCrossReferencePriority(result, context.getPrefix());
 				acceptor.accept(result);

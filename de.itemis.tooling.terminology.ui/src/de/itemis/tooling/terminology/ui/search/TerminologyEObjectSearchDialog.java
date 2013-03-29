@@ -443,7 +443,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 
 		//right
 		Label useCustomerProductSettings=new Label(leftRight, SWT.NONE);
-		useCustomerProductSettings.setText("customer/product settings:");
+		useCustomerProductSettings.setText("Customer/product settings:");
 
 		//left
 		Composite checkboxComposite = new Composite(leftRight, SWT.NONE);
