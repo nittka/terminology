@@ -1,0 +1,58 @@
+//define a new terminology
+//elements of a definition usually have an ID by which they are referenced
+//and a descriptive text (String in double quotes) used in hovers, exports etc.
+Terminology Example "Example"
+Definitions
+
+  //sub categories of the terminology
+  //the idea is that there is one file per category
+  Subjects
+    ctrl "UI controls",
+    app "general application concepts"
+
+  //status of an entry with ID used in the terminology
+  //files, descriptive text and corresponding "TBX"-status
+  Status
+    OK "OK" _OK,
+    todo "unfinished" unfinished
+
+  //languages for which a term may be defined
+  //note that currently have only IDs, they are 
+  //not interpreted as Locales in any way!
+  Languages de, en
+
+  //grammatical information for a term
+  //after the descriptive text you define
+  //the corresponding tbx info (part of speech, gender, number)
+  Gr
+    n "neuter noun" _noun neuter singular,
+    f "feminine noun" _noun feminine singular,
+    m "masculine noun" _noun masculine singular,
+    npl "neuter plural noun" _noun neuter plural,
+    fpl "feminine plural noun" _noun feminine plural,
+    mpl "masculine plural noun" _noun masculine plural,
+    noun "noun" _noun,
+    noun_pl "plural noun" _noun plural,
+    adj "adjective" adjective,
+    adv "adverb" adverb,
+    vt "transitive verb" transitive_verb,
+    vi "intransitive verb" intransitive_verb
+
+  //authors usable in the entrie's meta data
+  //currently no additional typed information is supported
+  //(such as e-Mail...)
+  Authors
+    brm "Mary Brown",
+    smj "John Smith"
+
+  //terms may be product specific, here the possible
+  //products may be defined
+  Products
+    web "Browser",
+    office "Office application"
+
+  //terms may be customer specific, here the possible
+  //customers may be defined
+  Customers
+    inhouseOnly "for internal communication only",
+    c1 "customer with own non-standardized terminology"

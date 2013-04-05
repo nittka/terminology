@@ -11,8 +11,10 @@ import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider;
 import com.google.common.collect.ImmutableList;
 
 import de.itemis.tooling.terminology.terminology.Author;
+import de.itemis.tooling.terminology.terminology.Customer;
 import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Gr;
+import de.itemis.tooling.terminology.terminology.Product;
 import de.itemis.tooling.terminology.terminology.Status;
 import de.itemis.tooling.terminology.terminology.Subject;
 import de.itemis.tooling.terminology.terminology.Term;
@@ -64,6 +66,10 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 			return ((Status) o).getDisplayName();
 		} else if(o instanceof Author){
 			return ((Author) o).getDisplayName();
+		} else if(o instanceof Customer){
+			return ((Customer) o).getDisplayName();
+		} else if(o instanceof Product){
+			return ((Product) o).getDisplayName();
 		}
 		return null;
 	}
@@ -81,7 +87,16 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 //		return resultString.replaceAll("\\\\\"", "\"").replaceAll("\n", "</br>");
 //	}
 
-	private static final List<EClass> hoverClasses=ImmutableList.of(TerminologyPackage.Literals.TERM,TerminologyPackage.Literals.AUTHOR, TerminologyPackage.Literals.SUBJECT, TerminologyPackage.Literals.STATUS, TerminologyPackage.Literals.GR, TerminologyPackage.Literals.ENTRY);
+	private static final List<EClass> hoverClasses=ImmutableList.of(
+			TerminologyPackage.Literals.TERM,
+			TerminologyPackage.Literals.AUTHOR,
+			TerminologyPackage.Literals.SUBJECT,
+			TerminologyPackage.Literals.STATUS,
+			TerminologyPackage.Literals.GR,
+			TerminologyPackage.Literals.ENTRY,
+			TerminologyPackage.Literals.PRODUCT,
+			TerminologyPackage.Literals.CUSTOMER
+		);
 	@Override
 	protected boolean hasHover(EObject o) {
 		EClass eClass = o.eClass();

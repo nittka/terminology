@@ -1,0 +1,62 @@
+//the entry list starts with the definition of the category, 
+//the entries belong to
+Subject Example.app
+
+//Each entry has a unique ID, data about its status and its
+//creators, a definition an optinal definition source 
+//and a list of terms
+Entry app0001 {
+  Metadata {
+    Status OK
+    created brm 2013-03-27
+    modified smj 2013-04-05
+  }
+  Definition "a placeholder for variable content in a serial letter"
+
+  //for each term you define its status, language and grammar information
+  //information about usage, products and customers are optional
+  Term "Seriendruckfeld"
+    Status preferred
+    Language de
+    Gr n
+    Products office
+  Term "MergeField"
+    Status permitted
+    Language de
+    Gr n
+    Products office
+    Customers inhouseOnly
+  Term "merge field"
+    Status preferred
+    Language en
+    Gr noun
+    Products office
+}
+
+Entry app0002 {
+  Metadata {
+    Status OK
+    created brm 2013-03-27
+  }
+  Definition
+  "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
+  Source "http://en.wikipedia.org/wiki/Bookmark_%28World_Wide_Web%29"
+  Term "Lesezeichen"
+    Status preferred
+    Language de
+    Gr n
+    Usage "~ für eine Website setzen"
+    Products web
+  Term "Favorit"
+    Status permitted
+    Language de
+    Gr m
+    Usage "~ eine Website als Favorit speichern"
+    Products web
+    Customers c1
+  Term "bookmark"
+    Status preferred
+    Language en
+    Gr noun
+    Products web
+}
