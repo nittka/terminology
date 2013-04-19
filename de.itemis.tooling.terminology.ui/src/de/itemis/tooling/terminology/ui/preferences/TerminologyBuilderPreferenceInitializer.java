@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2013 itemis AG (http://www.itemis.eu).
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package de.itemis.tooling.terminology.ui.preferences;
 
 import static org.eclipse.xtext.builder.EclipseOutputConfigurationProvider.*;
@@ -12,9 +19,11 @@ import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreAccess;
 import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer;
 import org.eclipse.xtext.ui.editor.preferences.PreferenceConstants;
 
+/**
+ * adapted from inner Initializer of {@Link org.eclipse.xtext.builder.preferences.BuilderPreferenceAccess} 
+ * in order to disable compiler by default
+ */
 @SuppressWarnings("restriction")
-//adapted from BuilderPreferenceAccess$Initializer in order to disable compiler
-//by default
 public class TerminologyBuilderPreferenceInitializer implements IPreferenceStoreInitializer {
 		private IOutputConfigurationProvider outputConfigurationProvider;
 

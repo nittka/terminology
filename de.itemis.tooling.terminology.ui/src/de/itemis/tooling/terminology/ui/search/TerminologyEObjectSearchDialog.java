@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2013 itemis AG (http://www.itemis.eu).
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package de.itemis.tooling.terminology.ui.search;
 
 import java.util.Collection;
@@ -64,7 +71,7 @@ import de.itemis.tooling.terminology.ui.internal.TerminologyActivator;
 import de.itemis.tooling.terminology.ui.search.TerminologyEObjectSearch.TerminologySearchPattern;
 
 /**
- * adapted from XtextEObjectSearchDialog
+ * adapted from {@Link org.eclipse.xtext.ui.search.XtextEObjectSearchDialog}
  */
 @SuppressWarnings("restriction")
 public class TerminologyEObjectSearchDialog extends ListDialog {
@@ -79,7 +86,7 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 
 	private Label searchStatusLabel;
 
-	private IteratorJob sizeCalculationJob;
+	private TerminologyIteratorJob sizeCalculationJob;
 
 	private Label matchingElementsLabel;
 
@@ -577,10 +584,10 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 				try {
 					sizeCalculationJob.join();
 				} catch (InterruptedException e) {
-					sizeCalculationJob = new IteratorJob(this);
+					sizeCalculationJob = new TerminologyIteratorJob(this);
 				}
 			} else {
-				sizeCalculationJob = new IteratorJob(this);
+				sizeCalculationJob = new TerminologyIteratorJob(this);
 			}
 			sizeCalculationJob.init(matches);
 			sizeCalculationJob.schedule();

@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2013 itemis AG (http://www.itemis.eu).
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package de.itemis.tooling.terminology.ui.search;
 
 import java.text.Collator;
@@ -16,7 +23,10 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 import com.google.common.collect.Lists;
 
-public class IteratorJob extends Job {
+/**
+ * copied and adapted from {@Link org.eclipse.xtext.ui.search.IteratorJob}
+ * */
+public class TerminologyIteratorJob extends Job {
 
 	private static final int TIME_THRESHOLD = 250;
 
@@ -28,7 +38,7 @@ public class IteratorJob extends Job {
 
 	private Collator sorter=Collator.getInstance(Locale.GERMANY);
 
-	public IteratorJob(TerminologyEObjectSearchDialog dialog) {
+	public TerminologyIteratorJob(TerminologyEObjectSearchDialog dialog) {
 		super("Counting");
 		this.dialog = dialog;
 		setSystem(true);
