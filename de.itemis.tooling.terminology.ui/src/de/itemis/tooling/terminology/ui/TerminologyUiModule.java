@@ -20,6 +20,7 @@ import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
 import org.eclipse.xtext.ui.editor.hover.IEObjectHoverProvider;
 import org.eclipse.xtext.ui.editor.outline.impl.OutlineFilterAndSorter.IComparator;
 import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.HighlightingReconciler;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.eclipse.xtext.ui.editor.templates.XtextTemplateContextType;
@@ -36,6 +37,7 @@ import de.itemis.tooling.terminology.ui.outline.TerminologyOutlineSorter;
 import de.itemis.tooling.terminology.ui.preferences.TerminologyBuilderPreferenceInitializer;
 import de.itemis.tooling.terminology.ui.preferences.TerminologyPreferenceBasedValidationSeverityLevels;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologyHighlightingConfig;
+import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologyHighlightingReconciler;
 import de.itemis.tooling.terminology.ui.syntaxcoloring.TerminologySemanticHighlighter;
 import de.itemis.tooling.terminology.ui.templates.TerminologyTemplateContextType;
 import de.itemis.tooling.terminology.ui.templates.TerminologyTemplateContextTypeRegistry;
@@ -115,5 +117,9 @@ public class TerminologyUiModule extends de.itemis.tooling.terminology.ui.Abstra
 
 	public Class<? extends IGenerator> bindGenerator() {
 		return TerminologyUIGenerator.class;
+	}
+
+	public Class<? extends HighlightingReconciler> bindHighlightingReconciler() {
+		return TerminologyHighlightingReconciler.class;
 	}
 }

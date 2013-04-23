@@ -81,14 +81,13 @@ class TerminologyFoldingActionGroup extends FoldingActionGroup {
 						Position position = model.getPosition(pa);
 						if(position instanceof TypedFoldedRegion && type==((TypedFoldedRegion) position).getType()){
 							if (!pa.isCollapsed()){
+								pa.markCollapsed();
 								toCollapse.add(pa);
 							}
 						}
 					}
 				}
-				for (Annotation annotation : toCollapse) {
-					model.collapse(annotation);
-				}
+				model.modifyAnnotations(null, null, toCollapse.toArray(new Annotation[0]));
 			}
 		};
 	}
@@ -97,6 +96,7 @@ class TerminologyFoldingActionGroup extends FoldingActionGroup {
 		super.update();
 		if(isEnabled()){
 			collapseMetadata.update();
+			collapseTerm.update();
 		}
 	}
 }
