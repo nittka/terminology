@@ -30,7 +30,7 @@ class WikiExporter extends TerminologyGeneratorParticipant {
 	
 	override getFileContents(SubjectEntries entries) {
 		languages=(entries.subject.eContainer as Terminology).languages
-		languages.map[entries.subject.name+"_"+id+".wiki"->content(entries)]
+		languages.map[entries.subject.name+"_"+name+".wiki"->content(entries)]
 	}
 
 	def CharSequence content(Language l, SubjectEntries entries)'''
