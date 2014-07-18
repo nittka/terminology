@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: de.itemis.tooling.terminology.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.itemis.tooling.terminology;visibility:=reexport,
- org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui;bundle-version="2.5.0",
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.xtext.ui.shared,
@@ -15,9 +15,9 @@ Require-Bundle: de.itemis.tooling.terminology;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.compare,
  org.eclipse.ui.forms;bundle-version="3.4.1",
- org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib;bundle-version="2.5.0",
  com.google.guava,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib;bundle-version="2.5.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.itemis.tooling.terminology.ui.contentassist,

@@ -7,25 +7,51 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.ui.generator
 
+import de.itemis.tooling.terminology.generator.SubjectEntriesSiblings
 import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant
 import de.itemis.tooling.terminology.terminology.SubjectEntries
 import de.itemis.tooling.terminology.terminology.Terminology
+import java.util.List
 import javax.inject.Inject
 import javax.inject.Provider
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 
 class TerminologyUIGenerator implements IGenerator {
 
 	@Inject
 	private Provider<TerminologyGenerators> generators;
+	@Inject
+	ResourceDescriptionsProvider index
+	@Inject
+	Provider<XtextResourceSet> sets
 
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-		resource.contents.get(0).createFiles(fsa)
+		val root=resource.contents.get(0)
+		if(root instanceof SubjectEntries){
+			addSiblingAdapter(root as SubjectEntries)
+		}
+		root.createFiles(fsa)
+	}
+
+	def void addSiblingAdapter(SubjectEntries root){
+		val terminology= root.subject.eContainer as Terminology
+		val termURI=terminology.eResource.URI
+		val descs=index.getResourceDescriptions(root.eResource)
+		val List<URI> siblings=newArrayList
+		descs.allResourceDescriptions.filter[referenceDescriptions.exists[targetEObjectUri.trimFragment.equals(termURI)]].forEach[
+			siblings.add(URI)
+		]
+		siblings.add(termURI)
+		val adapter=new SubjectEntriesSiblings(sets.get(), siblings)
+		root.eAdapters.add(adapter)
 	}
 
 	def dispatch void createFiles(EObject o, IFileSystemAccess fsa){}

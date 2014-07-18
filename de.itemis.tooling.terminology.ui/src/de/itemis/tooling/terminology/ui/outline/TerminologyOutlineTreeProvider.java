@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode;
@@ -48,9 +49,9 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 			try {
 				languages = ((Terminology) entries.getSubject().eContainer()).getLanguages();
 			} catch (NullPointerException e) {
-				new AbstractOutlineNode(parentNode,null,"No outline available. Make sure,",true) {};
-				new AbstractOutlineNode(parentNode,null,"the project has the Xtext nature and",true) {};
-				new AbstractOutlineNode(parentNode,null,"start a clean build.",true) {};
+				new AbstractOutlineNode(parentNode,(Image)null,"No outline available. Make sure,",true) {};
+				new AbstractOutlineNode(parentNode,(Image)null,"the project has the Xtext nature and",true) {};
+				new AbstractOutlineNode(parentNode,(Image)null,"start a clean build.",true) {};
 				return;
 			}
 			createLanguageNodes(parentNode, entries, languages);
@@ -61,7 +62,7 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	void createLanguageNodes(IOutlineNode parent, final SubjectEntries entries, final EList<Language> languages){
 		for (final Language language : languages) {
-			EObjectNode ln = new EObjectNode(entries, parent,null,language.getName(),false) {
+			EObjectNode ln = new EObjectNode(entries, parent,(Image)null,language.getName(),false) {
 				boolean created=false;
 				@Override
 				public List<IOutlineNode> getChildren() {

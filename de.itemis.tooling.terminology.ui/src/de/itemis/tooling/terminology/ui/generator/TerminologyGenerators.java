@@ -15,8 +15,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.xtext.builder.preferences.OptionsConfigurationBlock;
 import org.eclipse.xtext.ui.editor.preferences.PreferenceStoreAccessImpl;
+import org.eclipse.xtext.ui.preferences.OptionsConfigurationBlock;
 
 import com.google.common.collect.Lists;
 
