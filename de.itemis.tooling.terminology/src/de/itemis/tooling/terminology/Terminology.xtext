@@ -21,6 +21,9 @@ Terminology:
 		("Products" products+=Product(','products+=Product)*)?
 		("Customers" customers+=Customer(','customers+=Customer)*)?
 ;
+
+WithNameAndDisplayName:Status|Subject|Gr|Author|Product|Customer;
+
 Status: name=ID displayName=STRING status=EntryStatus;
 Subject:name=ID displayName=STRING;
 Language:name=ID;

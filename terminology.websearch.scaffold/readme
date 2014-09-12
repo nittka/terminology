@@ -1,0 +1,19 @@
+This is a web site scaffold for presenting the data produced by the terminology json export.
+The page is designed for a single terminology.
+Place the two generated files (terms.html and terms.json) into the folder data replacing the example data.
+
+The web pages use resources from the following projects both of which are available under
+the MIT license (http://en.wikipedia.org/wiki/MIT_License):
+
+jQuery (license: https://jquery.org/license/, https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+https://jquery.org/
+
+filter.js (license: https://github.com/jiren/filter.js/blob/master/LICENSE)
+https://github.com/jiren/filter.js
+
+
+Some of the example entries are taken from the Microsoft Language Portal
+www.microsoft.com/language/
+
+page/index.html, page/style.css and page/filterjs/termsjs.js are adapted to the Terminology use case 
+from the examples provided at https://github.com/jiren/filter.js/tree/master/examples.

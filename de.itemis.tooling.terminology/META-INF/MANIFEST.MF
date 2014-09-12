@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology Language
 Bundle-Vendor: itemis AG 4+1
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0
 Bundle-SymbolicName: de.itemis.tooling.terminology; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.5.0";visibility:=reexport,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.4.0";visibility:=reexport,
  org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;bundle-version="1.0.4";resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,

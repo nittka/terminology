@@ -1,0 +1,13 @@
+*.class
+.DS_Store
+plugin.xml_gen
+bin/
+src-gen/
+xtend-gen/
+# Package Files #
+*.jar
+*.war
+*.ear
+#include plugins and features
+!plugins/*.jar
+!features/*.jar

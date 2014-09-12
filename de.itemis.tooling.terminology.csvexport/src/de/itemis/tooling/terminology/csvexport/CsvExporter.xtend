@@ -95,7 +95,7 @@ class EntryContent{
 
 	def private termEntries()'''«FOR language:count.keySet SEPARATOR ';'»«language.content»«ENDFOR»'''
 
-	def private content(Language l){
+	def private String content(Language l){
 		val result=newArrayList()
 		entry.terms.filter[language==l].forEach[result.add(it.content)]
 		//append empty entries until max size is reached
@@ -108,7 +108,7 @@ class EntryContent{
 	def private content(Term t){
 		newArrayList(
 			t.name,
-			t.status.name,
+			t.status.getName,
 			t.gr.name,
 			t.usage.fromNullable,
 			t.products.fromNullable,
@@ -116,10 +116,10 @@ class EntryContent{
 		).join(';')
 	}
 
-	def fromNullable(Object o){
+	def String fromNullable(Object o){
 		switch o {
 			case o==null:""
-			Iterable : o.map[Object it|fromNullable].join(', ')
+			Iterable<?> : o.map[Object it|fromNullable].join(', ')
 			Author : o.name
 			Product : o.name
 			Customer :o.name

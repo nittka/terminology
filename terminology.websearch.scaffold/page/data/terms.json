@@ -1,0 +1,193 @@
+terminology={
+  "name": "Example",
+  "entry_status":[
+    {"name": "OK", "display": "OK"},
+    {"name": "todo", "display": "unfinished"}
+  ]
+  ,
+  "subjects":[
+    {"name": "ctrl", "display": "UI controls"},
+    {"name": "app", "display": "general application concepts"}
+  ]
+  ,
+  "customers":[
+    {"name": "inhouseOnly", "display": "for internal communication only"},
+    {"name": "c1", "display": "customer with own non-standardized terminology"}
+  ]
+  ,
+  "products":[
+    {"name": "web", "display": "Browser"},
+    {"name": "office", "display": "Office application"}
+  ]
+};
+data=[
+{
+  "id": "1",
+  "term": "bookmark",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"web"}],
+  "language":"en",
+  "entry_id": "app0002",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
+},
+{
+  "id": "2",
+  "term": "drop-down list",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"en",
+  "entry_id": "ctrl0002",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a list that can be opened to reveal all choices for a given field"
+},
+{
+  "id": "3",
+  "term": "drop-down list box",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"en",
+  "entry_id": "ctrl0003",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a control on a menu, toolbar, dialog box, or data access page that displays a list of options when you click the small arrow next to the list box"
+},
+{
+  "id": "4",
+  "term": "Dropdownliste",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"de",
+  "entry_id": "ctrl0002",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a list that can be opened to reveal all choices for a given field"
+},
+{
+  "id": "5",
+  "term": "Dropdown-Listenfeld",
+  "term_status": "permitted",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"de",
+  "entry_id": "ctrl0003",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a control on a menu, toolbar, dialog box, or data access page that displays a list of options when you click the small arrow next to the list box"
+},
+{
+  "id": "6",
+  "term": "Favorit",
+  "term_status": "permitted",
+  "usage": "~ eine Website als Favorit speichern",
+  "customers": [{"id":"c1"}],
+  "products": [{"id":"web"}],
+  "language":"de",
+  "entry_id": "app0002",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
+},
+{
+  "id": "7",
+  "term": "Lesezeichen",
+  "term_status": "preferred",
+  "usage": "~ für eine Website setzen",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"web"}],
+  "language":"de",
+  "entry_id": "app0002",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
+},
+{
+  "id": "8",
+  "term": "MergeField",
+  "term_status": "permitted",
+  "usage": "",
+  "customers": [{"id":"inhouseOnly"}],
+  "products": [{"id":"office"}],
+  "language":"de",
+  "entry_id": "app0001",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "a placeholder for variable content in a serial letter"
+},
+{
+  "id": "9",
+  "term": "merge field",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"office"}],
+  "language":"en",
+  "entry_id": "app0001",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "a placeholder for variable content in a serial letter"
+},
+{
+  "id": "10",
+  "term": "Optionsfeld",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"de",
+  "entry_id": "ctrl0001",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
+},
+{
+  "id": "11",
+  "term": "radio button",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"en",
+  "entry_id": "ctrl0001",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
+},
+{
+  "id": "12",
+  "term": "Radio-Button",
+  "term_status": "permitted",
+  "usage": "informal",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"none"}],
+  "language":"de",
+  "entry_id": "ctrl0001",
+  "subject": "ctrl",
+  "entry_status":"OK",
+  "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
+},
+{
+  "id": "13",
+  "term": "Seriendruckfeld",
+  "term_status": "preferred",
+  "usage": "",
+  "customers": [{"id":"none"}],
+  "products": [{"id":"office"}],
+  "language":"de",
+  "entry_id": "app0001",
+  "subject": "app",
+  "entry_status":"OK",
+  "entry_definition": "a placeholder for variable content in a serial letter"
+}
+];

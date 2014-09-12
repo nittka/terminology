@@ -16,7 +16,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.dialogs.SearchPattern;
-import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
@@ -82,9 +81,9 @@ class TerminologyEObjectSearch {
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
-	
-	@Inject
-	private IQualifiedNameConverter qualifiedNameConverter;
+
+//	@Inject
+//	private IQualifiedNameConverter qualifiedNameConverter;
 
 	Iterable<IEObjectDescription> findMatches(TerminologySearchPattern pattern){
 		return Iterables.filter(getSearchScope(), getSearchPredicate(pattern));

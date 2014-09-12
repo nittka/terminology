@@ -1,0 +1,265 @@
+/*BEGIN filter styling*/
+.toggleAll{
+  margin-left:15px;
+}
+/*END filter styling*/
+
+#languageToggle{
+  display:none;
+  cursor: pointer;
+}
+.lang{
+  margin-left:5px
+}
+
+/*BEGIN result list styling*/
+/*make current result selection background color fill whole width*/
+.resultlist{
+  display:block;
+  float:none;
+  cursor: pointer;
+  background-color:inherit;
+/*  width:99%*/
+}
+/*underline result when hovering over it*/
+.resultlist:hover{
+  text-decoration:underline;
+}
+
+.result_selected{
+  background-color:skyblue;
+}
+
+.result_term{
+  color:#000000;
+  margin-left:20px;
+}
+
+/*BEGIN term status styles*/
+.preferred{
+  font-weight:bold;
+  color: green;
+}
+.permitted{
+  color: green;
+}
+.superseded{
+  color: grey;
+}
+.rejected{
+  text-decoration:line-through;
+}
+/*END term status styles*/
+/*END result list styling*/
+
+/*BEGIN Details styling*/
+/*float none allows for grabbing the entire available space*/
+.details{
+  padding-left:5px;
+  float:none;
+  border-left:1px solid grey;
+/*  float:left;
+    max-width:430px;*/
+}
+
+
+.subject_label{
+  color:black;
+  font-weight:bold;
+  margin-right:4px;
+}
+
+
+.entry_status_label{
+  color:black;
+  font-weight:normal;
+  margin-right:4px;
+}
+
+
+.definition_label{
+  margin-left:-20px;
+  font-weight:bold;
+  margin-right:4px;
+}
+.definition{
+  font-weight:normal;
+  margin-top:10px;
+  margin-left:20px;
+}
+
+
+.term_label{
+  font-weight:bold;
+  margin-right:4px;
+}
+.term{
+  margin-top:10px;
+}
+
+/*don't show term status name*/
+.term_status{
+  display:none;
+  color:grey;
+  margin-left:5px;
+}
+
+
+.language_label{
+  margin-left:10px;
+  margin-right:4px;
+}
+
+
+.grammar_label{
+  margin-left:10px;
+  margin-right:4px;
+}
+
+
+.usage_label{
+  margin-left:10px;
+  margin-right:4px;
+}
+
+
+.customers_label{
+  margin-left:10px;
+  margin-right:4px;
+}
+
+
+.products_label{
+  margin-left:10px;
+  margin-right:4px;
+}
+/*END details styling*/
+
+/*begin complete html-terminology styling*/
+.see_also_label{
+  margin-right:4px;
+}
+
+.subject_heading{
+  border-top:2px solid black;
+  padding-top:20px;
+  margin-top: 5px;
+}
+
+.entry_container{
+  border-top:1px dotted grey;
+  padding-top:10px;
+  margin-top:10px
+}
+/*end complete html-terminology styling*/
+
+
+/*from here on general styling*/
+
+body {
+	margin:0;
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:#FFEEEE;
+}
+html, body {
+	margin:0;
+	padding:0;
+}
+.clear {
+	clear:both;
+}
+h1, h2, h3, h4, h5, h6, p, ol, ul {
+	margin:0px;
+	padding:0px;
+}
+
+.header_name{
+  position: relative;
+  text-align: center;
+  top: 20px;
+  margin:0 auto;
+  color: #4C4328;
+  text-shadow: #FFF 1px 1px 0;
+}
+
+.container {
+	width:1024px;
+	padding:20px 30px 30px 30px;
+	margin:50px auto;
+	border-radius:5px;
+	position:relative;
+	box-shadow:0px 2px 5px #333;
+	background-color:lightgray;
+}
+
+.featured_services_find {
+	max-width:350px;
+	float:left;
+	margin-right:10px;
+}
+.featured_list_find a {
+	text-decoration:none;
+}
+.sidebar_bar {
+	float:left;
+	width:220px;
+	margin-left:-10px;
+}
+.sidebar_left_find {
+	float:left;
+	width:180px;
+	background:#e8f6f7;
+	border-radius:2px;
+	padding:0px 20px 0px 20px;
+}
+.sidebar_list {
+	float:left;
+	width:100%;
+	margin-bottom:10px;
+}
+.sidebar_list h3 {
+	font-family: 'Crimson Text', serif;
+	font-weight: 400;
+	font-size:18px;
+	margin-bottom:2px;
+	margin-top:4px;
+}
+.sidebar_list ul {
+	width:100%;
+	float:left;
+}
+.sidebar_list ul li {
+	list-style:none;
+	width:100%;
+	float:left;
+	margin-bottom:1px;
+}
+.sidebar_list ul li input {
+	float:left;
+}
+.sidebar_list ul li span {
+	float:right;
+	width:150px;
+	margin:2px 0px 0px 5px;
+	display:inline !important;
+}
+.sidebar_list p {
+	margin-top:5px;
+	font-weight:bold;
+	float:left;
+}
+.sidebar_list p a {
+	text-decoration:none;
+	color:#004a80;
+	margin-left:25px;
+}
+.searchbox{
+  line-height: 20px;
+  width: 170px;
+  height: 20px;
+  font-size: 15px;
+}
+h2{
+  text-align: center;
+}

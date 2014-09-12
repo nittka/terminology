@@ -120,9 +120,9 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		for (Subject def : terminology.getSubjects()) {
 			List<URI> list = subjectFileLinks.get(def);
 			if(list.isEmpty()){
-				error("no file for this subject",def,TerminologyPackage.Literals.SUBJECT__NAME,-1);
+				error("no file for this subject",def,TerminologyPackage.Literals.WITH_NAME_AND_DISPLAY_NAME__NAME,-1);
 			} else if(list.size()>1){
-				error("more than one file for this subject",def,TerminologyPackage.Literals.SUBJECT__NAME,-1);
+				error("more than one file for this subject",def,TerminologyPackage.Literals.WITH_NAME_AND_DISPLAY_NAME__NAME,-1);
 			}
 		}
 	}
