@@ -15,47 +15,53 @@
     name="Xtext Terminology Editor"
     label="Xtext Terminology Editor">
   <setupTask
-      xsi:type="setup:CompoundTask"
-      name="Xtext">
-    <setupTask
-        xsi:type="setup.p2:P2Task"
-        id="Xtext stuff">
-      <requirement
-          name="org.eclipse.xtext.sdk.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <requirement
-          name="de.itemis.xtext.antlr.sdk.feature.group"
-          versionRange="2.0.0"/>
-      <requirement
-          name="org.eclipse.xtend.sdk.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <requirement
-          name="org.eclipse.xtend.m2e.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <requirement
-          name="org.eclipse.emf.mwe.sdk.feature.group"
-          versionRange="[1.2.1,1.2.2)"/>
-      <requirement
-          name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <requirement
-          name="org.eclipse.emf.sdk.feature.group"
-          versionRange="[2.8.0,3.0.0)"/>
-      <requirement
-          name="org.eclipse.emf.mwe2.language.sdk.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <requirement
-          name="org.eclipse.emf.mwe2.launcher.feature.group"
-          versionRange="[2.4.0,2.5.0)"/>
-      <repository
-          url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
-      <repository
-          url="http://download.itemis.com/updates/releases/2.1.1"/>
-    </setupTask>
+      xsi:type="setup.p2:P2Task"
+      id="WikiText"
+      label="WikiText">
+    <requirement
+        name="org.eclipse.mylyn.wikitext_feature.feature.group"/>
+    <repository
+        url="http://download.eclipse.org/mylyn/releases/latest"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      id="Xtext stuff"
+      label="Xtext stuff">
+    <requirement
+        name="org.eclipse.xtext.sdk.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <requirement
+        name="de.itemis.xtext.antlr.sdk.feature.group"
+        versionRange="2.0.0"/>
+    <requirement
+        name="org.eclipse.xtend.sdk.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <requirement
+        name="org.eclipse.xtend.m2e.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <requirement
+        name="org.eclipse.emf.mwe.sdk.feature.group"
+        versionRange="[1.2.1,1.2.2)"/>
+    <requirement
+        name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <requirement
+        name="org.eclipse.emf.sdk.feature.group"
+        versionRange="[2.8.0,3.0.0)"/>
+    <requirement
+        name="org.eclipse.emf.mwe2.language.sdk.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <requirement
+        name="org.eclipse.emf.mwe2.launcher.feature.group"
+        versionRange="[2.4.0,2.5.0)"/>
+    <repository
+        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    <repository
+        url="http://download.itemis.com/updates/releases/2.1.1"/>
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask"
-      predecessor="git.clone.xturtle">
+      predecessor="git.clone.terminology">
     <targlet
         name="Xtext Target Platform"
         activeRepositoryList="${eclipse.target.platform}">
@@ -183,7 +189,7 @@
         name="Distro">
       <predicate
           xsi:type="workingsets:ExclusionPredicate"
-          excludedWorkingSet="//@setupTasks.2/@workingSets.1 //@setupTasks.2/@workingSets.0 //@setupTasks.2/@workingSets.2"/>
+          excludedWorkingSet="//@setupTasks.3/@workingSets.1 //@setupTasks.3/@workingSets.0 //@setupTasks.3/@workingSets.2"/>
     </workingSet>
   </setupTask>
   <setupTask
@@ -194,14 +200,30 @@
       defaultValue=""/>
   <setupTask
       xsi:type="git:GitCloneTask"
-      id="git.clone.xturtle"
+      id="git.clone.terminology"
       location="${terminology.clone.location}"
       remoteURI="https://github.com/nittka/Terminology.git">
-    <description>Xturtle</description>
+    <description>Terminology git</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      id="terminologywiki.git.clone.variable"
+      name="terminologywiki.clone.location"
+      value="${installation.location}/wikigit"
+      defaultValue=""/>
+  <setupTask
+      xsi:type="git:GitCloneTask"
+      id="git.clone.terminologywiki"
+      location="${terminologywiki.clone.location}"
+      remoteURI="https://github.com/nittka/terminology.wiki.git">
+    <description>Terminology Wiki Git</description>
   </setupTask>
   <setupTask
       xsi:type="projects:ProjectsImportTask"
       id="Terminology-Projects">
+    <sourceLocator
+        rootFolder="${terminologywiki.clone.location}"
+        locateNestedProjects="true"/>
     <sourceLocator
         rootFolder="${terminology.clone.location}">
       <predicate
@@ -217,6 +239,11 @@
       encoding="UTF-8"/>
   <stream name="master"
       label="master">
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.terminologySetup"
+        value="=https://raw.githubusercontent.com/nittka/terminology/master/terminologyDev.setup->${terminology.clone.location|uri}/terminologyDev.setup"
+        vm="true"/>
     <description>master</description>
   </stream>
   <description></description>
