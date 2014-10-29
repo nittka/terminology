@@ -31,29 +31,44 @@
             <input type="text" id="search_box" class="searchbox"/>
           </div>
         </div>  
-        <div class="sidebar_left_find">
+        <div id="filter_termstatus_div" class="sidebar_left_find">
           <div class="sidebar_list">
             <h3 id="filter_termstatus_label">missing localization</h3>
             <ul id="termstatus">
-              <li><input id="termstatuspreferred" value="preferred" type="checkbox"><span id="filter_preferred_label">missing localization</span></li>
-              <li><input id="termstatuspermitted" value="permitted" type="checkbox"><span id="filter_permitted_label">missing localization</span></li>
-              <li><input id="termstatussuperseded" value="superseded" type="checkbox"><span id="filter_superseded_label">missing localization</span></li>
-              <li><input id="termstatusrejected" value="rejected" type="checkbox"><span id="filter_rejected_label">missing localization</span></li>
+              <li><input id="termstatuspreferred" value="preferred" type="checkbox"><span class="preferred" id="filter_preferred_label">missing localization</span></li>
+              <li><input id="termstatuspermitted" value="permitted" type="checkbox"><span class="permitted" id="filter_permitted_label">missing localization</span></li>
+              <li><input id="termstatussuperseded" value="superseded" type="checkbox"><span class="superseded" id="filter_superseded_label">missing localization</span></li>
+              <li><input id="termstatusrejected" value="rejected" type="checkbox"><span class="rejected" id="filter_rejected_label">missing localization</span></li>
             </ul>
           </div>
         </div>
 
-        <div class="sidebar_left_find">
+        <div id="filter_products_div" class="sidebar_left_find">
           <div class="sidebar_list">
             <h3><span id="filter_products_label">missing localization</span><input class="toggleAll" id="toggleproducts" value="" checked="true" type="checkbox"></h3>
             <ul id="products"></ul>
           </div>
         </div>
 
-        <div class="sidebar_left_find">
+        <div id="filter_customers_div" class="sidebar_left_find">
           <div class="sidebar_list">
             <h3><span id="filter_customers_label">missing localization</span><input class="toggleAll" id="togglecustomers" value="" checked="true" type="checkbox"></h3>
             <ul id="customers"></ul>
+          </div>
+        </div>
+
+
+        <div id="filter_languages_div" class="sidebar_left_find">
+          <div class="sidebar_list">
+            <h3><span id="filter_languages_label">missing localization</span></h3>
+            <ul id="languages"></ul>
+          </div>
+        </div>
+
+        <div id="filter_subjects_div" class="sidebar_left_find">
+          <div class="sidebar_list">
+            <h3><span id="filter_subjects_label">missing localization</span><input class="toggleAll" id="togglesubjects" value="" checked="true" type="checkbox"></h3>
+            <ul id="subjects"></ul>
           </div>
         </div>
 

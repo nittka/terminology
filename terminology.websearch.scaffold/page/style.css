@@ -1,9 +1,4 @@
-/*BEGIN filter styling*/
-.toggleAll{
-  margin-left:15px;
-}
-/*END filter styling*/
-
+/*BEGIN header localization*/
 #languageToggle{
   display:none;
   cursor: pointer;
@@ -11,6 +6,17 @@
 .lang{
   margin-left:5px
 }
+/*END header localization*/
+
+
+/*BEGIN filter styling*/
+.toggleAll{
+  margin-left:15px;
+}
+#filter_subjects_div{
+  display:none;
+}
+/*END filter styling*/
 
 /*BEGIN result list styling*/
 /*make current result selection background color fill whole width*/
@@ -69,6 +75,23 @@
   margin-right:4px;
 }
 
+.author_create{
+  display:none;
+}
+.author_create_label{
+  color:black;
+  font-weight:normal;
+  margin-right:4px;
+}
+
+.author_update{
+  display:none;
+}
+.author_update_label{
+  color:black;
+  font-weight:normal;
+  margin-right:4px;
+}
 
 .entry_status_label{
   color:black;
@@ -135,7 +158,7 @@
 }
 /*END details styling*/
 
-/*begin complete html-terminology styling*/
+/*BEGIN complete html-terminology styling*/
 .see_also_label{
   margin-right:4px;
 }
@@ -151,7 +174,7 @@
   padding-top:10px;
   margin-top:10px
 }
-/*end complete html-terminology styling*/
+/*END complete html-terminology styling*/
 
 
 /*from here on general styling*/

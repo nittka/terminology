@@ -23,7 +23,9 @@ package class JsonFileContent {
 		terminology={
 		  "name": "«terminology.titleInfo»",
 		  «nameDisplayNameList("entry_status", terminology.status)»,
+		  «nameDisplayNameList("languages", terminology.languages)»,
 		  «nameDisplayNameList("subjects", terminology.subjects)»,
+		  «nameDisplayNameList("authors", terminology.authors)»,
 		  «nameDisplayNameList("customers", terminology.customers)»,
 		  «nameDisplayNameList("products", terminology.products)»
 		};
@@ -84,6 +86,8 @@ package class JsonFileContent {
 
 	def private CharSequence entryContent(Entry e)'''
 		  "entry_id": "«e.name»",
+		  "create_author": "«e.meta.createdAuthor.name»",
+		  "modify_author": "«e.meta.modifiedAuthor?.name»",
 		  "subject": "«(e.eContainer as SubjectEntries).subject.name»",
 		  "entry_status":"«e.meta.status.name»",
 		  "entry_definition": "«(e.definition?:"").toJsonString»"

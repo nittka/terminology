@@ -22,11 +22,11 @@ Terminology:
 		("Customers" customers+=Customer(','customers+=Customer)*)?
 ;
 
-WithNameAndDisplayName:Status|Subject|Gr|Author|Product|Customer;
+WithNameAndDisplayName:Status|Subject|Gr|Author|Product|Customer|Language;
 
 Status: name=ID displayName=STRING status=EntryStatus;
 Subject:name=ID displayName=STRING;
-Language:name=ID;
+Language:name=ID (displayName=STRING)?;
 Gr:name=ID displayName=STRING pos=Pos gender=Gender? number=GrNumber?;
 Author:name=ID displayName=STRING;
 Product:name=ID displayName=STRING;

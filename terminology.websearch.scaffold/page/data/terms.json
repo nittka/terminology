@@ -5,9 +5,19 @@ terminology={
     {"name": "todo", "display": "unfinished"}
   ]
   ,
+  "languages":[
+    {"name": "de", "display": "German"},
+    {"name": "en", "display": "English"}
+  ]
+  ,
   "subjects":[
     {"name": "ctrl", "display": "UI controls"},
     {"name": "app", "display": "general application concepts"}
+  ]
+  ,
+  "authors":[
+    {"name": "brm", "display": "Mary Brown"},
+    {"name": "smj", "display": "John Smith"}
   ]
   ,
   "customers":[
@@ -30,6 +40,8 @@ data=[
   "products": [{"id":"web"}],
   "language":"en",
   "entry_id": "app0002",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
@@ -43,6 +55,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"en",
   "entry_id": "ctrl0002",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a list that can be opened to reveal all choices for a given field"
@@ -56,6 +70,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"en",
   "entry_id": "ctrl0003",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a control on a menu, toolbar, dialog box, or data access page that displays a list of options when you click the small arrow next to the list box"
@@ -69,6 +85,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"de",
   "entry_id": "ctrl0002",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a list that can be opened to reveal all choices for a given field"
@@ -82,6 +100,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"de",
   "entry_id": "ctrl0003",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a control on a menu, toolbar, dialog box, or data access page that displays a list of options when you click the small arrow next to the list box"
@@ -95,6 +115,8 @@ data=[
   "products": [{"id":"web"}],
   "language":"de",
   "entry_id": "app0002",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
@@ -108,6 +130,8 @@ data=[
   "products": [{"id":"web"}],
   "language":"de",
   "entry_id": "app0002",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "In the context of the World Wide Web, a bookmark is a Uniform Resource Identifier (URI) that is stored for later retrieval in any of various storage formats. All modern web browsers include bookmark features."
@@ -121,6 +145,8 @@ data=[
   "products": [{"id":"office"}],
   "language":"de",
   "entry_id": "app0001",
+  "create_author": "brm",
+  "modify_author": "smj",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "a placeholder for variable content in a serial letter"
@@ -134,6 +160,8 @@ data=[
   "products": [{"id":"office"}],
   "language":"en",
   "entry_id": "app0001",
+  "create_author": "brm",
+  "modify_author": "smj",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "a placeholder for variable content in a serial letter"
@@ -147,6 +175,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"de",
   "entry_id": "ctrl0001",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
@@ -160,6 +190,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"en",
   "entry_id": "ctrl0001",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
@@ -173,6 +205,8 @@ data=[
   "products": [{"id":"none"}],
   "language":"de",
   "entry_id": "ctrl0001",
+  "create_author": "brm",
+  "modify_author": "",
   "subject": "ctrl",
   "entry_status":"OK",
   "entry_definition": "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
@@ -186,6 +220,8 @@ data=[
   "products": [{"id":"office"}],
   "language":"de",
   "entry_id": "app0001",
+  "create_author": "brm",
+  "modify_author": "smj",
   "subject": "app",
   "entry_status":"OK",
   "entry_definition": "a placeholder for variable content in a serial letter"

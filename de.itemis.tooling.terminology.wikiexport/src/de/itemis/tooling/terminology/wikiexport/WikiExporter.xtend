@@ -19,6 +19,7 @@ import java.text.Collator
 import java.util.List
 import java.util.Locale
 import java.util.Map
+import com.google.common.base.Optional
 
 //TODO escaping
 class WikiExporter extends TerminologyGeneratorParticipant {
@@ -35,12 +36,13 @@ class WikiExporter extends TerminologyGeneratorParticipant {
 	}
 
 	def CharSequence content(Language l, SubjectEntries entries)'''
-		||Benennung||weitere Benennungen «l.name»||«languages.filter[it!=l].map["Benennungen "+it.name].join("||")»||
+		||Benennung||weitere Benennungen «Optional.fromNullable(l.displayName).or(l.name)»||«languages.filter[it!=l].map["Benennungen "+Optional.fromNullable(it.displayName).or(it.name)].join("||")»||
 		«FOR Entry e:sortedEntries(l,entries)»
 			«e.getLine(l)»
 		«ENDFOR»
 	'''
 
+	//TODO use primary language if it can be turned into a locale?
 	val sorter=Collator::getInstance(Locale::GERMANY)
 	def List<Entry> sortedEntries(Language l, SubjectEntries entries){
 		val filtered=entries.entries.filter[it.showEntry(l)]

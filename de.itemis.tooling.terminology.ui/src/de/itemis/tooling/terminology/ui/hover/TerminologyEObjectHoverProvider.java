@@ -26,6 +26,7 @@ import de.itemis.tooling.terminology.terminology.Status;
 import de.itemis.tooling.terminology.terminology.Subject;
 import de.itemis.tooling.terminology.terminology.Term;
 import de.itemis.tooling.terminology.terminology.TerminologyPackage;
+import de.itemis.tooling.terminology.terminology.WithNameAndDisplayName;
 
 public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider {
 
@@ -65,18 +66,8 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 			}
 			b.append("<dl></dl><dl></dl><dl></dl><dl></dl><dl></dl>");
 			return b.toString().replaceAll("\n", "</br>");
-		} else if (o instanceof Subject){
-			return ((Subject) o).getDisplayName();
-		} else if(o instanceof Gr){
-			return ((Gr) o).getDisplayName();
-		} else if(o instanceof Status){
-			return ((Status) o).getDisplayName();
-		} else if(o instanceof Author){
-			return ((Author) o).getDisplayName();
-		} else if(o instanceof Customer){
-			return ((Customer) o).getDisplayName();
-		} else if(o instanceof Product){
-			return ((Product) o).getDisplayName();
+		} else if (o instanceof WithNameAndDisplayName){
+			return ((WithNameAndDisplayName) o).getDisplayName();
 		}
 		return null;
 	}
@@ -100,6 +91,7 @@ public class TerminologyEObjectHoverProvider extends DefaultEObjectHoverProvider
 			TerminologyPackage.Literals.SUBJECT,
 			TerminologyPackage.Literals.STATUS,
 			TerminologyPackage.Literals.GR,
+			TerminologyPackage.Literals.LANGUAGE,
 			TerminologyPackage.Literals.ENTRY,
 			TerminologyPackage.Literals.PRODUCT,
 			TerminologyPackage.Literals.CUSTOMER

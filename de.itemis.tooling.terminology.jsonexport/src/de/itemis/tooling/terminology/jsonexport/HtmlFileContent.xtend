@@ -49,6 +49,8 @@ class HtmlFileContent {
 	<div class="entry_container">
 	  <div class="entry" id='«entry.name»'>
 	    <div class="subject"><span class="subject_label"></span>«subject»</div>
+	    <div class="author_create"><span class="author_create_label"></span>«entry.meta.createdAuthor.displayName» («entry.meta.created»)</div>«IF entry.meta.modifiedAuthor!==null»
+	    <div class="author_update"><span class="author_update_label"></span>«entry.meta.modifiedAuthor.displayName» («entry.meta.modified»)</div>«ENDIF»
 	    <div class="entry_status"><span class="entry_status_label"></span>«entry.meta.status.displayName.or(entry.meta.status.name)»</div>
 	    «entry.htmlDefinition»
 	    «FOR term:entry.terms»
@@ -64,7 +66,7 @@ class HtmlFileContent {
 
 	def private CharSequence html(Term term)'''
 	<div class="term"><span class="term_label"></span><span class="«term.status.getName»">«term.name.toJsonString»</span> <span class="term_status">«term.status.getName»</span>
-	  <div class="language"><span class="language_label"></span>«term.language.name»</div>
+	  <div class="language"><span class="language_label"></span>«term.language.displayName?:term.language.name»</div>
 	  <div class="grammar"><span class="grammar_label"></span>«term.gr.displayName»</div>
 	  «IF !(term.usage.nullOrEmpty)»<div class="usage"><span class="usage_label"></span>«term.usage.toJsonString»</div>«ENDIF»
 	  «IF !(term.products.nullOrEmpty)»<div class="products"><span class="products_label"></span>«term.products.map[it.displayName].join(", ")»</div>«ENDIF»

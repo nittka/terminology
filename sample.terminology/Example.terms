@@ -19,7 +19,7 @@ Definitions
   //languages for which a term may be defined
   //note that currently have only IDs, they are 
   //not interpreted as Locales in any way!
-  Languages de, en
+  Languages de "German", en "English"
 
   //grammatical information for a term
   //after the descriptive text you define

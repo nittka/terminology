@@ -24,6 +24,8 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 import org.eclipse.xtext.ui.editor.outline.impl.EObjectNode;
 import org.eclipse.xtext.util.TextRegion;
 
+import com.google.common.base.Optional;
+
 import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Language;
 import de.itemis.tooling.terminology.terminology.SubjectEntries;
@@ -62,7 +64,7 @@ public class TerminologyOutlineTreeProvider extends DefaultOutlineTreeProvider {
 
 	void createLanguageNodes(IOutlineNode parent, final SubjectEntries entries, final EList<Language> languages){
 		for (final Language language : languages) {
-			EObjectNode ln = new EObjectNode(entries, parent,(Image)null,language.getName(),false) {
+			EObjectNode ln = new EObjectNode(entries, parent,(Image)null,Optional.fromNullable(language.getDisplayName()).or(language.getName()),false) {
 				boolean created=false;
 				@Override
 				public List<IOutlineNode> getChildren() {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/de.itemis.tooling.terminology.feature_1.1.0.jar" id="de.itemis.tooling.terminology.feature" version="1.1.0">
-      <category name="TerminologyIDE"/>
-   </feature>
-   <feature url="features/de.itemis.tooling.terminology.exporters.feature_1.1.0.jar" id="de.itemis.tooling.terminology.exporters.feature" version="1.1.0">
+   <feature url="features/de.itemis.tooling.terminology.exporters.feature_1.1.1.jar" id="de.itemis.tooling.terminology.exporters.feature" version="1.1.1">
       <category name="terminology_exporters"/>
+   </feature>
+   <feature url="features/de.itemis.tooling.terminology.feature_1.1.1.jar" id="de.itemis.tooling.terminology.feature" version="1.1.1">
+      <category name="TerminologyIDE"/>
    </feature>
    <category-def name="TerminologyIDE" label="Terminology IDE">
       <description>

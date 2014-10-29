@@ -13,11 +13,15 @@ localization={
       filter_rejected_label:"rejected",
       filter_customers_label:"Customers",
       filter_products_label:"Products",
+      filter_languages_label:"Languages",
+      filter_subjects_label:"Subjects",
       filter_customersnone_label:"none",
       filter_productsnone_label:"none"
     },
     details:{
       subject_label:"Category:",
+      author_create_label:"Created by:",
+      author_update_label:"Last update by:",
       entry_status_label:"Entry status:",
       definition_label:"Definition:",
       term_label:"Term:",
@@ -41,11 +45,15 @@ localization={
       filter_rejected_label:"verboten",
       filter_customers_label:"Kunden",
       filter_products_label:"Produkte",
+      filter_languages_label:"Sprachen",
+      filter_subjects_label:"Kategorien",
       filter_customersnone_label:"ohne",
       filter_productsnone_label:"ohne"
     },
     details:{
       subject_label:"Kategorie:",
+      author_create_label:"erstellt durch:",
+      author_update_label:"letzte Änderung:",
       entry_status_label:"Eintragsstatus:",
       definition_label:"Definition:",
       term_label:"Term:",

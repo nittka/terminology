@@ -2,7 +2,7 @@
 <feature
       id="de.itemis.tooling.terminology.feature"
       label="Terminology"
-      version="1.1.0"
+      version="1.1.1"
       provider-name="itemis AG 4+1">
 
    <copyright>
@@ -128,14 +128,14 @@ This Agreement is governed by the laws of the State of New York and the intellec
          id="de.itemis.tooling.terminology"
          download-size="0"
          install-size="0"
-         version="1.1.0"
+         version="1.1.1"
          unpack="false"/>
 
    <plugin
          id="de.itemis.tooling.terminology.ui"
          download-size="0"
          install-size="0"
-         version="1.1.0"
+         version="1.1.1"
          unpack="false"/>
 
 </feature>

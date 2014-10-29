@@ -1,17 +1,20 @@
 var fJS;
 
-function initFilterList(listLabel, data){
+function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
-  if(data.length==0){
-    return;
-  }
-  var append="<li><input id='"+listLabel+"none' value='none' type='checkbox'><span id='filter_"+listLabel+"none_label'>missing localization</span></li>";
+  if(includeNone){
+    var append="<li><input id='"+listLabel+"none' value='none' type='checkbox'><span id='filter_"+listLabel+"none_label'>missing localization</span></li>";
     checkBoxList.append(append);
+  }
   for(var i=0; i<data.length; i++){
     var filter=data[i];
     var append="<li><input id='"+listLabel+filter.name+"' value='"+filter.name+"' type='checkbox'><span>"+filter.display+"</span></li>";
     checkBoxList.append(append);
   }
+  if(data.length==0 && includeNone || data.length==1 && !includeNone){
+    checkBoxList.parent()[0].style.display='none';
+  }
+
 };
 
 function toggleAll(toggleId){
@@ -43,12 +46,16 @@ function unselectResultList(){
 jQuery(document).ready(function($) {
 
   $('.header_name').html(terminology.name);
-  initFilterList("customers",terminology.customers);
-  initFilterList("products",terminology.products);
+  initFilterList("customers",terminology.customers, true);
+  initFilterList("products",terminology.products, true);
+  initFilterList("languages",terminology.languages, false);
+  initFilterList("subjects",terminology.subjects, false);
 
   $('#termstatus :checkbox').prop('checked', true);
   $('#customers :checkbox').prop('checked', true);
   $('#products :checkbox').prop('checked', true);
+  $('#languages :checkbox').prop('checked', true);
+  $('#subjects :checkbox').prop('checked', true);
 
   $('#searchAlso input').on('change', function(){
     $('#service_list').html('');
@@ -69,6 +76,7 @@ jQuery(document).ready(function($) {
 
   toggleAll('products'); 
   toggleAll('customers'); 
+  toggleAll('subjects'); 
 
   language;//touch localize.js for initializing localization
 
@@ -109,6 +117,8 @@ function filterInit($) {
   var settings = {
     filter_criteria: {
       termstatus: ['#termstatus :checkbox', 'term_status'],
+      languages: ['#languages :checkbox', 'language'],
+      subjects: ['#subjects :checkbox', 'subject'],
       customers: ['#customers :checkbox', 'customers.ARRAY.id'],
       products: ['#products :checkbox', 'products.ARRAY.id']
     },
