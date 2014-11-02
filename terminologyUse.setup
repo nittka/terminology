@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    name="Xtext Terminology Editor - Usage"
+    label="Xtext Terminology Editor">
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      id="Xtext Terminology Editor Basics"
+      label="">
+    <requirement
+        name="org.eclipse.xtext.redist.feature.group"/>
+    <requirement
+        name="de.itemis.tooling.terminology.feature.feature.group"/>
+    <repository
+        url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    <repository
+        url="https://raw.githubusercontent.com/nittka/terminology/master/de.itemis.tooling.terminology.updatesite/site.xml"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:ResourceCopyTask"
+      sourceURL="https://github.com/nittka/terminology/archive/master.zip"
+      targetURL="${workspace.location|uri}/master.zip"/>
+  <stream name="editorOnly"
+      label="Editor only">
+    <description>Installs the Terminology Editor only, not the exporters</description>
+  </stream>
+  <stream name="editorAndExporters"
+      label="Editor and Exporters">
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        id="Xtext Terminology Editor Exporters"
+        label="">
+      <requirement
+          name="de.itemis.tooling.terminology.exporters.feature.feature.group"/>
+    </setupTask>
+    <description>Installs the Terminology Editor and Exporters</description>
+  </stream>
+  <description>Lightweight Xtext-based Terminology Editor</description>
+</setup:Project>
