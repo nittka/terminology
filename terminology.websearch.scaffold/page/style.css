@@ -10,6 +10,12 @@
 
 
 /*BEGIN filter styling*/
+.collapsed:after{
+  content:" ...";
+}
+.collapse_label{
+  cursor: pointer;
+}
 .toggleAll{
   margin-left:15px;
 }
@@ -25,7 +31,6 @@
   float:none;
   cursor: pointer;
   background-color:inherit;
-/*  width:99%*/
 }
 /*underline result when hovering over it*/
 .resultlist:hover{
@@ -39,6 +44,7 @@
 .result_term{
   color:#000000;
   margin-left:20px;
+  margin-right:5px;
 }
 
 /*BEGIN term status styles*/
@@ -214,6 +220,7 @@ h1, h2, h3, h4, h5, h6, p, ol, ul {
 	position:relative;
 	box-shadow:0px 2px 5px #333;
 	background-color:lightgray;
+	min-height:450px;
 }
 
 .featured_services_find {

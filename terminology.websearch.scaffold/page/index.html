@@ -45,14 +45,14 @@
 
         <div id="filter_products_div" class="sidebar_left_find">
           <div class="sidebar_list">
-            <h3><span id="filter_products_label">missing localization</span><input class="toggleAll" id="toggleproducts" value="" checked="true" type="checkbox"></h3>
+            <h3><span id="filter_products_label" class="collapse_label">missing localization</span><input class="toggleAll" id="toggleproducts" value="" checked="true" type="checkbox"></h3>
             <ul id="products"></ul>
           </div>
         </div>
 
         <div id="filter_customers_div" class="sidebar_left_find">
           <div class="sidebar_list">
-            <h3><span id="filter_customers_label">missing localization</span><input class="toggleAll" id="togglecustomers" value="" checked="true" type="checkbox"></h3>
+            <h3><span id="filter_customers_label" class="collapse_label">missing localization</span><input class="toggleAll" id="togglecustomers" value="" checked="true" type="checkbox"></h3>
             <ul id="customers"></ul>
           </div>
         </div>
@@ -60,23 +60,25 @@
 
         <div id="filter_languages_div" class="sidebar_left_find">
           <div class="sidebar_list">
-            <h3><span id="filter_languages_label">missing localization</span></h3>
+            <h3><span id="filter_languages_label" class="collapse_label">missing localization</span></h3>
             <ul id="languages"></ul>
           </div>
         </div>
 
         <div id="filter_subjects_div" class="sidebar_left_find">
           <div class="sidebar_list">
-            <h3><span id="filter_subjects_label">missing localization</span><input class="toggleAll" id="togglesubjects" value="" checked="true" type="checkbox"></h3>
+            <h3><span id="filter_subjects_label" class="collapse_label">missing localization</span><input class="toggleAll" id="togglesubjects" value="" checked="true" type="checkbox"></h3>
             <ul id="subjects"></ul>
           </div>
         </div>
 
       </div>
-      <div class="featured_services_find" style="height:550px;overflow:auto;">
+      <div class="featured_services_find" style="min-height:inherit;overflow:auto;">
         <div class="featured_list_find" id="service_list"></div>
       </div>
-      <div class="details" style="max-height:550px;overflow:auto;" id="details"></div>
+      <div id="details_service" style="min-height:inherit;overflow:auto;">
+        <div class="details" id="details"></div>
+      </div>
       <div class="clear"></div>
       <div id="languageToggle"></div>
     </div>

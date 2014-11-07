@@ -14,7 +14,16 @@ function initFilterList(listLabel, data, includeNone){
   if(data.length==0 && includeNone || data.length==1 && !includeNone){
     checkBoxList.parent()[0].style.display='none';
   }
-
+  var header=$('#filter_'+listLabel+'_label');
+  header.click(function () {
+    checkBoxList.slideToggle(0, function () {
+      var filterBarHeight=$('.sidebar_bar').height();
+      $('.featured_services_find').css('max-height', filterBarHeight+'px');
+      $('#details_service').css('max-height', filterBarHeight+'px');
+      header.toggleClass("collapsed");
+    });
+  });
+  header.click();
 };
 
 function toggleAll(toggleId){
