@@ -24,6 +24,31 @@
       xsi:type="setup:ResourceCopyTask"
       sourceURL="https://github.com/nittka/terminology/archive/master.zip"
       targetURL="${workspace.location|uri}/master.zip"/>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      id="word wrap"
+      name="Word Wrap">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="de.cdhq.eclipse.wordwrap.feature.feature.group"
+          optional="true"/>
+      <requirement
+          name="de.cdhq.eclipse.linenumberfix.luna.feature.feature.group"
+          optional="true"/>
+      <requirement
+          name="de.cdhq.eclipse.linenumberfix.kepler.feature.feature.group"
+          optional="true"/>
+      <repository
+          url="http://dev.cdhq.de/eclipse/updatesite/luna/"/>
+      <repository
+          url="http://dev.cdhq.de/eclipse/updatesite/kepler/"/>
+    </setupTask>
+    <description>
+      Installs a plugin for line wrapping in text files (allowing better editing and reading entry descpriptions).
+      The line number fix will be installed only for Eclipse Juno, Kepler and Luna.
+    </description>
+  </setupTask>
   <stream name="editorOnly"
       label="Editor only">
     <description>Installs the Terminology Editor only, not the exporters</description>
