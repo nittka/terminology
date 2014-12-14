@@ -81,6 +81,9 @@
       <requirement
           name="org.eclipse.xtext.xbase.lib"
           versionRange="[2.4.1,2.4.2)"/>
+      <requirement
+          name="org.eclipse.xtext.junit4"
+          versionRange="[2.4.0,2.4.1)"/>
       <repositoryList
           name="Mars">
         <repository
@@ -151,8 +154,11 @@
           name="de.itemis.tooling.terminology.feature.feature.group"/>
       <requirement
           name="de.itemis.tooling.terminology.exporters.feature.feature.group"/>
+      <requirement
+          name="de.itemis.tooling.terminology.tests"
+          optional="true"/>
       <sourceLocator
-          rootFolder="${terminology.clone.location}"
+          rootFolder="${git.clone.terminology.location}"
           locateNestedProjects="true"/>
     </targlet>
   </setupTask>
@@ -193,28 +199,14 @@
     </workingSet>
   </setupTask>
   <setupTask
-      xsi:type="setup:VariableTask"
-      id="terminology.git.clone.variable"
-      name="terminology.clone.location"
-      value="${installation.location}/git"
-      defaultValue=""/>
-  <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone.terminology"
-      location="${terminology.clone.location}"
       remoteURI="https://github.com/nittka/Terminology.git">
     <description>Terminology git</description>
   </setupTask>
   <setupTask
-      xsi:type="setup:VariableTask"
-      id="terminologywiki.git.clone.variable"
-      name="terminologywiki.clone.location"
-      value="${installation.location}/wikigit"
-      defaultValue=""/>
-  <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone.terminologywiki"
-      location="${terminologywiki.clone.location}"
       remoteURI="https://github.com/nittka/terminology.wiki.git">
     <description>Terminology Wiki Git</description>
   </setupTask>
@@ -222,10 +214,10 @@
       xsi:type="projects:ProjectsImportTask"
       id="Terminology-Projects">
     <sourceLocator
-        rootFolder="${terminologywiki.clone.location}"
+        rootFolder="${git.clone.terminology.location}"
         locateNestedProjects="true"/>
     <sourceLocator
-        rootFolder="${terminology.clone.location}">
+        rootFolder="${git.clone.terminologywiki.location}">
       <predicate
           xsi:type="predicates:NamePredicate"
           pattern=".*"/>
@@ -242,7 +234,7 @@
     <setupTask
         xsi:type="setup:EclipseIniTask"
         option="-Doomph.redirection.terminologySetup"
-        value="=https://raw.githubusercontent.com/nittka/terminology/master/terminologyDev.setup->${terminology.clone.location|uri}/terminologyDev.setup"
+        value="=https://raw.githubusercontent.com/nittka/terminology/master/terminologyDev.setup->${git.clone.terminology.location|uri}/terminologyDev.setup"
         vm="true"/>
     <description>master</description>
   </stream>
