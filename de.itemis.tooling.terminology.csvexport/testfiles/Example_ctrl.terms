@@ -1,0 +1,64 @@
+Subject Example.ctrl
+
+Entry ctrl0001 {
+  Metadata {
+    Status OK
+    created brm 2013-03-27
+  }
+  Definition "a standard Windows control that allows a user to select from a fixed set of mutually exclusive choices"
+  Source "Definition from the Microsoft Language Portal. © 2013 Microsoft Corporation. All rights reserved."
+  Term "Optionsfeld"
+    Status preferred
+    Language de
+    Gr n
+  Term "Radio-Button"
+    Status permitted
+    Language de
+    Gr m
+    Usage "informal"
+  Term "radio button"
+    Status preferred
+    Language en
+    Gr noun
+}
+
+Entry ctrl0002 {
+  Metadata {
+    Status OK
+    created brm 2013-03-27
+  }
+  Definition "a list that can be opened to reveal all choices for a given field"
+  Source "Definition from the Microsoft Language Portal. © 2013 Microsoft Corporation. All rights reserved."
+  RelatedEntries ctrl0003
+  Term "Dropdownliste"
+    Status preferred
+    Language de
+    Gr f
+  Term "drop-down list"
+    Status preferred
+    Language en
+    Gr noun
+}
+
+//in case validation for missing preferred terms is activated
+//you can mark an entry as OK
+@MissingPreferredTermOK(de)
+Entry ctrl0003 {
+  @Feedback "find out the actual preferred term in German"
+  Metadata {
+    Status OK
+    created brm 2013-03-27
+  }
+  Definition
+  "a control on a menu, toolbar, dialog box, or data access page that displays a list of options when you click the small arrow next to the list box"
+  Source "Definition from the Microsoft Language Portal. © 2013 Microsoft Corporation. All rights reserved."
+  RelatedEntries ctrl0002
+  Term "Dropdown-Listenfeld"
+    Status permitted
+    Language de
+    Gr n
+  Term "drop-down list box"
+    Status preferred
+    Language en
+    Gr noun
+}
