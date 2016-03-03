@@ -33,7 +33,7 @@ public class TerminologyValidationPreferencePage extends FieldEditorPreferencePa
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_PREFTERM_PERLANGUAGE_KEY, "one preferred term per language",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_MISSING_PREFTERM_KEY, "missing preferred term for language",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_UNIQUE_ENTRY_KEY, "unique entry id per terminology",otherErrors, getFieldEditorParent()));
-		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_UNIQUE_TERM_KEY, "duplicate term per terminology",otherErrors, getFieldEditorParent()));
+		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_UNIQUE_TERM_KEY, "duplicate term per language per terminology",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_MISSING_DEFINITION_KEY, "missing definition",otherErrors, getFieldEditorParent()));
 		addField(new ComboFieldEditor(TerminologyPreferenceConstants.VALIDATION_ENTRY_REF_SYMMETRIC_KEY, "missing inverse entry reference",otherErrors, getFieldEditorParent()));
 	}

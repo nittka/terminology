@@ -132,7 +132,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		Severity level=levels.getUniqueEntryIdLevel();
 		if(level!=null){
 			SubjectEntries entries=getEntries(entry);
-			if(getDuplicate(entries, TerminologyPackage.Literals.ENTRY).contains(entry.getName())){
+			if(getDuplicate(entries, TerminologyPackage.Literals.ENTRY).keySet().contains(entry.getName())){
 				createError(level, "entry id not unique: "+entry.getName(), TerminologyPackage.Literals.ENTRY__NAME);
 			}
 		}
@@ -156,29 +156,48 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 		Severity level=levels.getUniqueTermLevel();
 		if(level!=null){
 			SubjectEntries entries=getEntries(term);
-			if(!term.isAllowDuplicate() && getDuplicate(entries, TerminologyPackage.Literals.TERM).contains(term.getName())){
-				createError(level, "multiple definitions for term "+term.getName(), TerminologyPackage.Literals.TERM__NAME);
+			if(!term.isAllowDuplicate()){
+				List<IEObjectDescription> duplicates = getDuplicate(entries, TerminologyPackage.Literals.TERM).get(term.getName());
+				if(duplicates!=null){
+					String termLanguage = term.getLanguage().getName();
+					List<IEObjectDescription> languageDuplicates=new ArrayList<IEObjectDescription>();
+					for (IEObjectDescription desc : duplicates) {
+						if(termLanguage.equals(desc.getUserData("lang"))){
+							languageDuplicates.add(desc);
+						}
+					}
+					//term itself will be one element of the list
+					if(languageDuplicates.size()>1){
+						createError(level, "multiple definitions for the same language for term "+term.getName(), TerminologyPackage.Literals.TERM__NAME);
+					}
+				}
 			}
 		}
 	}
 
 
-	private Set<String> getDuplicate(final SubjectEntries entries, final EClass clazz){
-		Set<String>result= cache.get(clazz, entries.eResource(), new Provider<Set<String>>() {
-			public Set<String> get(){
+	private Map<String, List<IEObjectDescription>> getDuplicate(final SubjectEntries entries, final EClass clazz){
+		Map<String, List<IEObjectDescription>>result= cache.get(clazz, entries.eResource(), new Provider<Map<String, List<IEObjectDescription>>>() {
+			public Map<String, List<IEObjectDescription>> get(){
 				String terminologyName=getTerminology(entries).getName();
-				Set<String> defined=new HashSet<String>();
-				Set<String> duplicates=new HashSet<String>();
+				Map<String, List<IEObjectDescription>> unfiltered=new HashMap<String, List<IEObjectDescription>>();
 				IResourceDescriptions index = resourceDescriptionsProvider.getResourceDescriptions(entries.eResource());
 				Iterable<IEObjectDescription> indexedEntries = index.getExportedObjectsByType(clazz);
 				for (IEObjectDescription entry : indexedEntries) {
 					if(terminologyName.equals(entry.getQualifiedName().getFirstSegment())){
-						String entryId = entry.getQualifiedName().getLastSegment();
-						if(defined.contains(entryId)){
-							duplicates.add(entryId);
-						}else{
-							defined.add(entryId);
+						String name = entry.getQualifiedName().getLastSegment();
+						List<IEObjectDescription> list = unfiltered.get(name);
+						if(list==null){
+							list=new ArrayList<IEObjectDescription>();
+							unfiltered.put(name, list);
 						}
+						list.add(entry);
+					}
+				}
+				Map<String, List<IEObjectDescription>> duplicates=new HashMap<String, List<IEObjectDescription>>();
+				for (Map.Entry<String, List<IEObjectDescription>> mapEntry : unfiltered.entrySet()) {
+					if(mapEntry.getValue().size()>1){
+						duplicates.put(mapEntry.getKey(), mapEntry.getValue());
 					}
 				}
 				return duplicates;

@@ -8,11 +8,15 @@
 package de.itemis.tooling.terminology.resource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.impl.LeafNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy;
@@ -22,6 +26,7 @@ import org.eclipse.xtext.util.IResourceScopeCache;
 import de.itemis.tooling.terminology.terminology.Entry;
 import de.itemis.tooling.terminology.terminology.Term;
 import de.itemis.tooling.terminology.terminology.TermStatus;
+import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 
 public class TerminologyResourceDescriptionStrategy extends
 		DefaultResourceDescriptionStrategy {
@@ -71,6 +76,15 @@ public class TerminologyResourceDescriptionStrategy extends
 		}
 		if(term.getUsage()!=null &&term.getUsage().length()>0){
 			result.put("sem", term.getUsage());
+		}
+		List<INode> languageNodes = NodeModelUtils.findNodesForFeature(term, TerminologyPackage.Literals.TERM__LANGUAGE);
+		for (INode iNode : languageNodes) {
+			if(iNode instanceof LeafNode){
+				if(!((LeafNode) iNode).isHidden()){
+					result.put("lang", iNode.getText());
+					break;
+				}
+			}
 		}
 		return result;
 	}
