@@ -18,7 +18,7 @@ public interface TerminologyValidationSeverityLevels {
 	Severity getOnePreferredTermPerLanguageLevel();
 	/**
 	 * at least one preferred Term per definied language*/
-	Severity getMissingPreferredTerm();
+	Severity getMissingPreferredTermLevel();
 	/**
 	 * entry ID unique within terminology
 	 * */
@@ -30,9 +30,15 @@ public interface TerminologyValidationSeverityLevels {
 	/**
 	 * entry definition is empty
 	 * */
-	Severity getMissingDefinition();
+	Severity getMissingDefinitionLevel();
 	/**
 	 * entry references must be symmetric
 	 * */
-	Severity getEntryRefSymmetric();
+	Severity getEntryRefSymmetricLevel();
+
+	/**
+	 * if false disables getMissingPreferredTerm issues if no term
+	 * of that language exists within the term
+	 * */
+	boolean checkMissingPreferredTermForLanguageWithoutTerms();
 }

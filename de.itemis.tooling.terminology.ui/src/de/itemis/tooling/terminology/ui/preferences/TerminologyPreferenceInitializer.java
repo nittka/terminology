@@ -37,6 +37,7 @@ public class TerminologyPreferenceInitializer extends AbstractPreferenceInitiali
 		store.setDefault(TerminologyPreferenceConstants.VALIDATION_MISSING_DEFINITION_KEY, "null");
 		store.setDefault(TerminologyPreferenceConstants.VALIDATION_MISSING_PREFTERM_KEY, "null");
 		store.setDefault(TerminologyPreferenceConstants.VALIDATION_ENTRY_REF_SYMMETRIC_KEY, "null");
+		store.setDefault(TerminologyPreferenceConstants.VALIDATION_PREFTERM_NOLANGUAGE_KEY, true);
 
 		//generators
 //		generators.applyDefaults(store);

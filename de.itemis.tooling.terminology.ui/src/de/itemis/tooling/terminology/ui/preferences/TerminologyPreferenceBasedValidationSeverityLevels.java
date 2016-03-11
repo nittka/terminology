@@ -26,6 +26,7 @@ public class TerminologyPreferenceBasedValidationSeverityLevels implements
 	private Severity uniqueTerm;
 	private Severity missingDefinition;
 	private Severity entryRefSymmetric;
+	private boolean checkMissingPreferredTermForLanguageWithoutTerms;
 
 	@Inject
 	public TerminologyPreferenceBasedValidationSeverityLevels(IPreferenceStore store) {
@@ -45,16 +46,20 @@ public class TerminologyPreferenceBasedValidationSeverityLevels implements
 	public Severity getUniqueTermLevel() {
 		return uniqueTerm;
 	}
-	public Severity getMissingDefinition() {
+	public Severity getMissingDefinitionLevel() {
 		return missingDefinition;
 	}
 
-	public Severity getMissingPreferredTerm() {
+	public Severity getMissingPreferredTermLevel() {
 		return missingPreferredForLanguage;
 	}
 
-	public Severity getEntryRefSymmetric() {
+	public Severity getEntryRefSymmetricLevel() {
 		return entryRefSymmetric;
+	}
+
+	public boolean checkMissingPreferredTermForLanguageWithoutTerms() {
+		return checkMissingPreferredTermForLanguageWithoutTerms;
 	}
 
 	public void propertyChange(PropertyChangeEvent event) {
@@ -70,6 +75,7 @@ public class TerminologyPreferenceBasedValidationSeverityLevels implements
 		uniqueTerm=getSeverity(TerminologyPreferenceConstants.VALIDATION_UNIQUE_TERM_KEY);
 		missingDefinition=getSeverity(TerminologyPreferenceConstants.VALIDATION_MISSING_DEFINITION_KEY);
 		entryRefSymmetric=getSeverity(TerminologyPreferenceConstants.VALIDATION_ENTRY_REF_SYMMETRIC_KEY);
+		checkMissingPreferredTermForLanguageWithoutTerms=prefernces.getBoolean(TerminologyPreferenceConstants.VALIDATION_PREFTERM_NOLANGUAGE_KEY);
 	}
 
 	Severity getSeverity(String key){

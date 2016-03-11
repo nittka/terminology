@@ -12,6 +12,8 @@ import org.eclipse.xtext.diagnostics.Severity;
 public class TerminologyFixedSeverityLevels implements
 		TerminologyValidationSeverityLevels {
 
+	private static boolean checkMissingPreferredTermForLanguageWithoutTerms=true;
+
 	public Severity getOnePreferredTermPerLanguageLevel() {
 		return Severity.WARNING;
 	}
@@ -21,13 +23,16 @@ public class TerminologyFixedSeverityLevels implements
 	public Severity getUniqueTermLevel() {
 		return Severity.WARNING;
 	}
-	public Severity getMissingPreferredTerm() {
+	public Severity getMissingPreferredTermLevel() {
 		return Severity.WARNING;
 	}
-	public Severity getMissingDefinition() {
+	public Severity getMissingDefinitionLevel() {
 		return null;
 	}
-	public Severity getEntryRefSymmetric() {
+	public Severity getEntryRefSymmetricLevel() {
 		return null;
+	}
+	public boolean checkMissingPreferredTermForLanguageWithoutTerms() {
+		return checkMissingPreferredTermForLanguageWithoutTerms;
 	}
 }

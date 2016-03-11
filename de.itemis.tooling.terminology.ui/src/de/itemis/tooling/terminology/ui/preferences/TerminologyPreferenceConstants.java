@@ -23,6 +23,7 @@ public class TerminologyPreferenceConstants {
 	public static final String VALIDATION_UNIQUE_ENTRY_KEY = LANGUAGE_PREFIX+".validation.uniqueentry";
 	public static final String VALIDATION_UNIQUE_TERM_KEY = LANGUAGE_PREFIX+".validation.uniqueterm";
 	public static final String VALIDATION_PREFTERM_PERLANGUAGE_KEY = LANGUAGE_PREFIX+".validation.preferredterm";
+	public static final String VALIDATION_PREFTERM_NOLANGUAGE_KEY = LANGUAGE_PREFIX+".validation.preferredtermnolang";
 	public static final String VALIDATION_MISSING_PREFTERM_KEY = LANGUAGE_PREFIX+".validation.missingpreferredterm";
 	public static final String VALIDATION_MISSING_DEFINITION_KEY = LANGUAGE_PREFIX+".validation.missingdefinition";
 	public static final String VALIDATION_ENTRY_REF_SYMMETRIC_KEY = LANGUAGE_PREFIX+".validation.entryRefSym";

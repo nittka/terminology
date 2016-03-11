@@ -8,7 +8,6 @@
 package de.itemis.tooling.terminology.validation;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +34,6 @@ import org.eclipse.xtext.validation.Check;
 
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.inject.Provider;
@@ -64,7 +62,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 
 	@Check
 	public void oneMissingDefinition(Entry entry) {
-		Severity level=levels.getMissingDefinition();
+		Severity level=levels.getMissingDefinitionLevel();
 		if(level!=null){
 			String definition=entry.getDefinition();
 			if(definition==null ||definition.trim().length()==0){
@@ -76,35 +74,39 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 	@Check
 	public void onePreferredTerm(Entry entry) {
 		Severity levelToMany=levels.getOnePreferredTermPerLanguageLevel();
-		Severity levelMissing=levels.getMissingPreferredTerm();
+		Severity levelMissing=levels.getMissingPreferredTermLevel();
+		boolean includeMissingForUnusedLanguage=levels.checkMissingPreferredTermForLanguageWithoutTerms();
 		if(levelToMany==null && levelMissing==null){
 			return;
 		}
 		List<Language> languages = Lists.newArrayList(getTerminology(entry).getLanguages());
 		Set<Language> duplicates=new HashSet<Language>();
+		Set<Language> unUsedLanguages=new HashSet<Language>(languages);
 		Map<Language, Term> defined=new HashMap<Language, Term>();
-		
-		Collection<Term> preferred = Collections2.filter(entry.getTerms(),new Predicate<Term>() {
-			public boolean apply(Term term){
-				return term.getStatus()==TermStatus.PREFERRED;
-			}
-		});
-		for (Term term : preferred) {
+
+		for (Term term :entry.getTerms()) {
 			Language language = term.getLanguage();
-			if(defined.containsKey(language)){
-				duplicates.add(language);
-				createError(levelToMany, term, "only one preferred term per language allowed", TerminologyPackage.Literals.TERM__LANGUAGE);
-			} else{
-				defined.put(language, term);
+			unUsedLanguages.remove(term.getLanguage());
+			if(term.getStatus()==TermStatus.PREFERRED){
+				if(defined.containsKey(language)){
+					duplicates.add(language);
+					createError(levelToMany, term, "only one preferred term per language allowed", TerminologyPackage.Literals.TERM__LANGUAGE);
+				} else{
+					defined.put(language, term);
+				}
 			}
 		}
+
 		for (Language language : duplicates) {
 			createError(levelToMany, defined.get(language), "only one preferred term per language allowed", TerminologyPackage.Literals.TERM__LANGUAGE);
 		}
 
 		languages.removeAll(defined.keySet());
 		languages.removeAll(entry.getMissingPreferredTermLangage());
-		if(!languages.isEmpty() &&levelMissing!=null){
+		if(!includeMissingForUnusedLanguage){
+			languages.removeAll(unUsedLanguages);
+		}
+		if(!languages.isEmpty() && levelMissing!=null){
 			String list=Joiner.on(", ").join(Collections2.transform(languages, new Function<Language, String>() {
 				public String apply(Language s){
 					return s.getName();
@@ -140,7 +142,7 @@ public class TerminologyJavaValidator extends AbstractTerminologyJavaValidator {
 
 	@Check
 	public void inverseEntryReference(Entry entry) {
-		Severity level=levels.getEntryRefSymmetric();
+		Severity level=levels.getEntryRefSymmetricLevel();
 		if(level!=null){
 			for (Entry referenced : entry.getRelatedEntries()) {
 				if(!referenced.getRelatedEntries().contains(entry)){
