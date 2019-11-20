@@ -108,7 +108,9 @@
 
       if (this.options.search){
         $(this.options.search.input).on('keyup', function(e){
-          self.filter();
+          if(e.keyCode==13){
+            self.filter();
+          }
         });
       }
     },

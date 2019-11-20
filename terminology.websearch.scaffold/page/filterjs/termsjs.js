@@ -1,4 +1,5 @@
 var fJS;
+var filterChanged=true;
 
 function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
@@ -68,9 +69,11 @@ jQuery(document).ready(function($) {
 
   $('#searchAlso input').on('change', function(){
     $('#service_list').html('');
-    fJS.clear();
+    filterChanged=true;
     unselectResultList();
-    fJS = filterInit($);
+    //init on next search
+    //fJS.clear();
+    //fJS = filterInit($);
   });
 
   $('input').on('change', function(){
@@ -78,8 +81,17 @@ jQuery(document).ready(function($) {
     unselectResultList();
   });
 
-  $('#search_box').on('keypress', function(){
+  $('#search_box').on('keypress', function(e){
     $('#details').html('');
+    if(e.keyCode==13){
+      if(filterChanged){
+        if(fJS!=null){
+          fJS.clear();
+        }
+        fJS = filterInit($);
+        filterChanged=false;
+      }
+    }
     unselectResultList();
   });
 
@@ -88,8 +100,8 @@ jQuery(document).ready(function($) {
   toggleAll('subjects'); 
 
   language;//touch localize.js for initializing localization
-
-  fJS=filterInit($);
+  //Open page quickly
+  //fJS=filterInit($);
 });
 
 function loadEntry(id, termid){
