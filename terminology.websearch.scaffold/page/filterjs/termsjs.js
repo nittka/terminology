@@ -1,5 +1,4 @@
 var fJS;
-var filterChanged=true;
 
 function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
@@ -34,17 +33,14 @@ function toggleAll(toggleId){
   if(size<2){
     $(toggleSelector)[0].style.display='none';
   }else{
-	  $(toggleSelector).on('change', function(){
+	  $(toggleSelector).on('click', function(){
 	    var toggleButtonId='#toggle'+toggleId;
 	    var checkboxSelector='#'+toggleId +' :checkbox';
 	    var onOff=$(toggleButtonId).is(":checked");
 	    var noneCheckbox='#'+toggleId+'none';
 	    $(checkboxSelector).prop('checked', onOff);
 	    $(noneCheckbox).prop('checked', true);
-
-	    $('#service_list').html('');
-	    fJS.clear();
-	    fJS = filterInit($);
+	    fJS.filter();//this seems not to be necessary in the example!?
 	  });
   }
 };
@@ -67,13 +63,10 @@ jQuery(document).ready(function($) {
   $('#languages :checkbox').prop('checked', true);
   $('#subjects :checkbox').prop('checked', true);
 
-  $('#searchAlso input').on('change', function(){
-    $('#service_list').html('');
-    filterChanged=true;
+  $('#searchAlso input').on('click', function(){
     unselectResultList();
-    //init on next search
-    //fJS.clear();
-    //fJS = filterInit($);
+    fJS.initSearch({ele: '#search_box', fields:getSearchFields()});
+    fJS.filter();
   });
 
   $('input').on('change', function(){
@@ -83,15 +76,6 @@ jQuery(document).ready(function($) {
 
   $('#search_box').on('keypress', function(e){
     $('#details').html('');
-    if(e.keyCode==13){
-      if(filterChanged){
-        if(fJS!=null){
-          fJS.clear();
-        }
-        fJS = filterInit($);
-        filterChanged=false;
-      }
-    }
     unselectResultList();
   });
 
@@ -100,8 +84,7 @@ jQuery(document).ready(function($) {
   toggleAll('subjects'); 
 
   language;//touch localize.js for initializing localization
-  //Open page quickly
-  //fJS=filterInit($);
+  fJS=filterInit($);
 });
 
 function loadEntry(id, termid){
@@ -118,35 +101,39 @@ function renderTerm(jsonTerm){
   return "<span "+id+"class='resultlist "+jsonTerm.term_status+"' "+action+jsonTerm.term+"</span>";
 };
 
-function filterInit($) {
+function getSearchFields(){
+   var searchFields=['term'];
    var searchInUsage=$('#usage').is(":checked");
    var searchInDefinition=$('#definition').is(":checked");
-
-   var view = function(jsonTerm){
-   var result="<div class='result_term'>" +
-        renderTerm(jsonTerm) + "<div style='display: none;'>";
    if(searchInUsage){
-     result=result+" "+jsonTerm.usage;
+     searchFields.push('usage');
    }
    if(searchInDefinition){
-     result=result+" "+jsonTerm.entry_definition;
+     searchFields.push('entry_definition');
    }
-   result=result+"</div></div>";
-   return result;
-  };
+   return searchFields;
+};
+
+function filterInit($) {
+   var view = function(jsonTerm){
+     var result="<div class='result_term'>" + renderTerm(jsonTerm) + "</div>";
+     return result;
+   };
 
   var settings = {
-    filter_criteria: {
-      termstatus: ['#termstatus :checkbox', 'term_status'],
-      languages: ['#languages :checkbox', 'language'],
-      subjects: ['#subjects :checkbox', 'subject'],
-      customers: ['#customers :checkbox', 'customers.ARRAY.id'],
-      products: ['#products :checkbox', 'products.ARRAY.id']
-    },
-    search: {input: '#search_box'},
+    criterias: [
+      {ele: '#termstatus :checkbox', field:'term_status'},
+      {ele: '#languages :checkbox', field:'language'},
+      {ele: '#subjects :checkbox', field:'subject'},
+      {ele: '#customers :checkbox', field:'customers.id'},
+      {ele: '#products :checkbox', field:'products.id'},
+    ],
+    view: view,
+    template:'#template',
+    search: {ele: '#search_box', fields:getSearchFields()},
     and_filter_on: true,
     id_field: 'id' //Default is id. This is only for usecase
   };
 
-  return FilterJS(data, "#service_list", view, settings);
+  return FilterJS(data, "#service_list", settings);
 }
