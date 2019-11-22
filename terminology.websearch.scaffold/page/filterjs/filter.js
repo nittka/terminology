@@ -1240,7 +1240,8 @@
     if(this.$search_ele.length){
       this.has_search = true;
       this.searchFn = this.buildSearchFn(opts.fields);
-      this.bindEvent(opts.ele, 'keyup');
+//!!do not bind the search event - performance-issues for big terminologies
+//      this.bindEvent(opts.ele, 'keyup');
     }
   };
   

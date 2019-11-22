@@ -1,4 +1,5 @@
 var fJS;
+var currentFilterCount=9999;
 
 function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
@@ -74,9 +75,28 @@ jQuery(document).ready(function($) {
     unselectResultList();
   });
 
-  $('#search_box').on('keypress', function(e){
+  $('#search_box').on('keyup', function(e){
     $('#details').html('');
     unselectResultList();
+    //performanc hack; unbound keyup in filter.js line 1244
+    //heuristic for automatic filtering:
+    //element count small, search text length large
+    //or user explicitly calls
+    var filterTimer=-1;
+    var length=$.trim(this.value).length;
+    if(length==1){
+      //do nothing - no filtering for only one character
+    } else if(e.keyCode==13){
+      filterTimer=0;
+    } else if(currentFilterCount<1000 || length>3){
+      filterTimer=35;
+    }
+    if(filterTimer>=0){
+      //$(this).removeClass('dirty');
+      fJS.filterTimer(filterTimer);
+    } else {
+      $(this).addClass('dirty');
+    }
   });
 
   toggleAll('products'); 
@@ -128,12 +148,18 @@ function filterInit($) {
       {ele: '#customers :checkbox', field:'customers.id'},
       {ele: '#products :checkbox', field:'products.id'},
     ],
+    callbacks: {
+      afterFilter: function(result){
+       currentFilterCount=result.length;
+       $('#search_box').removeClass('dirty');
+      }
+    },
     view: view,
     template:'#template',
     search: {ele: '#search_box', fields:getSearchFields()},
     and_filter_on: true,
     id_field: 'id' //Default is id. This is only for usecase
   };
-
+  currentFilterCount=data.length;
   return FilterJS(data, "#service_list", settings);
 }
