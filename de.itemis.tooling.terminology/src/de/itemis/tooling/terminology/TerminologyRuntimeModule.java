@@ -10,6 +10,7 @@
  */
 package de.itemis.tooling.terminology;
 
+import org.eclipse.xtext.conversion.impl.STRINGValueConverter;
 import org.eclipse.xtext.formatting.IIndentationInformation;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
@@ -40,5 +41,9 @@ public class TerminologyRuntimeModule extends de.itemis.tooling.terminology.Abst
 
 	public Class<? extends IIndentationInformation> bindIndentation() {
 		return TerminologyIndentation.class;
+	}
+
+	public Class<? extends STRINGValueConverter> bindStringValueConverter(){
+		return TerminologyStringValueConverter.class;
 	}
 }
