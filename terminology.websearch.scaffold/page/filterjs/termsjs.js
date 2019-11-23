@@ -1,5 +1,6 @@
 var fJS;
 var currentFilterCount=9999;
+var startLength; //1 or 2 depending on data.lenght; marker performance hack
 
 function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
@@ -84,7 +85,7 @@ jQuery(document).ready(function($) {
     //or user explicitly calls
     var filterTimer=-1;
     var length=$.trim(this.value).length;
-    if(length==1){
+    if(length==1 && startLength!=1){
       //do nothing - no filtering for only one character
     } else if(e.keyCode==13){
       filterTimer=0;
@@ -140,6 +141,13 @@ function filterInit($) {
      return result;
    };
 
+   currentFilterCount=data.length;
+   if(currentFilterCount<500){
+     startLength=1;
+   } else {
+     startLength=2;
+   }
+
   var settings = {
     criterias: [
       {ele: '#termstatus :checkbox', field:'term_status'},
@@ -156,7 +164,7 @@ function filterInit($) {
     },
     view: view,
     template:'#template',
-    search: {ele: '#search_box', fields:getSearchFields()},
+    search: {ele: '#search_box', fields:getSearchFields(), start_length:startLength},
     and_filter_on: true,
     id_field: 'id' //Default is id. This is only for usecase
   };
