@@ -84,6 +84,6 @@ class HtmlFileContent {
 	}
 
 	def private String toJsonString(String s){
-		nlEspcape(s,"<p>")
+		nlEspcape(s.replaceAll("&","&amp;"),"<p>")
 	}
 }
