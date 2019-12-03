@@ -272,20 +272,11 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 		});
 
 		applyFilter();
-		
 		return parent;
 	}
 
 	@Override
 	protected void okPressed() {
-		try {
-			//disable tableViewer's doubleClickListener, so that the dialog stays open
-			StackTraceElement traceElement = Thread.currentThread().getStackTrace()[2];
-			if(traceElement.getMethodName().contains("Click")){
-				return;
-			}
-		} catch (Exception e) {
-		}
 		storeSettings();
 		super.okPressed();
 	}
@@ -487,11 +478,19 @@ public class TerminologyEObjectSearchDialog extends ListDialog {
 	}
 
 	@Override
+	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
+		//no default buttons, no dialog closing Enter in the table
+		return super.createButton(parent, id, label, false);
+	}
+	
+	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		super.createButtonsForButtonBar(parent);
 		getOkButton().setText("Save Settings and Close");
 		setButtonLayoutData(getOkButton());
 		getButton(IDialogConstants.CANCEL_ID).setText("Close");
+		//disable tableViewer's doubleClickListener, so that the dialog stays open
+		setAddCancelButton(false);
 	}
 
 	private void readSettings() {
