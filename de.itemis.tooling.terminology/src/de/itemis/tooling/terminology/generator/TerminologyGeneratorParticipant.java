@@ -11,8 +11,6 @@ import java.util.List;
 
 import org.eclipse.xtext.xbase.lib.Pair;
 
-import com.google.common.base.Objects;
-
 import de.itemis.tooling.terminology.terminology.SubjectEntries;
 
 public abstract class TerminologyGeneratorParticipant {
@@ -85,6 +83,13 @@ public abstract class TerminologyGeneratorParticipant {
 
 	@Override
 	public final String toString() {
-		return Objects.toStringHelper(getClass()).add("id", getId()).add("active", isActive()).add("folder", getFolder()).toString();
+		return new StringBuilder()
+		.append(getClass())
+		.append(" id: ")
+		.append(getId())
+		.append(" active: ")
+		.append(isActive())
+		.append(" folder: ")
+		.append(getFolder()).toString();
 	}
 }

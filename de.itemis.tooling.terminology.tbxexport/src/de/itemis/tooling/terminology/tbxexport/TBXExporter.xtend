@@ -7,6 +7,7 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.tbxexport
 
+import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant
 import de.itemis.tooling.terminology.terminology.Author
 import de.itemis.tooling.terminology.terminology.Entry
 import de.itemis.tooling.terminology.terminology.EntryStatus
@@ -24,7 +25,6 @@ import java.util.Date
 import java.util.LinkedHashMap
 import java.util.List
 import java.util.Map
-import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant
 
 class TBXExporter extends TerminologyGeneratorParticipant {
 
@@ -145,16 +145,18 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 		resultList.join("\n")
 	}
 	//TODO customer, products
-	def termContent(Term b)'''
+	def termContent(Term b){
+		val boolean grPresent=b.gr.pos!==Pos._NA
+	'''
 		<tig>
 			<term>«b.name»</term>
-			«IF b.gr.pos!=null»
+			«IF grPresent && b.gr.pos!=null»
 				<termNote type="partOfSpeech">«b.gr.pos.localize»</termNote>
 			«ENDIF»
-			«IF b.gr.gender!=null»
+			«IF grPresent && b.gr.gender!=null»
 				<termNote type="grammaticalGender">«b.gr.gender.localize»</termNote>
 			«ENDIF»
-			«IF b.gr.number!=null»
+			«IF grPresent && b.gr.number!=null»
 				<termNote type="grammaticalNumber">«b.gr.number.localize»</termNote>
 			«ENDIF»
 			<termNote type="normativeAuthorization">«b.status.localize»</termNote>
@@ -168,9 +170,11 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 				<admin type="customerSubset">«customer.name»</admin>
 			«ENDFOR»
 		</tig>	'''
+	}
 
 	def localize(Pos w){
 		switch (w){
+			case Pos::_NA: throw new IllegalStateException
 			case Pos::ADJECTIVE:"adjective"
 			case Pos::ADVERB:"adverb"
 			case Pos::_NOUN:"noun"

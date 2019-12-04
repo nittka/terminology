@@ -79,6 +79,6 @@ terminal STRING	:
 
 enum EntryStatus:unfinished|_OK|consolidated|archive|imported|exported;
 enum TermStatus: preferred|permitted|superseded|rejected;
-enum Pos:_noun|transitive_verb|intransitive_verb|adjective|adverb;
+enum Pos:_na|_noun|transitive_verb|intransitive_verb|adjective|adverb;
 enum Gender:masculine|feminine|neuter|other;
 enum GrNumber:singular|plural;
