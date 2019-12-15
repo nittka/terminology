@@ -72,12 +72,12 @@ jQuery(document).ready(function($) {
   });
 
   $('input').on('change', function(){
-    $('#details').html('');
+    clearDetails();
     unselectResultList();
   });
 
   $('#search_box').on('keyup', function(e){
-    $('#details').html('');
+    clearDetails();
     unselectResultList();
     //performanc hack; unbound keyup in filter.js line 1244
     //heuristic for automatic filtering:
@@ -108,12 +108,16 @@ jQuery(document).ready(function($) {
   fJS=filterInit($);
 });
 
+function clearDetails(){
+  $('#details .entry').replaceWith(noEntry);
+};
+
 function loadEntry(id, termid){
-  $('#details').load('data/terms.html #'+id, function(){
-    localizeDetails(language);
-    unselectResultList();
-    $("#result"+termid).addClass("result_selected");
-  });
+  var content=globalTermDetailMap[id];
+  $('#details .entry').replaceWith(content);
+  localizeDetails(language);
+  unselectResultList();
+  $("#result" + termid).addClass("result_selected");
 };
 
 function renderTerm(jsonTerm){
@@ -121,6 +125,21 @@ function renderTerm(jsonTerm){
   var id='id="result'+jsonTerm.id+'" ';
   return "<span "+id+"class='resultlist "+jsonTerm.term_status+"' "+action+jsonTerm.term+"</span>";
 };
+
+var globalTermDetailMap = {};
+var noEntry;
+
+document.addEventListener("DOMContentLoaded", function () {
+  $('#hiddenClipBoard').load('data/terms.html', function () {
+    $('.entry').each(function () {
+      var currentId = $(this).attr('id');
+      var currentEntryNode = $(this);
+      globalTermDetailMap[currentId] = currentEntryNode;
+    });
+    $('#hiddenClipBoard').remove();
+    noEntry=$('#details .entry');
+  });
+});
 
 function getSearchFields(){
    var searchFields=['term'];
