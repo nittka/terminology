@@ -21,7 +21,7 @@
             <ul id="searchAlso" style="margin-bottom:3px;">
               <li>
                 <input id="usage" value="usage" type="checkbox">
-                <span id="filter_searchUsage_label" onclick=switchLanguage("de")>missing localization</span>
+                <span id="filter_searchUsage_label">missing localization</span>
               </li>
               <li>
                 <input id="definition" value="definition" type="checkbox">
@@ -77,10 +77,17 @@
         <div class="featured_list_find" id="service_list"></div>
       </div>
       <div id="details_service" style="min-height:inherit;overflow:auto;">
-        <div class="details" id="details"></div>
+        <div class="details" id="details">
+          <div class="entry">
+            <!-- Dummy entry. Provides DOM node to be replaced by some entry from terms.html -->
+          </div>
+        </div>
       </div>
       <div class="clear"></div>
       <div id="languageToggle"></div>
+      <div id="hiddenClipBoard" style="display:none"></div>
     </div>
+
+    <script id="template" type="text/html"></script>
   </body>
 </html>

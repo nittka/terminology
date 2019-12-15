@@ -17,3 +17,6 @@ www.microsoft.com/language/
 
 page/index.html, page/style.css and page/filterjs/termsjs.js are adapted to the Terminology use case 
 from the examples provided at https://github.com/jiren/filter.js/tree/master/examples.
+
+filter.js was slightly adapted (lines 1243,1244).
+The automatic key event for the search was removed in order to prevent an expensive search while the user is typing. 

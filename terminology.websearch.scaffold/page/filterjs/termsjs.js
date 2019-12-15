@@ -1,4 +1,6 @@
 var fJS;
+var currentFilterCount=9999;
+var startLength; //1 or 2 depending on data.lenght; marker performance hack
 
 function initFilterList(listLabel, data, includeNone){
   var checkBoxList=$('#'+listLabel);
@@ -33,17 +35,14 @@ function toggleAll(toggleId){
   if(size<2){
     $(toggleSelector)[0].style.display='none';
   }else{
-	  $(toggleSelector).on('change', function(){
+	  $(toggleSelector).on('click', function(){
 	    var toggleButtonId='#toggle'+toggleId;
 	    var checkboxSelector='#'+toggleId +' :checkbox';
 	    var onOff=$(toggleButtonId).is(":checked");
 	    var noneCheckbox='#'+toggleId+'none';
 	    $(checkboxSelector).prop('checked', onOff);
 	    $(noneCheckbox).prop('checked', true);
-
-	    $('#service_list').html('');
-	    fJS.clear();
-	    fJS = filterInit($);
+	    fJS.filter();//this seems not to be necessary in the example!?
 	  });
   }
 };
@@ -66,21 +65,39 @@ jQuery(document).ready(function($) {
   $('#languages :checkbox').prop('checked', true);
   $('#subjects :checkbox').prop('checked', true);
 
-  $('#searchAlso input').on('change', function(){
-    $('#service_list').html('');
-    fJS.clear();
+  $('#searchAlso input').on('click', function(){
     unselectResultList();
-    fJS = filterInit($);
+    fJS.initSearch({ele: '#search_box', fields:getSearchFields()});
+    fJS.filter();
   });
 
   $('input').on('change', function(){
-    $('#details').html('');
+    clearDetails();
     unselectResultList();
   });
 
-  $('#search_box').on('keypress', function(){
-    $('#details').html('');
+  $('#search_box').on('keyup', function(e){
+    clearDetails();
     unselectResultList();
+    //performanc hack; unbound keyup in filter.js line 1244
+    //heuristic for automatic filtering:
+    //element count small, search text length large
+    //or user explicitly calls
+    var filterTimer=-1;
+    var length=$.trim(this.value).length;
+    if(length==1 && startLength!=1){
+      //do nothing - no filtering for only one character
+    } else if(e.keyCode==13){
+      filterTimer=0;
+    } else if(currentFilterCount<1000 || length>3){
+      filterTimer=35;
+    }
+    if(filterTimer>=0){
+      //$(this).removeClass('dirty');
+      fJS.filterTimer(filterTimer);
+    } else {
+      $(this).addClass('dirty');
+    }
   });
 
   toggleAll('products'); 
@@ -88,16 +105,19 @@ jQuery(document).ready(function($) {
   toggleAll('subjects'); 
 
   language;//touch localize.js for initializing localization
-
   fJS=filterInit($);
 });
 
+function clearDetails(){
+  $('#details .entry').replaceWith(noEntry);
+};
+
 function loadEntry(id, termid){
-  $('#details').load('data/terms.html #'+id, function(){
-    localizeDetails(language);
-    unselectResultList();
-    $("#result"+termid).addClass("result_selected");
-  });
+  var content=globalTermDetailMap[id];
+  $('#details .entry').replaceWith(content);
+  localizeDetails(language);
+  unselectResultList();
+  $("#result" + termid).addClass("result_selected");
 };
 
 function renderTerm(jsonTerm){
@@ -106,35 +126,67 @@ function renderTerm(jsonTerm){
   return "<span "+id+"class='resultlist "+jsonTerm.term_status+"' "+action+jsonTerm.term+"</span>";
 };
 
-function filterInit($) {
+var globalTermDetailMap = {};
+var noEntry;
+
+document.addEventListener("DOMContentLoaded", function () {
+  $('#hiddenClipBoard').load('data/terms.html', function () {
+    $('.entry').each(function () {
+      var currentId = $(this).attr('id');
+      var currentEntryNode = $(this);
+      globalTermDetailMap[currentId] = currentEntryNode;
+    });
+    $('#hiddenClipBoard').remove();
+    noEntry=$('#details .entry');
+  });
+});
+
+function getSearchFields(){
+   var searchFields=['term'];
    var searchInUsage=$('#usage').is(":checked");
    var searchInDefinition=$('#definition').is(":checked");
-
-   var view = function(jsonTerm){
-   var result="<div class='result_term'>" +
-        renderTerm(jsonTerm) + "<div style='display: none;'>";
    if(searchInUsage){
-     result=result+" "+jsonTerm.usage;
+     searchFields.push('usage');
    }
    if(searchInDefinition){
-     result=result+" "+jsonTerm.entry_definition;
+     searchFields.push('entry_definition');
    }
-   result=result+"</div></div>";
-   return result;
-  };
+   return searchFields;
+};
+
+function filterInit($) {
+   var view = function(jsonTerm){
+     var result="<div class='result_term'>" + renderTerm(jsonTerm) + "</div>";
+     return result;
+   };
+
+   currentFilterCount=data.length;
+   if(currentFilterCount<500){
+     startLength=1;
+   } else {
+     startLength=2;
+   }
 
   var settings = {
-    filter_criteria: {
-      termstatus: ['#termstatus :checkbox', 'term_status'],
-      languages: ['#languages :checkbox', 'language'],
-      subjects: ['#subjects :checkbox', 'subject'],
-      customers: ['#customers :checkbox', 'customers.ARRAY.id'],
-      products: ['#products :checkbox', 'products.ARRAY.id']
+    criterias: [
+      {ele: '#termstatus :checkbox', field:'term_status'},
+      {ele: '#languages :checkbox', field:'language'},
+      {ele: '#subjects :checkbox', field:'subject'},
+      {ele: '#customers :checkbox', field:'customers.id'},
+      {ele: '#products :checkbox', field:'products.id'},
+    ],
+    callbacks: {
+      afterFilter: function(result){
+       currentFilterCount=result.length;
+       $('#search_box').removeClass('dirty');
+      }
     },
-    search: {input: '#search_box'},
+    view: view,
+    template:'#template',
+    search: {ele: '#search_box', fields:getSearchFields(), start_length:startLength},
     and_filter_on: true,
     id_field: 'id' //Default is id. This is only for usecase
   };
-
-  return FilterJS(data, "#service_list", view, settings);
+  currentFilterCount=data.length;
+  return FilterJS(data, "#service_list", settings);
 }

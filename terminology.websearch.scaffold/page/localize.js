@@ -1,3 +1,6 @@
+//by removing the "display:none" in the #languageToggle style
+//you can allow the user to switch between different
+//langages for the labels
 language='en';
 
 localization={
