@@ -9,8 +9,8 @@
     label="Xtext Terminology Editor">
   <setupTask
       xsi:type="setup.p2:P2Task"
-      id="Xtext Terminology Editor Basics"
-      label="">
+      id="Xtext_Terminology_Editor_Basics"
+      label="Xtext Terminology Editor Basics">
     <requirement
         name="org.eclipse.xtext.redist.feature.group"/>
     <requirement
@@ -26,7 +26,7 @@
       targetURL="${workspace.location|uri}/master.zip"/>
   <setupTask
       xsi:type="setup:CompoundTask"
-      id="word wrap"
+      id="word_wrap"
       name="Word Wrap">
     <setupTask
         xsi:type="setup.p2:P2Task">
@@ -57,8 +57,8 @@
       label="Editor and Exporters">
     <setupTask
         xsi:type="setup.p2:P2Task"
-        id="Xtext Terminology Editor Exporters"
-        label="">
+        id="Xtext_Terminology_Editor_Exporters"
+        label="Xtext Terminology Editor Exporters">
       <requirement
           name="de.itemis.tooling.terminology.exporters.feature.feature.group"/>
     </setupTask>

@@ -2,7 +2,7 @@
 <feature
       id="de.itemis.tooling.terminology.exporters.feature"
       label="Terminology Exporters Feature"
-      version="1.2.0.qualifier"
+      version="1.2.0"
       provider-name="itemis AG 4+1">
 
    <copyright>
