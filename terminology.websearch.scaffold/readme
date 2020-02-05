@@ -2,6 +2,11 @@ This is a web site scaffold for presenting the data produced by the terminology 
 The page is designed for a single terminology.
 Place the two generated files (terms.html and terms.json) into the folder data replacing the example data.
 
+If you publish the page rather than viewing it locally only, you may have to modify terms.html:
+Remove or comment out the script tags in the header (see lines 6-10 in the example terms.html), otherwise there may be problems loading the data for entry details. 
+
+*******
+
 The web pages use resources from the following projects both of which are available under
 the MIT license (http://en.wikipedia.org/wiki/MIT_License):
 
