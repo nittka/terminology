@@ -34,9 +34,11 @@ The typical user does not want to edit the terminology but only researches terms
 Adapt the example exporters to your needs or write a completely new one. Place it in the installation's dropins folder and it will be available (and configurable via preference page) immediately.
 
 ## Installation
-You need an Eclipse with Xtext and the Terminology Editor installed. Install
+You need an Eclipse with Xtext and the Terminology Editor installed. 
+The last Eclipse version supported by the original version of the Terminology plugin is Eclipse 2021-12 (Xtext up to version 2.29).
+Install
 
-* an Xtext Redistributable from the [Xtext update site](http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/)
+* an Xtext Redistributable/Xtext SDK from the [Xtext update site](http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/)
 * the terminology editor (and possibly the exporter) feature from the [Terminology update site](https://raw.githubusercontent.com/nittka/terminology/master/de.itemis.tooling.terminology.updatesite/site.xml)
 
 or use the [Oomph](https://wiki.eclipse.org/Eclipse_Oomph_Installer "Oomph Installer") setup files (add the following links to the user projects in the project catalog)
