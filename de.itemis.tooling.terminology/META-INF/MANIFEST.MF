@@ -3,7 +3,7 @@ Automatic-Module-Name: de.itemis.tooling.terminology
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology Language
 Bundle-Vendor: itemis AG 4+1
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.0.0
 Bundle-SymbolicName: de.itemis.tooling.terminology; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.4.0";visibility:=reexport,
