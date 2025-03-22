@@ -29,7 +29,7 @@ class CsvExporter extends TerminologyGeneratorParticipant {
 	//number of columns depends on the number of terms per language, will be stored here
 	Map<Language,Integer> languageCount
 
-	public new() {
+	new() {
 		super("csv_export", "CSV Exporter", "csv")
 	}
 	
@@ -123,7 +123,7 @@ class EntryContent{
 
 	def String fromNullable(Object o){
 		switch o {
-			case o==null:""
+			case o===null:""
 			Iterable<?> : o.map[Object it|fromNullable].join(', ')
 			Author : o.name
 			Product : o.name

@@ -200,8 +200,8 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant">
-      </participant>
+            class="de.itemis.tooling.terminology.ui.TerminologyExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+            fileExtensions="terms"/>
    </extension>
    <extension
             point="org.eclipse.ui.preferencePages">

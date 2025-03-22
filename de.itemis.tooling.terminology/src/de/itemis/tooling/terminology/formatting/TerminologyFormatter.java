@@ -12,10 +12,10 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.formatting;
 
-import javax.inject.Inject;
-
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+
+import com.google.inject.Inject;
 
 import de.itemis.tooling.terminology.services.TerminologyGrammarAccess;
 

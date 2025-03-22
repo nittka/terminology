@@ -14,23 +14,21 @@ package de.itemis.tooling.terminology.ui.generator;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.xtext.ui.editor.preferences.PreferenceStoreAccessImpl;
-import org.eclipse.xtext.ui.preferences.OptionsConfigurationBlock;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant;
 
-@SuppressWarnings("restriction")
 public class TerminologyGenerators {
 
 	private PreferenceStoreAccessImpl preferenceStoreAccess;
+	private IProject currentContext=null;
 	private List<TerminologyGeneratorParticipant> generators=null;
 
 	@Inject
@@ -41,10 +39,12 @@ public class TerminologyGenerators {
 	public List<TerminologyGeneratorParticipant> getGenerators(IProject context){
 		//context plays a role only if there are project specific settings
 		IPreferenceStore preferences=preferenceStoreAccess.getContextPreferenceStore(context);
-		if(!preferences.getBoolean(OptionsConfigurationBlock.IS_PROJECT_SPECIFIC)){
+		if(!preferences.getBoolean("BuilderConfiguration.is_project_specific")) {
 			preferences=preferenceStoreAccess.getContextPreferenceStore(null);
+			context=null;
 		}
-		if(generators==null){
+		if (generators==null || context !=currentContext) {
+			currentContext=context;
 			generators=Lists.newArrayList();
 			//Injection does not really make sense as here only classes from the terminology plugin could be injected
 //			Injector injector = TerminologyActivator.getInstance().getInjector(TerminologyActivator.DE_ITEMIS_TOOLING_TERMINOLOGY_TERMINOLOGY);
@@ -69,8 +69,8 @@ public class TerminologyGenerators {
 		return generators;
 	}
 
-	public void applyDefaults(IPreferenceStore store){
-		for (TerminologyGeneratorParticipant generator : getGenerators(null)) {
+	public void applyDefaults(IPreferenceStore store, IProject context){
+		for (TerminologyGeneratorParticipant generator : getGenerators(context)) {
 			store.setValue(generator.getId()+"_active", false);
 			store.setValue(generator.getId()+"_folder", generator.getDefaultFolder());
 //			store.setDefault(generator.getId()+"_active", false);
@@ -80,8 +80,8 @@ public class TerminologyGenerators {
 		}
 	}
 
-	public void apply(IPreferenceStore store){
-		for (TerminologyGeneratorParticipant generator : getGenerators(null)) {
+	public void apply(IPreferenceStore store, IProject context){
+		for (TerminologyGeneratorParticipant generator : getGenerators(context)) {
 			store.setValue(generator.getId()+"_active", ""+generator.isActive());
 			store.setValue(generator.getId()+"_folder", generator.getFolder());
 		}

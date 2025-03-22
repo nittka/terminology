@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: de.itemis.tooling.terminology
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology Language
 Bundle-Vendor: itemis AG 4+1
-Bundle-Version: 1.2.0
+Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: de.itemis.tooling.terminology; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.4.0";visibility:=reexport,
@@ -14,12 +15,12 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.4.0";visibility:=reexport,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.equinox.common,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0"
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.itemis.tooling.terminology,
  de.itemis.tooling.terminology.services,
  de.itemis.tooling.terminology.terminology,
@@ -32,4 +33,3 @@ Export-Package: de.itemis.tooling.terminology,
  de.itemis.tooling.terminology.scoping,
  de.itemis.tooling.terminology.generator,
  de.itemis.tooling.terminology.formatting
-

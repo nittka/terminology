@@ -1,11 +1,13 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: de.itemis.tooling.terminology.ui
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology UI
 Bundle-Vendor: itemis AG 4+1
-Bundle-Version: 1.2.0
+Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: de.itemis.tooling.terminology.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.itemis.tooling.terminology;visibility:=reexport,
+ de.itemis.tooling.terminology.ide,
  org.eclipse.xtext.ui;bundle-version="2.4.0",
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
@@ -17,11 +19,11 @@ Require-Bundle: de.itemis.tooling.terminology;visibility:=reexport,
  org.eclipse.ui.forms;bundle-version="3.4.1",
  org.eclipse.xtend.lib;bundle-version="2.4.0",
  com.google.guava,
- org.eclipse.xtext.xbase.lib;bundle-version="2.4.0"
+ org.eclipse.xtext.xbase.lib;bundle-version="2.4.0",
+ org.eclipse.xtext.ui.codetemplates.ui
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: de.itemis.tooling.terminology.ui.contentassist,
- de.itemis.tooling.terminology.ui.contentassist.antlr,
  de.itemis.tooling.terminology.ui.internal,
  de.itemis.tooling.terminology.ui.quickfix
 Bundle-Activator: de.itemis.tooling.terminology.ui.internal.TerminologyActivator

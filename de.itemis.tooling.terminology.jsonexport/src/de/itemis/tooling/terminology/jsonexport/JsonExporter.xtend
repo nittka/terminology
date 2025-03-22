@@ -23,7 +23,7 @@ import java.util.Locale
 class JsonExporter extends TerminologyGeneratorParticipant {
 
 	val sorter=Collator::getInstance(Locale::GERMANY)
-	public new() {
+	new() {
 		super("json_export", "Json Exporter", "json")
 	}
 
@@ -36,7 +36,7 @@ class JsonExporter extends TerminologyGeneratorParticipant {
 				allSubjects.map[getEntries]
 				.flatten
 				.map[terms].flatten
-				.sort[t1,t2|sorter.compare(t1.name, t2.name)].toList)
+				.sortWith[t1,t2|sorter.compare(t1.name, t2.name)].toList)
 			return #[
 				"terms.json"->new JsonFileContent().content(terminology, allTerms),
 				"terms.html"->new HtmlFileContent().html(terminology,allSubjects)

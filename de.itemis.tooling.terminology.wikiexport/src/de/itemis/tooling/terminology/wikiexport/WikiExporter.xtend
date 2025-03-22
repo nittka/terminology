@@ -26,7 +26,7 @@ class WikiExporter extends TerminologyGeneratorParticipant {
 
 	List<Language> languages
 
-	public new() {
+	new() {
 		super("wiki_export", "Wiki Exporter", "wiki")
 	}
 	
@@ -47,7 +47,7 @@ class WikiExporter extends TerminologyGeneratorParticipant {
 	def List<Entry> sortedEntries(Language l, SubjectEntries entries){
 		val filtered=entries.entries.filter[it.showEntry(l)]
 		//TODO in case of performance issues optimise here
-		filtered.sort[Entry e1, Entry e2| 
+		filtered.sortWith[Entry e1, Entry e2| 
 			sorter.compare(
 				e1.terms.findFirst[preferredForLanguage(l)].name, 
 				e2.terms.findFirst[preferredForLanguage(l)].name

@@ -33,7 +33,7 @@ import java.util.Map
 
 class TBXExporter extends TerminologyGeneratorParticipant {
 
-	public new() {
+	new() {
 		super("default_tbx_generator", "TBX Generator", "tbx")
 	}
 
@@ -155,13 +155,13 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 	'''
 		<tig>
 			<term>«b.name»</term>
-			«IF grPresent && b.gr.pos!=null»
+			«IF grPresent && b.gr.pos!==null»
 				<termNote type="partOfSpeech">«b.gr.pos.localize»</termNote>
 			«ENDIF»
-			«IF grPresent && b.gr.gender!=null»
+			«IF grPresent && b.gr.gender!==null»
 				<termNote type="grammaticalGender">«b.gr.gender.localize»</termNote>
 			«ENDIF»
-			«IF grPresent && b.gr.number!=null»
+			«IF grPresent && b.gr.number!==null»
 				<termNote type="grammaticalNumber">«b.gr.number.localize»</termNote>
 			«ENDIF»
 			<termNote type="normativeAuthorization">«b.status.localize»</termNote>
@@ -223,7 +223,7 @@ class TBXExporter extends TerminologyGeneratorParticipant {
 		}
 	}
 	def boolean hasContent(String s){
-		s!=null && s.trim.length>0
+		s!==null && s.trim.length>0
 	}
 
 //	val sourceDateFormat=new SimpleDateFormat("dd.MM.yy")

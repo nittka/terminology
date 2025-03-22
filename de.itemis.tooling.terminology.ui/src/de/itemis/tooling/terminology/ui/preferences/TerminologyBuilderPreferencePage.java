@@ -48,7 +48,7 @@ public class TerminologyBuilderPreferencePage extends BuilderPreferencePage{
 
 	private PreferenceStoreAccessImpl preferenceStoreAccess;
 	private TerminologyGenerators generators;
-	private Map<TerminologyGeneratorParticipant,Pair<Button,Text>> controls=Maps.newHashMap();
+	private Map<String,Pair<Button,Text>> controls=Maps.newHashMap();
 
 	@Inject
 	public TerminologyBuilderPreferencePage(PreferenceStoreAccessImpl prefStoreAccess, TerminologyGenerators generators) {
@@ -89,7 +89,7 @@ public class TerminologyBuilderPreferencePage extends BuilderPreferencePage{
 							generator.setFolder(directory.getText());
 						}
 					});
-					controls.put(generator, Pair.of(active,directory));
+					controls.put(generator.getId(), Pair.of(active,directory));
 			}
 			updateControls(useProjectSettings());
 		}
@@ -118,21 +118,21 @@ public class TerminologyBuilderPreferencePage extends BuilderPreferencePage{
 	@Override
 	public void performApply() {
 		super.performApply();
-		generators.apply(getPreferenceStore());
+		generators.apply(getPreferenceStore(), getProject());
 
 	}
 
 	@Override
 	public boolean performOk() {
 		boolean result= super.performOk();
-		generators.apply(getPreferenceStore());
+		generators.apply(getPreferenceStore(), getProject());
 		return result;
 	}
 
 	@Override
 	protected void performDefaults() {
 		super.performDefaults();
-		generators.applyDefaults(getPreferenceStore());
+		generators.applyDefaults(getPreferenceStore(), getProject());
 		updateControls(useProjectSettings());
 	}
 
@@ -146,7 +146,7 @@ public class TerminologyBuilderPreferencePage extends BuilderPreferencePage{
 	private void updateControls(boolean useProjectSpecificSettings) {
 		boolean activated=!isProjectPreferencePage() || useProjectSpecificSettings;
 		for (TerminologyGeneratorParticipant generator : generators.getGenerators(getProject())) {
-			Pair<Button, Text> pair = controls.get(generator);
+			Pair<Button, Text> pair = controls.get(generator.getId());
 			if(pair!=null){
 				pair.getKey().setSelection(generator.isActive());
 				pair.getValue().setText(generator.getFolder());

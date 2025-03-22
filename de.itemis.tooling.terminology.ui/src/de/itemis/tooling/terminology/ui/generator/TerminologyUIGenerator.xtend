@@ -17,28 +17,30 @@ import de.itemis.tooling.terminology.generator.TerminologyGeneratorParticipant
 import de.itemis.tooling.terminology.terminology.SubjectEntries
 import de.itemis.tooling.terminology.terminology.Terminology
 import java.util.List
-import javax.inject.Inject
-import javax.inject.Provider
+import com.google.inject.Inject
+import com.google.inject.Provider
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.eclipse.xtext.generator.IGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
+import org.eclipse.xtext.generator.AbstractGenerator
 
-class TerminologyUIGenerator implements IGenerator {
+class TerminologyUIGenerator extends AbstractGenerator {
 
 	@Inject
-	private Provider<TerminologyGenerators> generators;
+	Provider<TerminologyGenerators> generators;
 	@Inject
 	ResourceDescriptionsProvider index
 	@Inject
 	Provider<XtextResourceSet> sets
 
-	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
+	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val root=resource.contents.get(0)
 		if(root instanceof SubjectEntries){
 			addSiblingAdapter(root as SubjectEntries)
@@ -85,7 +87,7 @@ class TerminologyUIGenerator implements IGenerator {
 
 	def folderName(String terminologyName, TerminologyGeneratorParticipant generator){
 		var folderName=terminologyName+"/"
-		if(generator.folder!=null && generator.folder.length>0){
+		if(generator.folder!==null && generator.folder.length>0){
 			folderName=folderName+generator.folder
 		}
 		if(!folderName.endsWith("/")){

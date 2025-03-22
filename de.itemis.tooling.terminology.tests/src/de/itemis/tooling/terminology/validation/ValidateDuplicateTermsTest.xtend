@@ -12,28 +12,28 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.validation
 
-import de.itemis.tooling.terminology.TerminologyInjectorProvider
 import de.itemis.tooling.terminology.terminology.SubjectEntries
-import javax.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.util.ParseHelper
-import org.eclipse.xtext.junit4.validation.ValidationTestHelper
-import org.junit.Test
-import org.junit.runner.RunWith
 import de.itemis.tooling.terminology.terminology.Terminology
 import de.itemis.tooling.terminology.terminology.TerminologyPackage
+import de.itemis.tooling.terminology.tests.TerminologyInjectorProvider
 import java.util.ArrayList
+import com.google.inject.Inject
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.eclipse.xtext.testing.validation.ValidationTestHelper
+import org.junit.Test
+import org.junit.runner.RunWith
 
-@RunWith(typeof(XtextRunner))
-@InjectWith(typeof(TerminologyInjectorProvider))
-class ValidateDuplicateTermsTests {
+@RunWith(XtextRunner)
+@InjectWith(TerminologyInjectorProvider)
+class ValidateDuplicateTermsTest {
 
 	@Inject ParseHelper<Terminology> terminologyParser
 	@Inject extension ParseHelper<SubjectEntries> 
 	@Inject extension ValidationTestHelper
 
-	val termClass=TerminologyPackage::Literals::TERM
+	val termClass=TerminologyPackage.Literals::TERM
 
 	def private defaultMetaData()'''
 		Metadata {

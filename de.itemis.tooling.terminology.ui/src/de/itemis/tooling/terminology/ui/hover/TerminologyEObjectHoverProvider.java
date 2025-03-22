@@ -22,13 +22,7 @@ import org.eclipse.xtext.ui.editor.hover.html.DefaultEObjectHoverProvider;
 
 import com.google.common.collect.ImmutableList;
 
-import de.itemis.tooling.terminology.terminology.Author;
-import de.itemis.tooling.terminology.terminology.Customer;
 import de.itemis.tooling.terminology.terminology.Entry;
-import de.itemis.tooling.terminology.terminology.Gr;
-import de.itemis.tooling.terminology.terminology.Product;
-import de.itemis.tooling.terminology.terminology.Status;
-import de.itemis.tooling.terminology.terminology.Subject;
 import de.itemis.tooling.terminology.terminology.Term;
 import de.itemis.tooling.terminology.terminology.TerminologyPackage;
 import de.itemis.tooling.terminology.terminology.WithNameAndDisplayName;

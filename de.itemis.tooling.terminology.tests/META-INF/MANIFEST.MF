@@ -1,8 +1,9 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: de.itemis.tooling.terminology.tests
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology tests
 Bundle-Vendor: itemis AG 4+1
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: de.itemis.tooling.terminology.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.itemis.tooling.terminology,
@@ -10,7 +11,9 @@ Require-Bundle: de.itemis.tooling.terminology,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
  org.eclipse.xtext.xbase.lib;bundle-version="2.3.1",
- org.eclipse.xtext.junit4
+ org.eclipse.xtext.junit4,
+ org.eclipse.xtext.xbase.testing,
+ org.eclipse.xtext.testing
 Import-Package: org.apache.log4j,
  org.junit;version="4.5.0",
  org.junit.runner;version="4.5.0",
@@ -19,5 +22,5 @@ Import-Package: org.apache.log4j,
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.itemis.tooling.terminology
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: de.itemis.tooling.terminology.tests;x-internal=true

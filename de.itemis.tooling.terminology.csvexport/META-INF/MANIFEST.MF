@@ -1,12 +1,13 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: de.itemis.tooling.terminology.csvexport
 Bundle-ManifestVersion: 2
 Bundle-Name: Terminology Csv Export
 Bundle-SymbolicName: de.itemis.tooling.terminology.csvexport;singleton:=true
-Bundle-Version: 1.2.0
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: itemis AG 4+1
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: de.itemis.tooling.terminology;bundle-version="1.2.0",
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: de.itemis.tooling.terminology;bundle-version="2.0.0",
  org.eclipse.xtext.xbase.lib,
  org.junit;resolution:=optional,
  de.itemis.tooling.terminology.tests;resolution:=optional,
- org.eclipse.xtext.junit4;resolution:=optional
+ org.eclipse.xtext.testing;resolution:=optional

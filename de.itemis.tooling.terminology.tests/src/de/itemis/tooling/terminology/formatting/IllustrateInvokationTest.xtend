@@ -12,21 +12,21 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.formatting
 
-import de.itemis.tooling.terminology.TerminologyInjectorProvider
 import de.itemis.tooling.terminology.terminology.SubjectEntries
-import javax.inject.Inject
+import de.itemis.tooling.terminology.tests.TerminologyInjectorProvider
+import com.google.inject.Inject
 import org.eclipse.xtext.formatting.INodeModelFormatter
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.resource.SaveOptions
 import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.util.ParseHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(typeof(XtextRunner))
-@InjectWith(typeof(TerminologyInjectorProvider))
-class IllustrateInvokation {
+@RunWith(XtextRunner)
+@InjectWith(TerminologyInjectorProvider)
+class IllustrateInvokationTest {
 
 	@Inject extension ParseHelper<SubjectEntries>
 	//	@Inject extension ValidationTestHelper

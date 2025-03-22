@@ -15,7 +15,7 @@ package de.itemis.tooling.terminology.ui;
 import org.eclipse.jface.text.templates.ContextTypeRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.formatting.IIndentationInformation;
-import org.eclipse.xtext.generator.IGenerator;
+import org.eclipse.xtext.generator.IGenerator2;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.actions.IActionContributor;
 import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
@@ -117,7 +117,7 @@ public class TerminologyUiModule extends de.itemis.tooling.terminology.ui.Abstra
 		binder.bind(org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreInitializer.class).annotatedWith(com.google.inject.name.Names.named("builderPreferenceInitializer")).to(TerminologyBuilderPreferenceInitializer.class);
 	}
 
-	public Class<? extends IGenerator> bindGenerator() {
+	public Class<? extends IGenerator2> bindGenerator() {
 		return TerminologyUIGenerator.class;
 	}
 

@@ -16,7 +16,7 @@
     <package 
        uri = "http://www.itemis.de/tooling/terminology/Terminology" 
        class = "de.itemis.tooling.terminology.terminology.TerminologyPackage"
-       genModel = "de/itemis/tooling/terminology/Terminology.genmodel" /> 
+       genModel = "model/generated/Terminology.genmodel" /> 
 	
   </extension>
 </plugin>

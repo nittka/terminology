@@ -14,7 +14,7 @@ package de.itemis.tooling.terminology.ui.preferences;
 
 import static org.eclipse.xtext.builder.EclipseOutputConfigurationProvider.*;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.xtext.builder.preferences.BuilderPreferenceAccess;

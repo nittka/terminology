@@ -12,7 +12,7 @@
  ******************************************************************************/
 package de.itemis.tooling.terminology.ui.preferences;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;

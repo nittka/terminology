@@ -2,7 +2,7 @@
 <feature
       id="de.itemis.tooling.terminology.exporters.feature"
       label="Terminology Exporters Feature"
-      version="1.2.0"
+      version="2.0.0.qualifier"
       provider-name="itemis AG 4+1">
 
    <description url="https://github.com/nittka/terminology">
@@ -300,7 +300,7 @@ version(s), and exceptions or additional permissions here}.&quot;
    </license>
 
    <requires>
-      <import plugin="de.itemis.tooling.terminology" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.itemis.tooling.terminology" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.xbase.lib" version="2.3.1" match="greaterOrEqual"/>
    </requires>
 
@@ -308,28 +308,28 @@ version(s), and exceptions or additional permissions here}.&quot;
          id="de.itemis.tooling.terminology.csvexport"
          download-size="0"
          install-size="0"
-         version="1.2.0.qualifier"
+         version="2.0.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.itemis.tooling.terminology.tbxexport"
          download-size="0"
          install-size="0"
-         version="1.2.0.qualifier"
+         version="2.0.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.itemis.tooling.terminology.wikiexport"
          download-size="0"
          install-size="0"
-         version="1.2.0.qualifier"
+         version="2.0.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.itemis.tooling.terminology.jsonexport"
          download-size="0"
          install-size="0"
-         version="1.2.0.qualifier"
+         version="2.0.0.qualifier"
          unpack="false"/>
 
 </feature>

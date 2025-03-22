@@ -13,10 +13,12 @@
 package de.itemis.tooling.terminology;
 
 import org.eclipse.xtext.conversion.impl.STRINGValueConverter;
+import org.eclipse.xtext.formatting.IFormatter;
 import org.eclipse.xtext.formatting.IIndentationInformation;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 
+import de.itemis.tooling.terminology.formatting.TerminologyFormatter;
 import de.itemis.tooling.terminology.formatting.TerminologyIndentation;
 import de.itemis.tooling.terminology.naming.TerminologyNameProvider;
 import de.itemis.tooling.terminology.resource.TerminologyResourceDescriptionStrategy;
@@ -39,6 +41,11 @@ public class TerminologyRuntimeModule extends de.itemis.tooling.terminology.Abst
 
 	public Class<? extends IDefaultResourceDescriptionStrategy> bindIndexingStrategy() {
 		return TerminologyResourceDescriptionStrategy.class;
+	}
+
+	@Override
+	public Class<? extends IFormatter> bindIFormatter() {
+		return TerminologyFormatter.class;
 	}
 
 	public Class<? extends IIndentationInformation> bindIndentation() {

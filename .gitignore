@@ -1,5 +1,6 @@
 *.class
 .DS_Store
+**/model/generated/
 plugin.xml_gen
 bin/
 #src-gen/
@@ -9,3 +10,4 @@ xtend-gen/
 *.war
 *.ear
 target
+**.settings/

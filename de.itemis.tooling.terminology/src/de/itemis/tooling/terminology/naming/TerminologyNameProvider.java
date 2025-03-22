@@ -14,8 +14,6 @@ package de.itemis.tooling.terminology.naming;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;
@@ -25,6 +23,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.util.IResourceScopeCache;
 
 import com.google.common.base.Optional;
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import de.itemis.tooling.terminology.terminology.Entry;

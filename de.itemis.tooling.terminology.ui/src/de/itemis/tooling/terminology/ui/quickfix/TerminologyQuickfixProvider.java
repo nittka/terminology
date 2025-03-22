@@ -21,11 +21,11 @@ import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
 import org.eclipse.xtext.validation.Issue;
 
 import de.itemis.tooling.terminology.terminology.Entry;
-import de.itemis.tooling.terminology.validation.TerminologyJavaValidator;
+import de.itemis.tooling.terminology.validation.TerminologyValidator;
 
 public class TerminologyQuickfixProvider extends DefaultQuickfixProvider {
 
-	@Fix(TerminologyJavaValidator.RELATED_ENTRY_SYMMETRIC)
+	@Fix(TerminologyValidator.RELATED_ENTRY_SYMMETRIC)
 	public void addInverseReference(final Issue issue, IssueResolutionAcceptor acceptor) {
 		if(issue.getData()==null ||issue.getData().length<2){
 			return;

@@ -78,6 +78,7 @@ Term:
 		("Customers" customers+=[Customer](','customers+=[Customer])*)?
 ;
 
+@Override 
 terminal STRING	: 
 			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'\\') | !('\\'|'"') )* '"' 
 		; 
