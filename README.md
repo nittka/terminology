@@ -44,7 +44,7 @@ For later Eclipse versions use the plugin version 2.0.0 (or later). Install
 or use the [Oomph](https://wiki.eclipse.org/Eclipse_Oomph_Installer "Oomph Installer") setup files (add the following links to the user projects in the project catalog)
 
 * [Terminology Editor User setup](https://raw.githubusercontent.com/nittka/terminology/master/terminologyUse.setup) for the editor or editor and exporters (depending on the branch you choose)
-* [Terminology Editor Developer setup](https://raw.githubusercontent.com/nittka/terminology/master/terminologyDev.setup) for the complete source code
+* [Terminology Editor Developer setup](https://raw.githubusercontent.com/nittka/terminology/master/terminologyDev.setup) for the complete source code (Choose an Eclipse IDE for Java and DSL Developers)
 
 Import the `sample.terminology` and `terminology.websearch.scaffold` projects from the [Terminology Project archive](https://github.com/nittka/terminology/archive/master.zip) to get a brief overview of the syntax of the terminology files. When installing the editor via Oomph, the zip-file is automatically copied to your workspace location, so you can import the projects immediately from that archive.
 

@@ -23,7 +23,7 @@ Workflow {
 				baseName = "de.itemis.tooling.terminology"
 				rootPath = rootPath
 				runtimeTest = {
-					enabled = false //do not create parse test
+					enabled = true
 				}
 				eclipsePlugin = {
 					enabled = true
