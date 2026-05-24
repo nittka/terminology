@@ -29,6 +29,7 @@
   <setupTask
       xsi:type="setup.p2:P2Task"
       id="Xtext stuff"
+      disabled="true"
       label="Xtext stuff">
     <requirement
         name="de.itemis.xtext.antlr.sdk.feature.group"
